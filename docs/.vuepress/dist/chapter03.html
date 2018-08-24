@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chapter 3. Generating a MySQL API</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.e4472f66.css" as="style"><link rel="preload" href="/assets/js/app.210bb3a9.js" as="script"><link rel="preload" href="/assets/js/7.3cd72f25.js" as="script"><link rel="prefetch" href="/assets/js/5.f3e0c2b7.js"><link rel="prefetch" href="/assets/js/2.cda51ec0.js"><link rel="prefetch" href="/assets/js/3.9e80b1cb.js"><link rel="prefetch" href="/assets/js/4.92f55f27.js"><link rel="prefetch" href="/assets/js/6.91f4299a.js"><link rel="prefetch" href="/assets/js/8.4067f35f.js"><link rel="prefetch" href="/assets/js/9.3edd4ea2.js"><link rel="prefetch" href="/assets/js/10.573147bb.js"><link rel="prefetch" href="/assets/js/11.1387bd46.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e4472f66.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><!---->  <!----> </div> <div class="page"> <div class="content"><h1 id="chapter-3-generating-a-mysql-api"><a href="#chapter-3-generating-a-mysql-api" aria-hidden="true" class="header-anchor">#</a> Chapter 3. Generating a MySQL API</h1> <h2 id="supported-databases"><a href="#supported-databases" aria-hidden="true" class="header-anchor">#</a> Supported Databases</h2> <p>Although DreamFactory offers API generation capabilities for a wide variety of services, including file systems, e-mail delivery providers, and IoT device message brokers, the platform’s database support is far and away the most popular feature. It’s no wonder, considering the ability to expose CRUD (create, retrieve, update, delete) endpoints in just minutes is incredibly appealing, considering manually building out such features often takes at minimum weeks of work.</p> <h2 id="interacting-with-your-api-via-the-api-docs-tab"><a href="#interacting-with-your-api-via-the-api-docs-tab" aria-hidden="true" class="header-anchor">#</a> Interacting with Your API via the API Docs Tab</h2> <h3 id="creating-a-new-record"><a href="#creating-a-new-record" aria-hidden="true" class="header-anchor">#</a> Creating a New Record</h3> <p>{
+&quot;resource&quot;: [
+{
+&quot;dept_no&quot;: &quot;d015&quot;,
+&quot;dept_name&quot;: &quot;Fruit Department&quot;
+}
+]
+}</p> <h4 id="adding-records-to-multiple-tables"><a href="#adding-records-to-multiple-tables" aria-hidden="true" class="header-anchor">#</a> Adding Records to Multiple Tables</h4> <pre><code>CREATE TABLE `locations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `supply_id` int(10) unsigned NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `supply_id` (`supply_id`),
+  CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`supply_id`) REFERENCES `supplies` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `supplies` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+</code></pre> <p>Call /api/v2/mysql/_table/supplies</p> <p>{
+&quot;resource&quot;: [
+{
+&quot;name&quot;: &quot;Broom&quot;,
+&quot;locations_by_supply_id&quot;: [
+{<br>
+&quot;name&quot;: &quot;Broom Closet&quot;
+}
+]
+}
+]
+}</p> <p>Response</p> <p>{
+&quot;resource&quot;: [
+{
+&quot;id&quot;: 1
+}
+]
+}</p> <h3 id="updating-records"><a href="#updating-records" aria-hidden="true" class="header-anchor">#</a> Updating Records</h3> <h4 id="put"><a href="#put" aria-hidden="true" class="header-anchor">#</a> PUT</h4> <h4 id="patch"><a href="#patch" aria-hidden="true" class="header-anchor">#</a> PATCH</h4> <h3 id="deleting-records"><a href="#deleting-records" aria-hidden="true" class="header-anchor">#</a> Deleting Records</h3></div> <div class="page-edit"><!----> <!----></div> <!----> </div> <!----></div></div>
+    <script src="/assets/js/7.3cd72f25.js" defer></script><script src="/assets/js/app.210bb3a9.js" defer></script>
+  </body>
+</html>
