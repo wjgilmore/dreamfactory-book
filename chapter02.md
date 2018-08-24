@@ -13,3 +13,10 @@ Bitnami
 ### Choosing a System Database
 
     $ df:setup
+
+## Introducing the .env File
+
+
+
+## Enabling Debugging and Logging
+
