@@ -1,5 +1,10 @@
 # Chapter 3. Generating a MySQL API
 
+## Supported Databases
+
+Although DreamFactory offers API generation capabilities for a wide variety of services, including file systems, e-mail delivery providers, and IoT device message brokers, the platform’s database support is far and away the most popular feature. It’s no wonder, considering the ability to expose CRUD (create, retrieve, update, delete) endpoints in just minutes is incredibly appealing, considering manually building out such features often takes at minimum weeks of work.
+
+
 ## Interacting with Your API via the API Docs Tab
 
 
