@@ -6,14 +6,35 @@ In addition to integrating third-party APIs, your organization is likely deeply 
 
 This chapter makes a case for eschewing custom API development in preference for embracing an API management platform. 
 
-## A Case for Automated API Management
+## Introducing REST
+
+Ultimately, REST is about declaring *what* you intend to do, and *where* you intend to do it. This is done by riding on the rails of two key HTTP components: the verb and URI. The verbs (also often referred to as methods) define the *what*, determining whether the client would like to retrieve, create, update, or delete a resource. The URI identifies the resource, and often works in conjunction with accompanying URI parameters or a request body. For instance, if you'd like to 
+
+### REST Methods
+
+
+#### GET
+
+You'll use the GET method to retrieve both multiple records and information about a specific record. Multiple records could mean all records, or some as identified by a particular attribute such as those which have as `id` of `29`, a `price` column greater than `$19.99`, or which were created within the past 30 days.
+
+#### POST
+
+#### PUT
+
+#### PATCH
+
+#### DELETE
+
+
 
 ### API Generation
 
 
 
+
 ### API Security
 
+Because 
 
 ### Business Logic
 
