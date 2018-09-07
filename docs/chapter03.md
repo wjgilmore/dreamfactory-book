@@ -1,6 +1,6 @@
 # Chapter 3. Generating a Database-backed API
 
-Although DreamFactory supports almost 60 data sources, in addition to the ability to mount third-party REST and SOAP services, and create completely custom scripted services using four supported scripting engines (Node.js, PHP, Python, and V8.js), it might not come as a surprise that DreamFactory's database support is by far the most popular feature. Databases are after all an indispensable part of the application ecosystem, providing a persistent store for every conceivable type of data.
+Although DreamFactory natively supports almost 60 data sources, in addition to the ability to mount third-party REST and SOAP services, and create completely custom scripted services using four supported scripting engines (Node.js, PHP, Python, and V8.js), it might not come as a surprise that DreamFactory's database support is by far the most popular feature. Databases are after all an indispensable part of the application ecosystem, providing a persistent store for every conceivable type of data.
 
 In this chapter you'll learn all about DreamFactory's database support by way of an introduction to the following topics:
 
@@ -8,9 +8,9 @@ In this chapter you'll learn all about DreamFactory's database support by way of
 * Interacting with the auto-generated Swagger documentation
 * Securing access to your API using API keys and roles
 
-## Supported Databases
+## Introducing DreamFactory's Database Support
 
-Although DreamFactory offers API generation capabilities for a wide variety of services, including file systems, e-mail delivery providers, and IoT device message brokers, the platform’s database support is far and away the most popular feature. It’s no wonder, considering the ability to expose CRUD (create, retrieve, update, delete) endpoints in just minutes is incredibly appealing, considering manually building out such features often takes at minimum weeks of work.
+DreamFactory natively supports automated API generation and management for 18 databases, including the usual suspects such as Oracle, Microsoft SQL Server, and MySQL, but also for relative newcomers such as MongoDB, CouchDB, and AWS Redshift DB. 
 
 ## Generating a MySQL-backed REST API
 
