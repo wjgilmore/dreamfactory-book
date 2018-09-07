@@ -1,4 +1,4 @@
-# A Beginner's Guide to DreamFactory
+# Getting Started with DreamFactory
 
 Welcome to the DreamFactory platform! Whether you’re an open source user, or a paid customer taking advantage of DreamFactory’s advanced capabilities, we wrote this guide to help you begin incorporating the platform into your organization in the most efficient way possible.
 
