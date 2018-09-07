@@ -1,5 +1,6 @@
 # Chapter 6. Integrating Business Logic
 
+## Transforming Response Content
 
 ## Calling Other APIs
 
