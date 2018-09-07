@@ -14,7 +14,7 @@ So why would you want to use the DreamFactory platform in the first place? It’
 
 Much of the DreamFactory platform is open source, with the code made available via GitHub. But this doesn’t mean you have to be a command-line wizard to begin generating APIs in a flash. In this chapter you’ll learn how to install and configure DreamFactory regardless of your operating system or experience level. We’ll also talk about configuring DreamFactory to suit your specific needs, and highlight key configuration changes which will make your life much easier.
 
-### [Chapter 3. Generating a Database API](chapter03.md)
+### [Chapter 3. Generating a Database-backed API](chapter03.md)
 
 After installing your DreamFactory instance, it’s only natural to want to see what the platform can do. For most users, this means generating a database API, because the advantages of doing so are so evident. By merely supplying a set of authentication credentials, DreamFactory will generate an API for any of an array of popular databases, including MySQL, SQL Server, Oracle, PostgreSQL, MongoDB, and others. Once generated, you’ll be able to issue REST calls to carry out record creation, retrieval, modification, and deletion tasks. You’ll also be able to perform advanced queries using the REST API, including filters, grouping, joins, limiting, and more. 
 

@@ -1,4 +1,4 @@
-# Chapter 3. Generating a MySQL API
+# Chapter 3. Generating a Database-backed API
 
 ## Supported Databases
 
