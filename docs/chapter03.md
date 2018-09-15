@@ -24,15 +24,15 @@ Best of all, thanks to DreamFactory's unified interface and API generation solut
 
 To generate a MySQL-backed API, login to your DreamFactory instance using an administrator account and click on the Services tab:
 
-![The Services Tab](./images/navbar-services.png)
+![The Services Tab](/images/navbar-services.png)
 
 On the left side of the interface you'll see the `Create` button. Click this button to begin generating an API. You'll be presented with a single dropdown form control titled `Select Service Type`. You'll use this dropdown to both generate new APIs and configure additional authentication options. There's a lot to review in this menu, but for the moment let's stay on track and just navigate to `Databases` and then `MySQL`:
 
-<img src="./images/service-create-mysql.png" width="1000">
+<img src="/images/service-create-mysql.png" width="1000">
 
 After selecting MySQL, you'll be presented with the following form:
 
-<img src="./images/services-overview.png" width="1000">
+<img src="/images/services-overview.png" width="1000">
 
 Let's review these fields:
 
@@ -43,7 +43,7 @@ Let's review these fields:
 
 After completing these fields, click on the `Config` tab located at the top of the interface. You'll be presented with the following form (I'll only present the top of the form since this one is fairly long):
 
-<img src="./images/services-config.png" width="1000">
+<img src="/images/services-config.png" width="1000">
 
 This form might look a bit intimidating at first, however in most cases there are only a few fields you'll need to complete. Let's cover those first, followed by an overview of the optional fields.
 
