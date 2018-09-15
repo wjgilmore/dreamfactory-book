@@ -24,11 +24,15 @@ Best of all, thanks to DreamFactory's unified interface and API generation solut
 
 To generate a MySQL-backed API, login to your DreamFactory instance using an administrator account and click on the Services tab:
 
-HIGHLIGHT NAVBAR SERVICE TAB SCREENSHOT
+![The Services Tab](./images/navbar-services.png)
 
-On the left side of the interface you'll see the `Create` button. Click this button to begin generating an API. You'll be presented with a single dropdown form control titled `TODO`. You'll use this dropdown to both generate new APIs and configure additional authentication options. There's a lot to review in this menu, but for the moment let's stay on track and just navigate to `Databases` and then `MySQL`. You'll be presented with the following form:
+On the left side of the interface you'll see the `Create` button. Click this button to begin generating an API. You'll be presented with a single dropdown form control titled `Select Service Type`. You'll use this dropdown to both generate new APIs and configure additional authentication options. There's a lot to review in this menu, but for the moment let's stay on track and just navigate to `Databases` and then `MySQL`:
 
-INSERT NAME/LABEL/DESC FORM SCREENSHOT
+<img src="./images/service-create-mysql.png" width="1000">
+
+After selecting MySQL, you'll be presented with the following form:
+
+<img src="./images/services-overview.png" width="1000">
 
 Let's review these fields:
 
@@ -39,7 +43,7 @@ Let's review these fields:
 
 After completing these fields, click on the `Config` tab located at the top of the interface. You'll be presented with the following form (I'll only present the top of the form since this one is fairly long):
 
-INSERT TOP OF FORM SCREENSHOT HERE WITH RAGGED/FADED BOTTOM
+<img src="./images/services-config.png" width="1000">
 
 This form might look a bit intimidating at first, however in most cases there are only a few fields you'll need to complete. Let's cover those first, followed by an overview of the optional fields.
 
@@ -83,6 +87,14 @@ Following the required fields you'll find a number of optional parameters. These
 
 After completing the required fields in addition to any desired optional fields, press the `Save` button to generate your API. After a moment you'll see a pop up message indicating `TODO`. Congratulations you've just generated your first database-backed API! So what can you do with this shiny new toy? Read on to learn more.
 
+### A Note About API Capabilities
+
+Most databases employ a user authorization system which gives administrators the ability to determine exactly what a user can do after successfully establishing a connection. In the case of MySQL, *privileges* are used for this purpose. Administrators can grant and revoke user privileges, and in doing so determine what databases a user can connect to, whether the user can create, retrieve, update, and delete records, and whether the user has the ability to manage the schema.
+
+Because DreamFactory connects to your database on behalf of this user, the resulting API is logically constrained by that user's authorized capabilities. DreamFactory will however display a complete set of Swagger documentation regardless, so if you are attempting to interact with the API via the Swagger docs or via any other client and aren't obtaining the desired outcome, be sure to check your database user permissions to confirm the user can indeed carry out the desired task.
+
+Further, keep in mind this can serve as an excellent way to further lock down your API. Although as you'll later learn DreamFactory offers some excellent security-related features for restricting API access, it certainly wouldn't hurt to additionally configure the connecting database user's privileges to reflect the desired API capabilities. For instance, if you intend for the API to be read-only, then create a database user with read-only authorization. If API read and create capabilities are desired, then configure the user accordingly.
+
 ## Interacting with Your API via the API Docs Tab
 
 The `TODO` message which appears following successful generation of a new REST API is rather anticlimactic, because this simple message really doesn't convey exactly how much tedious work DreamFactory has just saved you and your team. Not only did it generate a fully-featured REST API, but also secured it from unauthorized access and additionally generated interactive [Swagger documentation](TODO) for all of your endpoints! If you haven't used Swagger before, you're in for a treat because it's a really amazing tool which allows developers to get familiar with an API without being first required to write any code. Further, each endpoint is documented with details about both the input parameters and response.
@@ -97,7 +109,7 @@ DOCS SCREENSHOT, FADED AT BOTTOM
 
 Scrolling through this list, you can see that quite a few API endpoints have been generated! If you generated an API for a database which supports stored procedures, towards the top you'll find endpoints named `TODO` and `TODO`. Scrolling down, you'll encounter quite a few endpoints used to manage your schema, followed by a set of CRUD (create, retrieve, update, delete) endpoints which are undoubtedly the most commonly used of the bunch. 
 
-### Retrieving Table Records
+### Querying Table Records
 
 Let's test the API by retrieving a set of table records. Select the `GET /_table/{table_name} Retrieve one or more records` entry:
 
@@ -114,20 +126,39 @@ Congratulations! You've just successfully interacted with the database API by wa
 * Does the specified table exist? 
 * If you received a `500` status code, check the service configuration credentials. The `500` code almost certainly means DreamFactory was unable to connect to the database. If everything checks out, make sure you can connect to the database from the DreamFactory instance's IP address via the database port. If you can't then it's probably a firewall issue.
 
+The API Docs interface is fantastically useful for getting familiar with an API, and we encourage you to continue experimenting with the different endpoints to learn more about how it works. However, you'll eventually want to transition from interacting with your APIs via the API Docs interface to doing so using a third-party client, and ultimately by way of your own custom applications. So let's take that next step now, and interact with the new API using a tool located squarely outside of the DreamFactory platform.
+
+## Using an HTTP Client
+
+Whether your API consumer is an iPhone or Android application, a SPA (Single Page Application), or another server altogether, that consumer is often referred to as the *client*. The client issues HTTP requests to the REST API, parsing the responses and reacting accordingly. Although in most cases your team will use libraries such as [Alamofire](https://github.com/Alamofire/Alamofire) or [Axios](https://github.com/axios/axios) to manage these requests, you'll often want to interact with the APIs in a much more fluid manner during the investigatory and learning phase. The API Docs feature serves this need well, however the API Docs interface lacks the ability to bookmark and otherwise persist queries, manage parameters programmatically using variables, and other features useful for maintaining a set of easily accessible configurations.
+
+Fortunately, there are a number of HTTP clients which fill this void very well. Two of the most popular are [Insomnia](TODO) and [Postman](TODO), which are available on OSX and multiple operating systems, respectively. In this section we'll introduce you to both HTTP clients, and as an added bonus talk about the ubiquitous cURL client which is quite possibly the most popular piece of software you've never heard of.
+
+### Insomnia
+
+Insomnia is an
+
+### POSTMan
 
 
-#### Adding a Record Filter
+### cURL
 
 
+cURL is decidedly the antithesis of Insomnia and Postman, 
 
 
-### A Note About API Capabilities
+### Querying by Primary Key
 
-Most databases employ a user authorization system which gives administrators the ability to determine exactly what a user can do after successfully establishing a connection. In the case of MySQL, *privileges* are used for this purpose. Administrators can grant and revoke user privileges, and in doing so determine what databases a user can connect to, whether the user can create, retrieve, update, and delete records, and whether the user has the ability to manage the schema.
+### Adding a Record Filter
 
-Because DreamFactory connects to your database on behalf of this user, the resulting API is logically constrained by that user's authorized capabilities. DreamFactory will however display a complete set of Swagger documentation regardless, so if you are attempting to interact with the API via the Swagger docs or via any other client and aren't obtaining the desired outcome, be sure to check your database user permissions to confirm the user can indeed carry out the desired task.
 
-Further, keep in mind this can serve as an excellent way to further lock down your API. Although as you'll later learn DreamFactory offers some excellent security-related features for restricting API access, it certainly wouldn't hurt to additionally configure the connecting database user's privileges to reflect the desired API capabilities. For instance, if you intend for the API to be read-only, then create a database user with read-only authorization. If API read and create capabilities are desired, then configure the user accordingly.
+### Grouping Records
+
+### Inserting Records
+
+###
+
+
 
 
 
