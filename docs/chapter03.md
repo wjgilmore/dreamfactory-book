@@ -68,20 +68,9 @@ W> so you don't wind up issuing a request that you later come to regret.
 
 ### Optional Configuration Fields
 
-Following the required fields you'll find a number of optional parameters. These can and do vary slightly according to the type of database you've selected, so don't be surprised if you see some variation below. Don't worry about this too much at the moment, because chances are high you're not going to need to modify any of the optional configuration fields at this point in time. However it's nonetheless instructive to at least review their capabilities in case you want to return to them later:
+Following the required fields you'll find a number of optional parameters. These can and do vary slightly according to the type of database you've selected, so don't be surprised if you see some variation below. Don't worry about this too much at the moment, because chances are you're not going to need to modify any of the optional configuration fields at this point in time. However we'd like to identify a few fields which are used more often than others:
 
 * **Schema**:
-* **Character Set**:
-* **Character Set Collation**:
-* **Timezone**:
-* **Session Modes**:
-* **Use Strict Mode**:
-* **Socket Connection**:
-* **Driver Options**:
-* **Driver Attributes**:
-* **Additional SQL Statements**:
-* **Allow Upsert**:
-* **Maximum Records**:
 * **Data Retrieval Caching Enabled**:
 * **Cache Time to Live (minutes)**:
 
@@ -126,28 +115,41 @@ Congratulations! You've just successfully interacted with the database API by wa
 * Does the specified table exist? 
 * If you received a `500` status code, check the service configuration credentials. The `500` code almost certainly means DreamFactory was unable to connect to the database. If everything checks out, make sure you can connect to the database from the DreamFactory instance's IP address via the database port. If you can't then it's probably a firewall issue.
 
-The API Docs interface is fantastically useful for getting familiar with an API, and we encourage you to continue experimenting with the different endpoints to learn more about how it works. However, you'll eventually want to transition from interacting with your APIs via the API Docs interface to doing so using a third-party client, and ultimately by way of your own custom applications. So let's take that next step now, and interact with the new API using a tool located squarely outside of the DreamFactory platform.
+The API Docs interface is fantastically useful for getting familiar with an API, and we encourage you to continue experimenting with the different endpoints to learn more about how it works. However, you'll eventually want to transition from interacting with your APIs via the API Docs interface to doing so using a third-party client, and ultimately by way of your own custom applications. So let's take that next step now, and interact with the new API using an HTTP client. In the last chapter you were introduced to a few such clients. We'll be using Insomnia for the following examples however there will be no material differences between Insomnia, Postman, or any other similar client.
 
-## Using an HTTP Client
+But first we need to create an API key which will be used to exclusively access this database API. This is done by first creating a *role* and then assigning the role to an *application*. Let's take care of this next.
 
-Whether your API consumer is an iPhone or Android application, a SPA (Single Page Application), or another server altogether, that consumer is often referred to as the *client*. The client issues HTTP requests to the REST API, parsing the responses and reacting accordingly. Although in most cases your team will use libraries such as [Alamofire](https://github.com/Alamofire/Alamofire) or [Axios](https://github.com/axios/axios) to manage these requests, you'll often want to interact with the APIs in a much more fluid manner during the investigatory and learning phase. The API Docs feature serves this need well, however the API Docs interface lacks the ability to bookmark and otherwise persist queries, manage parameters programmatically using variables, and other features useful for maintaining a set of easily accessible configurations.
+## Creating a Role
 
-Fortunately, there are a number of HTTP clients which fill this void very well. Two of the most popular are [Insomnia](TODO) and [Postman](TODO), which are available on OSX and multiple operating systems, respectively. In this section we'll introduce you to both HTTP clients, and as an added bonus talk about the ubiquitous cURL client which is quite possibly the most popular piece of software you've never heard of.
+Over time your DreamFactory instance will likely manage multiple APIs. Chances are you're going to want to silo access to these APIs, creating one or several API keys for each. These API keys will be configured to allow access to one or some APIs, but in all likelihood not all of them. To accomplish this, you'll create a *role* which is associated with one or more services, and then assign that role to an *application*. An application is just an easy way to connect an API key to a role.
 
-### Insomnia
+To create a role, click on the `Roles` tab located at the top of the screen:
 
-Insomnia is an
+INSERT ROLES NAV BAR HIGHLIGHT HERE
 
-### POSTMan
+Presuming this is the first time you've created a role, you'll be prompted to create one as depicted in this screenshot:
 
+TODO create-first-role.png
 
-### cURL
+Click the `Create a Role!` button and you'll be prompted to enter a role name and description. Unlike the service name, the role name is only used for human consumption so be sure to name it something descriptive such as `MySQL Role`. Next, click the `Access` tab. Here you'll be prompted to identify the API(s) which should be associated with this service. The default interface looks like that presented in the below screenshot:
 
+TODO roles-service-access-definition-form
 
-cURL is decidedly the antithesis of Insomnia and Postman, 
+The `Service` select box contains all of the APIs you've defined this far, including a few which are automatically included with each DreamFactory instance (`system`, `api_docs`, etc). Select the `mysql` service. Now here's where things get really interesting. After selecting the `mysql` service, click on the `Component` select box. You'll see this select box contains a list of all assets exposed through this API! If you leave the `Component` select box set to `*`, then the role will have access to all of the APIs assets. However, you're free to restrict the role's access to one or several assets by choosing for instance `_table/employees/*`. This would limit this role's access to *just* performing CRUD operations on the `employees` table! If you wanted to add access to another asset, or even to another service, just click the plus sign next to the `Advanced Filters` header, and you'll see 
 
+TODO roles-service-access-definition-form-2.png
+
+## Querying the Database
+
+### Retrieving All Records
+
+Let's recreate the task of retrieving all records within the HTTP client. Open your client and in the address bar set the URL to `/api/v2/{service_name}/{table_name}`, replacing `{service_name}` with the name of your API and `{table_name}` with the name of a table found within the database. For the remainder of this chapter I'll use `mysql` as the service name. Because we're retrieving records the method will be set to `GET`.
+
+Next, we'll need to set the header which
 
 ### Querying by Primary Key
+
+
 
 ### Adding a Record Filter
 
