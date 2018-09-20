@@ -2,11 +2,12 @@
 
 DreamFactory's capabilities are vast, however there is no more popular feature than its ability to generate a database-backed REST API. By embracing this automated approach, development teams can shave weeks if not months off the development cycle, and in doing so greatly reduce the likelihood of bugs or security issues due to mishaps such as SQL injection. This approach doesn't come at the cost of trade offs either, because DreamFactory's database-backed APIs are fully-featured REST interfaces, offering comprehensive CRUD (create, retrieve, update, delete) capabilities, endpoints for executing stored procedures, and even endpoints for managing the schema.
 
-In this chapter you'll learn all about DreamFactory's database support by way of an introduction to the following topics:
+In this chapter you'll learn all about DreamFactory's ability to generate, secure, and deploy a database-backed API in just minutes. You'll learn by doing, following along as we:
 
-* Generating a new database-backed REST API
-* Interacting with the auto-generated Swagger documentation
-* Securing API access to your API using API keys and roles
+* Generate a new database-backed REST API
+* Secure API access to your API using API keys and roles
+* Interact with the auto-generated Swagger documentation
+* Query the API using a third-party HTTP client
 
 We chose MySQL as the basis for examples found throughout the chapter, because it is free, ubiquitously available on hosting providers and cloud environments, and can otherwise be easily installed on all operating systems. Therefore to follow along with this chapter you'll need: 
 
@@ -16,7 +17,18 @@ We chose MySQL as the basis for examples found throughout the chapter, because i
 
 Before we begin, keep in mind MySQL is just one of DreamFactory supported 18 databases. The following table presents a complete list of what's supported:
 
-TABLE HERE
+| Databases           | SQL and No SQL
+| --------------------|------------------|
+| AWS DynamoDB        | IBM Informix     |
+| AWS Redshift        | MongoDB          |
+| Azure DocumentDB    | MySQL            |
+| Azure Table Storage | Oracle           |
+| Cassandra           | PostgreSQL       |
+| Couchbase           | Salesforce       |
+| CouchDB             | SAP SQL Anywhere | 
+| Firebird            | SQLite           |
+| IBM Db2             | SQL Server       |
+
 
 Best of all, thanks to DreamFactory's unified interface and API generation solution, everything you learn in this chapter applies identically to your chosen database! So if you already plan on using another database, then by all means feel free to follow along using it instead!
 
@@ -24,15 +36,15 @@ Best of all, thanks to DreamFactory's unified interface and API generation solut
 
 To generate a MySQL-backed API, login to your DreamFactory instance using an administrator account and click on the Services tab:
 
-![The Services Tab](/images/navbar-services.png)
+<img src="./images/03/navbar-services.png" width="800">
 
 On the left side of the interface you'll see the `Create` button. Click this button to begin generating an API. You'll be presented with a single dropdown form control titled `Select Service Type`. You'll use this dropdown to both generate new APIs and configure additional authentication options. There's a lot to review in this menu, but for the moment let's stay on track and just navigate to `Databases` and then `MySQL`:
 
-<img src="/images/service-create-mysql.png" width="1000">
+<img src="./images/03/service-create-mysql.png" width="500">
 
 After selecting MySQL, you'll be presented with the following form:
 
-<img src="/images/services-overview.png" width="1000">
+<img src="./images/03/services-overview.png" width="500">
 
 Let's review these fields:
 
@@ -43,38 +55,34 @@ Let's review these fields:
 
 After completing these fields, click on the `Config` tab located at the top of the interface. You'll be presented with the following form (I'll only present the top of the form since this one is fairly long):
 
-<img src="/images/services-config.png" width="1000">
+<img src="./images/03/services-config.png" width="500">
 
 This form might look a bit intimidating at first, however in most cases there are only a few fields you'll need to complete. Let's cover those first, followed by an overview of the optional fields.
 
 ### Required Configuration Fields
 
+There are only five (sometimes six) fields which need to be completed in order to generate a database-backed API. These include:
 
+* **Host**: The database server's host address. This may be an IP address or domain name.
+* **Port Number**: The database server's port number. For instance on MySQL this is 3306.
+* **Database**: The name of the database you'd like to expose via the API.
+* **Username**: The username associated with the database user account used to connect to the database.
+* **Password**: The password associated with the database user account used to connect to the database.
+* **Schema**: If your database supports the concept of a schema, you may specify it here. MySQL doesn't support the concept of a schema, but many other databases do.
 
-* **Host**: 
-* **Port Number**:
-* **Database**:
-* **Username**:
-* **Password**
-
-
-W> Keep in mind you'll be generating an API which can in 
-W> fact interact with the underlying database! While perhaps 
-W> obvious, once you generate this API it means any data or 
-W> schema manipulation requests you subsequently issue will 
-W> in fact affect your database. Therefore be sure to connect 
-W> to a test database when first experimenting with DreamFactory 
-W> so you don't wind up issuing a request that you later come to regret.
+::: warning
+Keep in mind you'll be generating an API which can in fact interact with the underlying database! While perhaps obvious, once you generate this API it means any data or schema manipulation requests you subsequently issue will in fact affect your database. Therefore be sure to connect to a test database when first experimenting with DreamFactory so you don't wind up issuing a request that you later come to regret.
+:::
 
 ### Optional Configuration Fields
 
 Following the required fields you'll find a number of optional parameters. These can and do vary slightly according to the type of database you've selected, so don't be surprised if you see some variation below. Don't worry about this too much at the moment, because chances are you're not going to need to modify any of the optional configuration fields at this point in time. However we'd like to identify a few fields which are used more often than others:
 
-* **Schema**:
-* **Data Retrieval Caching Enabled**:
-* **Cache Time to Live (minutes)**:
+* **Maximum Records**: You can use this field to place an upper limit on the number of records returned.
+* **Data Retrieval Caching Enabled**: Enabling caching will dramatically improve performance. This field is used in conjunction with `Cache Time to Live`, introduced next.
+* **Cache Time to Live (minutes)**: If data caching is enabled, you can use this field to specify the cache lifetime in minutes.
 
-After completing the required fields in addition to any desired optional fields, press the `Save` button to generate your API. After a moment you'll see a pop up message indicating `TODO`. Congratulations you've just generated your first database-backed API! So what can you do with this shiny new toy? Read on to learn more.
+After completing the required fields in addition to any desired optional fields, press the `Save` button to generate your API. After a moment you'll see a pop up message indicating `Service Saved Successfully`. Congratulations you've just generated your first database-backed API! So what can you do with this cool new toy? Read on to learn more.
 
 ### A Note About API Capabilities
 
@@ -86,29 +94,29 @@ Further, keep in mind this can serve as an excellent way to further lock down yo
 
 ## Interacting with Your API via the API Docs Tab
 
-The `TODO` message which appears following successful generation of a new REST API is rather anticlimactic, because this simple message really doesn't convey exactly how much tedious work DreamFactory has just saved you and your team. Not only did it generate a fully-featured REST API, but also secured it from unauthorized access and additionally generated interactive [Swagger documentation](TODO) for all of your endpoints! If you haven't used Swagger before, you're in for a treat because it's a really amazing tool which allows developers to get familiar with an API without being first required to write any code. Further, each endpoint is documented with details about both the input parameters and response.
+The `Service Saved Successfully` message which appears following successful generation of a new REST API is rather anticlimactic, because this simple message really doesn't convey exactly how much tedious work DreamFactory has just saved you and your team. Not only did it generate a fully-featured REST API, but also secured it from unauthorized access and additionally generated interactive [Swagger documentation](TODO) for all of your endpoints! If you haven't used Swagger before, you're in for a treat because it's a really amazing tool which allows developers to get familiar with an API without being first required to write any code. Further, each endpoint is documented with details about both the input parameters and response.
 
 To access your new API's documentation, click on the `API Docs` tab located at the top of the screen:
 
-INSERT API DOCS NAV BAR HIGHLIGHT HERE
+<img src="./images/03/navbar-apidocs.png" width="800">
 
 You'll be presented with a list of all documentation associated with your DreamFactory instance. The `db`, `email`, `files`, `logs`, `system`, and `user` documentation are automatically included with all DreamFactory instances, and can be very useful should you eventually desire to programmatically manage your instance. Let's just ignore those for now and focus on the newly generated database documentation. Click on the table row associated with this service to access the documentation. You'll be presented with a screen that looks like this:
 
-DOCS SCREENSHOT, FADED AT BOTTOM
+<img src="./images/03/apidocs-mysql.png" width="800">
 
-Scrolling through this list, you can see that quite a few API endpoints have been generated! If you generated an API for a database which supports stored procedures, towards the top you'll find endpoints named `TODO` and `TODO`. Scrolling down, you'll encounter quite a few endpoints used to manage your schema, followed by a set of CRUD (create, retrieve, update, delete) endpoints which are undoubtedly the most commonly used of the bunch. 
+Scrolling through this list, you can see that quite a few API endpoints have been generated! If you generated an API for a database which supports stored procedures, towards the top you'll find endpoints named `GET /_proc/{procedure_name}` and `POST /_proc/{procedure_name}`. Scrolling down, you'll encounter quite a few endpoints used to manage your schema, followed by a set of CRUD (create, retrieve, update, delete) endpoints which are undoubtedly the most commonly used of the bunch. 
 
 ### Querying Table Records
 
 Let's test the API by retrieving a set of table records. Select the `GET /_table/{table_name} Retrieve one or more records` entry:
 
-ENDPOINT LINE ITEM SCREENSHOT
+<img src="./images/03/apidocs-mysql-getrecords.png" width="800">
 
 A slideout window will open containing two sections. The first, `Parameters`, identifies the supported request parameters. The second, `Responses`, indicates what you can expect to receive by way of a response, including the status code and a JSON response template. In the case of the `GET _/table/{table_name}` endpoint, you have quite a few parameters at your disposal, because this endpoint represents the primary way in which table data is queried. By manipulating these parameters you'll be able to query for all records, or a specific record according to its primary key, or a subset of records according to a particular condition. Further, you can use these parameters to perform other commonplace tasks such as grouping and counting records, and joining tables.
 
 To test the endpoint, click the `Try it out` button located on the right. When you do, the input parameter fields will be enabled, allowing you to enter values to modify the default query's behavior. For the moment we're going to modify just one parameter: `table_name`. It's located at the very bottom of the parameter list. Enter the name of a table you know exists in the database, and press the blue `Execute` button. Below the button you'll see a "Loading" icon, and soon thereafter a list of records found in the designated table will be presented in JSON format. Here's an example of what I see when running this endpoint against our test MySQL database:
 
-MYSQL DB TABLE RECORD OUTPUT
+<img src="./images/03/apidocs-mysql-getrecords-output.png" width="800">
 
 Congratulations! You've just successfully interacted with the database API by way of the Swagger documentation. If you don't see a list of records, be sure to confirm the following:
 
@@ -125,21 +133,45 @@ Over time your DreamFactory instance will likely manage multiple APIs. Chances a
 
 To create a role, click on the `Roles` tab located at the top of the screen:
 
-INSERT ROLES NAV BAR HIGHLIGHT HERE
+<img src="./images/03/navbar-roles.png" width="800">
 
 Presuming this is the first time you've created a role, you'll be prompted to create one as depicted in this screenshot:
 
-TODO create-first-role.png
+<img src="./images/03/create-first-role.png" width="400">
 
 Click the `Create a Role!` button and you'll be prompted to enter a role name and description. Unlike the service name, the role name is only used for human consumption so be sure to name it something descriptive such as `MySQL Role`. Next, click the `Access` tab. Here you'll be prompted to identify the API(s) which should be associated with this service. The default interface looks like that presented in the below screenshot:
 
-TODO roles-service-access-definition-form
+<img src="./images/03/roles-service-access-definition-form.png" width="800">
 
-The `Service` select box contains all of the APIs you've defined this far, including a few which are automatically included with each DreamFactory instance (`system`, `api_docs`, etc). Select the `mysql` service. Now here's where things get really interesting. After selecting the `mysql` service, click on the `Component` select box. You'll see this select box contains a list of all assets exposed through this API! If you leave the `Component` select box set to `*`, then the role will have access to all of the APIs assets. However, you're free to restrict the role's access to one or several assets by choosing for instance `_table/employees/*`. This would limit this role's access to *just* performing CRUD operations on the `employees` table! If you wanted to add access to another asset, or even to another service, just click the plus sign next to the `Advanced Filters` header, and you'll see an additional row added to the interface:
+The `Service` select box contains all of the APIs you've defined this far, including a few which are automatically included with each DreamFactory instance (`system`, `api_docs`, etc). Select the `mysql` service. Now here's where things get really interesting. After selecting the `mysql` service, click on the `Component` select box. You'll see this select box contains a list of all assets exposed through this API! If you leave the `Component` select box set to `*`, then the role will have access to all of the APIs assets. However, you're free to restrict the role's access to one or several assets by choosing for instance `_table/employees/*`. This would limit this role's access to *just* performing CRUD operations on the `employees` table! Further, using the `Access` select box, you can restrict which methods can be used by the role, selecting only `GET`, only `POST`, or any combination thereof.
 
-TODO roles-service-access-definition-form-2.png
+If you wanted to add access to another asset, or even to another service, just click the plus sign next to the `Advanced Filters` header, and you'll see an additional row added to the interface:
 
-Use the new row to assign another service and/or already assigned service component to the role.
+<img src="./images/03/roles-service-access-definition-form-2.png" width="800">
+
+Use the new row to assign another service and/or already assigned service component to the role. In the screenshot you can see the role has been granted complete access to the `mysql` service's `employees` table, and read-only access to the `departments` table.
+
+Once you are satisfied with the role's configuration, press the `Save` button to create the role. With that done, it's time to create a new application which will be assigned an API key and attached to this role.
+
+## Creating an Application
+
+Next let's create an application, done by clicking on the `Apps` tab located at the top of the interface:
+
+<img src="./images/03/navbar-apps.png" width="800">
+
+Click the `Create` tab to create a new application. You'll be presented with the following form:
+
+<img src="./images/03/app-create.png" width="800">
+
+Let's walk through each form field:
+
+* **Application Name** and **Description**: The application name and description are used purely for human consumption, so feel free to complete these as you see fit.
+* **Active**: This checkbox can be used to toggle availability of the API key, which will be generated and presented to you when the application is saved.
+* **App Location**: This field presents four options for specifying the application's location. The overwhelming majority of users will choose `No Storage Required` because the API key will be used in conjunction with a mobile or web application, or via a server-side script.
+* **Assign a Default Role Filter**: Some of our customers manage dozens and even hundreds of role within their DreamFactory environment! To help them quickly find a particular role we added this real-time filtering feature which will adjust what's displayed in the `Assign a Default Role` select box. You can leave this blank for now.
+* **Assign a Default Role**: It is here where you'll assign the newly created role to your application. Click on this select box and choose the role.
+
+Click the `Save` button and the new API key will be generated. Click the clipboard icon next to your new API key to select the key, and then copy it to your clipboard, because in the next section we'll use it to interact with the API.
 
 ## Querying the Database
 
