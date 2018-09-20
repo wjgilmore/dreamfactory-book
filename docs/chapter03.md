@@ -135,9 +135,11 @@ Click the `Create a Role!` button and you'll be prompted to enter a role name an
 
 TODO roles-service-access-definition-form
 
-The `Service` select box contains all of the APIs you've defined this far, including a few which are automatically included with each DreamFactory instance (`system`, `api_docs`, etc). Select the `mysql` service. Now here's where things get really interesting. After selecting the `mysql` service, click on the `Component` select box. You'll see this select box contains a list of all assets exposed through this API! If you leave the `Component` select box set to `*`, then the role will have access to all of the APIs assets. However, you're free to restrict the role's access to one or several assets by choosing for instance `_table/employees/*`. This would limit this role's access to *just* performing CRUD operations on the `employees` table! If you wanted to add access to another asset, or even to another service, just click the plus sign next to the `Advanced Filters` header, and you'll see 
+The `Service` select box contains all of the APIs you've defined this far, including a few which are automatically included with each DreamFactory instance (`system`, `api_docs`, etc). Select the `mysql` service. Now here's where things get really interesting. After selecting the `mysql` service, click on the `Component` select box. You'll see this select box contains a list of all assets exposed through this API! If you leave the `Component` select box set to `*`, then the role will have access to all of the APIs assets. However, you're free to restrict the role's access to one or several assets by choosing for instance `_table/employees/*`. This would limit this role's access to *just* performing CRUD operations on the `employees` table! If you wanted to add access to another asset, or even to another service, just click the plus sign next to the `Advanced Filters` header, and you'll see an additional row added to the interface:
 
 TODO roles-service-access-definition-form-2.png
+
+Use the new row to assign another service and/or already assigned service component to the role.
 
 ## Querying the Database
 
@@ -148,6 +150,7 @@ Let's recreate the task of retrieving all records within the HTTP client. Open y
 Next, we'll need to set the header which
 
 ### Querying by Primary Key
+
 
 
 
