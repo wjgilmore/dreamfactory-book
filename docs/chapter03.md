@@ -9,7 +9,7 @@ In this chapter you'll learn all about DreamFactory's ability to generate, secur
 * Interact with the auto-generated Swagger documentation
 * Query the API using a third-party HTTP client
 
-We chose MySQL as the basis for examples found throughout the chapter, because it is free, ubiquitously available on hosting providers and cloud environments, and can otherwise be easily installed on all operating systems. Therefore to follow along with this chapter you'll need: 
+We chose MySQL as the basis for examples throughout the chapter, because it is free, ubiquitously available on hosting providers and cloud environments, and can otherwise be easily installed on all operating systems. Therefore to follow along with this chapter you'll need: 
 
 * Access to a DreamFactory instance and a MySQL database. 
 * If your MySQL database is running somewhere other than your laptop, you'll need to make sure your firewall is configured to allow traffic between port 3306 and the location where your DreamFactory instance is running.
