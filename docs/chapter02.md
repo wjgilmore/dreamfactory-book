@@ -6,11 +6,9 @@ GitHub
 Docker
 Bitnami
 
-## Configuring Your Instance
+## Installing DreamFactory via GitHub
 
     $ df:env
-
-### Choosing a System Database
 
     $ df:setup
 
