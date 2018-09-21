@@ -265,24 +265,75 @@ The equivalent SQL query looks like this:
 
 ### Querying by Primary Key
 
-TODO
+You'll often want to select a specific record using a column that uniquely defines it. Often (but not always) this unique value is the *primary key*. You can retrieve a record using its primary key by appending the value to the URL like so:
 
-### Grouping Records
+	http://localhost/api/v2/_table/supplies/45
 
-TODO
+The equivalent SQL query looks like this:
+
+    SELECT * FROM supplies where id = 5;
+
+### Joining Tables
+
+One of DreamFactory's most interesting database-related features is the automatic support for table joins. When DreamFactory creates a database-backed API, it parses all of the database tables, learning everything it can about the tables, including the column names, attributes, and relationships. The relationships are assigned aliases, and presented for referential purposes within DreamFactory's `Schema` tab. For instance, the following screenshot contains the list of relationship aliases associated with the `employees` table:
+
+<img src="/images/03/schema-relationships.png" width="800">
+
+Using these aliases along with the `related` parameter we can easily return sets of joined records via the API. For instance, the following URI would be used to join the `employees` and `departments` tables together:
+
+	/api/v2/mysql/_table/employees?related=dept_emp_by_emp_no
+
+The equivalent SQL query looks like this:
+
+	SELECT * FROM employees 
+	  LEFT JOIN departments on employees.emp_no = departments.emp_no;
+
+The joined results will be presented within a JSON array having a name matching that of the alias:
+
+	{
+	    "emp_no": 10001,
+	    "birth_date": "1953-09-02",
+	    "first_name": "Georgi",
+	    "last_name": "Facello",
+	    "gender": "M",
+	    "hire_date": "1986-06-26",
+	    "birth_year": "1953",
+	    "dept_emp_by_emp_no": [
+	        {
+	            "emp_no": 10001,
+	            "dept_no": "d005",
+	            "from_date": "1986-06-26",
+	            "to_date": "9999-01-01"
+	        }
+	    ]
+	}
+
 
 ### Inserting Records
 
-TODO
+To insert a record, you'll send a `POST` request to the API, passing along a JSON-formatted payload. For instance, to add a new record to the `supplies` table, we'd send a `POST` request to the following URI:
 
-	{
-		"resource": [
-			{
-				"dept_no": "d015",
-				"dept_name": "Fruit Department"
-			}
-		]
-	}
+	/api/v2/mysql/_table/supplies
+
+The body payload would look like this:
+
+    {
+        "resource": [
+            {
+                "name": "Stapler"
+            }
+        ]
+    }
+
+If the request is successful, DreamFactory will return a `200` status code and a response containing the record's primary key:
+
+    {
+        "resource": [
+          {
+            "id": 9
+          }
+        ]
+    }
 
 #### Adding Records to Multiple Tables
 
@@ -339,7 +390,33 @@ TODO
 
 ### Deleting Records
 
-TODO
+To delete a record, you'll send a `DELETE` request to the table endpoint associated with the record you'd like to delete. For instance, to delete a record from the `employees` table you'll reference this URL:
+
+    /api/v2/mysql/_table/employees
+
+The record's primary key should be passed along within the JSON-formatted body like so:
+
+    {
+     "resource": [
+       {
+         "emp_no": 500016
+       }
+     ]
+    }
+
+If deletion is successful, DreamFactory will return a 200 status code with a response body containing the deleted record's primary key:
+
+    {
+        "resource": [
+            {
+                "emp_no": 500016
+            }
+        ]
+    }
+
+The equivalent SQL query looks like this:
+
+    DELETE FROM employees WHERE emp_no = 500016;
 
 ## Conclusion
 
