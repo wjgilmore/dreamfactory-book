@@ -4,7 +4,7 @@ Welcome to the DreamFactory platform! Whether you’re an open source user, or a
 
 ## About this Guide
 
-This guide consists of seven chapters, covering the following topics:
+This guide consists of eight chapters, covering the following topics:
 
 ### Chapter 1. Introducing DreamFactory
 
@@ -30,9 +30,9 @@ The SOAP Protocol has long been instrumental to network-based data exchange, how
 
 The DreamFactory team regularly works with customers around the globe to build highly customized services based atop our platform. Most often this involves using DreamFactory’s scripting feature, which allows you to write custom code used to validating input parameters, call other APIs, and much, much more.
 
-### Chapter 7. Creating an API Mashup Using MySQL, Raspberry Pi and Twitter
+### Chapter 7. Monetizing Your APIs using Limiting and Logging
 
-Sometimes your API-related needs will be more sophisticated than what’s available by way of third-party canned solutions. In this chapter you’ll learn how to use DreamFactory’s scripting capabilities to merge multiple APIs together.
+You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
 ### Chapter 8. Troubleshooting Your APIs
 
