@@ -94,7 +94,7 @@ Further, keep in mind this can serve as an excellent way to further lock down yo
 
 ## Interacting with Your API via the API Docs Tab
 
-The `Service Saved Successfully` message which appears following successful generation of a new REST API is rather anticlimactic, because this simple message really doesn't convey exactly how much tedious work DreamFactory has just saved you and your team. Not only did it generate a fully-featured REST API, but also secured it from unauthorized access and additionally generated interactive [Swagger documentation](TODO) for all of your endpoints! If you haven't used Swagger before, you're in for a treat because it's a really amazing tool which allows developers to get familiar with an API without being first required to write any code. Further, each endpoint is documented with details about both the input parameters and response.
+The `Service Saved Successfully` message which appears following successful generation of a new REST API is rather anticlimactic, because this simple message really doesn't convey exactly how much tedious work DreamFactory has just saved you and your team. Not only did it generate a fully-featured REST API, but also secured it from unauthorized access and additionally generated interactive [OpenAPI documentation](https://swagger.io/) for all of your endpoints! If you haven't used Swagger before, you're in for a treat because it's a really amazing tool which allows developers to get familiar with an API without being first required to write any code. Further, each endpoint is documented with details about both the input parameters and response.
 
 To access your new API's documentation, click on the `API Docs` tab located at the top of the screen:
 
@@ -291,21 +291,21 @@ The equivalent SQL query looks like this:
 The joined results will be presented within a JSON array having a name matching that of the alias:
 
 	{
-	    "emp_no": 10001,
-	    "birth_date": "1953-09-02",
-	    "first_name": "Georgi",
-	    "last_name": "Facello",
-	    "gender": "M",
-	    "hire_date": "1986-06-26",
-	    "birth_year": "1953",
-	    "dept_emp_by_emp_no": [
-	        {
-	            "emp_no": 10001,
-	            "dept_no": "d005",
-	            "from_date": "1986-06-26",
-	            "to_date": "9999-01-01"
-	        }
-	    ]
+		"emp_no": 10001,
+		"birth_date": "1953-09-02",
+		"first_name": "Georgi",
+		"last_name": "Facello",
+		"gender": "M",
+		"hire_date": "1986-06-26",
+		"birth_year": "1953",
+		"dept_emp_by_emp_no": [
+			{
+				"emp_no": 10001,
+				"dept_no": "d005",
+				"from_date": "1986-06-26",
+				"to_date": "9999-01-01"
+			}
+		]
 	}
 
 
@@ -337,7 +337,20 @@ If the request is successful, DreamFactory will return a `200` status code and a
 
 #### Adding Records to Multiple Tables
 
-TODO
+It's often the case that you'll want to create a new record and associate it with another table. Believe it or not this is possible via a single HTTP request. Consider the following two tables. The first, `supplies`, manages a list of company supplies (staplers, brooms, etc). The company requires that all supply whereabouts be closely tracked in the corporate database, and so another table, `locations`, was created for this purpose. Each record in the `locations` table includes a location name and foreign key reference to a record found in the `supplies` table. 
+
+::: note
+We know in the real world the location names would be managed in a separate table and then a join table 
+would relate locations and supplies together; just trying to keep things simple for the purposes of demonstration.
+:::
+
+The table schemas look like this:
+
+    CREATE TABLE `supplies` (
+	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	  `name` varchar(255) DEFAULT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 	CREATE TABLE `locations` (
 	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -348,45 +361,102 @@ TODO
 	  CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`supply_id`) REFERENCES `supplies` (`id`)
 	) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+Remember from the last example that DreamFactory will create convenient join aliases which can be used in conjunction with the `related` parameter. In this case, that alias would be `locations_by_supply_id`. To create the relationship alongside the new `supplies` record, we'll use that alias to nest the location name within the payload, as demonstrated here:
 
-	CREATE TABLE `supplies` (
-	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	  `name` varchar(255) DEFAULT NULL,
-	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
-Call /api/v2/mysql/_table/supplies
-
-	{
-	    "resource": [
-	        {
-	            "name": "Broom",
-	            "locations_by_supply_id": [
-	                {    
-	                    "name": "Broom Closet"
-	                }
-	            ]
-	        }
-	    ]
-	}
-
-Response
 
 	{
 		"resource": [
 			{
-				"id": 1
+				"name": "Broom",
+				"locations_by_supply_id": [
+					{    
+						"name": "Broom Closet"
+					}
+				]
+			}
+		]
+	}
+
+With the payload sorted out, all that remains is to make a request to the `supplies` table endpoint:
+
+    /api/v2/mysql/_table/supplies
+
+If the nested insert is successful, you'll receive a `200` status code in return along with the primary key ID of the newly inserted `supplies` record:
+
+	{
+		"resource": [
+			{
+				"id": 15
 			}
 		]
 	}
 
 ### Updating Records
 
-TODO
+Updating database records is a straightforward matter in DreamFactory. However to do so you'll first need to determine which type of REST update you'd like to perform. Two are supported:
 
-#### PUT
+* **PUT**: The `PUT` request replaces an existing resource in its entirety. This means you need to pass along *all* of the resource attributes regardless of whether the attribute value is actually being modified.
+* **PATCH**: The `PATCH` request updates only part of the existing resource, meaning you only need to supply the resource primary key and the attributes you'd like to update. This is typically a much more convenient update approach than `PUT`, although to be sure both have their advantages.
 
-#### PATCH
+Let's work through update examples involving each method.
+
+#### Updating Records with PUT
+
+When updating records with `PUT` you'll need to send along *all* of the record attributes within the request payload:
+
+	{
+		"resource": [
+			{
+				"emp_no": 500015,
+				"birth_date": "1900-12-15",
+				"first_name": "Johnny",
+				"last_name": "Football",
+				"gender": "m",
+				"hire_date": "2007-01-01"
+			}
+		]
+	}
+
+With the payload in place, you'll send a `PUT` request to the `employees` table endpoint:
+
+    /api/v2/mysql/_table/employees
+
+If successful, DreamFactory will return a `200` status code and a response body containing the primary key of the updated record:
+
+	{
+		"resource": [
+			{
+				"emp_no": 500015
+			}
+		]
+	}
+
+The equivalent SQL query looks like this:
+
+   UPDATE supplies SET first_name = 'Johnny', last_name = 'Football', 
+     birthdate = '1900-12-15', gender = 'm', hire_date = '2007-01-01' WHERE emp_no = 500015;
+
+#### Updating Records with PATCH
+
+To update one or more (but not all) attributes associated with a particular record found in the `supplies` table, you'll send a `PATCH` request to the `supplies` table endpoint, accompanied by the primary key:
+
+    /api/v2/mysql/_table/supplies/8
+
+Suppose the `supplies` table includes attributes such as `name`, `description`, and `purchase_date`, but we only want to modify the `name` value. The JSON request body would look like this:
+
+    {
+      "name": "Silver Stapler"
+    }
+
+If successful, DreamFactory will return a `200` status code and a response body containing the primary key of the updated record:
+
+    {
+      "id": 8
+    }
+
+The equivalent SQL query looks like this:
+
+   UPDATE supplies SET name = 'Silver Stapler' WHERE id = 8; 
 
 ### Deleting Records
 

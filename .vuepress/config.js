@@ -5,7 +5,8 @@ module.exports = {
   	displayAllHeaders: true,
   	nav: [
       { text: 'Home', link: '/' },
-      { text: 'Contact', link: '/contact' }
+      { text: 'Contact', link: 'https://www.dreamfactory.com/contact' },
+      { text: 'Sales', link: 'https://www.dreamfactory.com/contact' }
     ]
   }
 }
