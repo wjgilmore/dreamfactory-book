@@ -173,35 +173,107 @@ Let's walk through each form field:
 
 Click the `Save` button and the new API key will be generated. Click the clipboard icon next to your new API key to select the key, and then copy it to your clipboard, because in the next section we'll use it to interact with the API.
 
-## Querying the Database
+## Interacting with the API
+
+We'll conclude this chapter with a series of examples intended to help you become familiar with the many ways in which you can interact with a database-backed API. For these examples we'll be using the Insomnia HTTP client (introduced in chapter 2) however you can use any similar client or even cURL to achieve the same results.
 
 ### Retrieving All Records
 
-Let's recreate the task of retrieving all records within the HTTP client. Open your client and in the address bar set the URL to `/api/v2/{service_name}/{table_name}`, replacing `{service_name}` with the name of your API and `{table_name}` with the name of a table found within the database. For the remainder of this chapter I'll use `mysql` as the service name. Because we're retrieving records the method will be set to `GET`.
+Let's begin by retrieving all of a particular table's records just as was done within the API Docs example. Open your client and in the address bar set the URL to `/api/v2/{service_name}/{table_name}`, replacing `{service_name}` with the name of your API and `{table_name}` with the name of a table found within the database (and to which your API key's associated role has access). For the remainder of this chapter we'll use `mysql` as the service nam, and in this particular example the table we're querying is called `employees` so the URL will look like this:
 
-Next, we'll need to set the header which
+    http://localhost/api/v2/_table/employees
+
+Also, because we're retrieving records the method will be set to `GET`. 
+
+Next, we'll need to set the header which defines the API key. This header should be named `X-DreamFactory-Api-Key`. You might have to hunt around for a moment within your HTTP client to figure out where this is placed, but we promise it is definitely there. In the case of Insomnia the header is added via a tab found directly below the address bar:
+
+<img src="./images/03/insomnia-api-key.png" width="800">
+
+With the URL and header in place, request the URL and you should see the table records returned in JSON format:
+
+<img src="./images/03/insomnia-all-records.png" width="400">
+
+The equivalent SQL query would look like this:
+
+    SELECT * FROM employees;
+
+### Limiting Results
+
+The previous example returns all records found in the `employees` table. But what if you only wanted to return five or 10 records? You can use the `limit` parameter to do so. Modify your URL to look like this:
+
+    http://localhost/api/v2/_table/employees?limit=10
+
+The equivalent SQL query would look like this:
+
+    SELECT * FROM employees LIMIT 10;
+
+### Ordering Results
+
+You can order results by any column using the `order` parameter. For instance to order the `employees` tab by the `emp_no` field, modify your URL to look like this:
+
+    http://localhost/api/v2/_table/employees?order=emp_no
+
+The equivalent SQL query looks like this:
+
+    SELECT * FROM employees ORDER BY emp_no;
+
+To order in descending fashion, just append `desc` to the `order` string:
+
+	http://localhost/api/v2/_table/employees?order=emp_no%20desc
+
+Note the space separating `emp_no` and `desc` has been HTML encoded. Most programming languages offer HTML encoding capabilities either natively or through a third-party library so there's no need for you to do this manually within your applications. The equivalent SQL query looks like this:
+
+    SELECT * FROM employees ORDER BY emp_no DESC;
+
+### Selecting Specific Fields
+
+It's often the case that you'll only require a few of the fields found in a table. To limit the fields returned, use the `fields` parameter:
+
+	http://localhost/api/v2/_table/employees?fields=emp_no%2Clast_name
+
+The equivalent SQL query looks like this:
+
+    SELECT emp_no, last_name FROM employees;
+
+### Filtering Records by Condition
+
+You can filter records by a particular condition using the `filter` parameter. For instance to return only those records having a `gender` equal to `M`, set the `filter` parameter like so:
+
+	http://localhost/api/v2/_table/employees?filter=(gender=M)
+
+The equivalent SQL query looks like this:
+
+    SELECT * FROM employees where gender='M';
+
+You're free to use any of the typical comparison operators, such as `LIKE`:
+
+    http://localhost/api/v2/_table/employees?filter=(last_name%20like%20G%25)
+
+The equivalent SQL query looks like this:
+
+    SELECT * FROM employees where last_name LIKE 'G%';
+
+### Combining Parameters
+
+The REST API's capabilities really begin to shine when combining multiple parameters together. For example, let's query the `employees` table to retrieve only those records having a `last_name` beginning with `G`, ordering the results by `emp_no`:
+
+    http://localhost/api/v2/_table/employees?filter=(last_name%20like%20G%25)&order=emp_no
+
+The equivalent SQL query looks like this:
+
+    SELECT * FROM employees where last_name LIKE 'G%' ORDER BY emp_no;
 
 ### Querying by Primary Key
 
-
-
-
-### Adding a Record Filter
-
+TODO
 
 ### Grouping Records
 
+TODO
+
 ### Inserting Records
 
-###
-
-
-
-
-
-
-
-### Creating a New Record
+TODO
 
 	{
 		"resource": [
@@ -213,6 +285,8 @@ Next, we'll need to set the header which
 	}
 
 #### Adding Records to Multiple Tables
+
+TODO
 
 	CREATE TABLE `locations` (
 	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -255,15 +329,17 @@ Response
 		]
 	}
 
-
-
 ### Updating Records
+
+TODO
 
 #### PUT
 
 #### PATCH
 
 ### Deleting Records
+
+TODO
 
 ## Conclusion
 
