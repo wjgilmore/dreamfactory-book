@@ -6,7 +6,7 @@ Welcome to the DreamFactory platform! Whether you’re an open source user, or a
 
 This guide consists of eight chapters, covering the following topics:
 
-### Chapter 1. Introducing DreamFactory
+### [Chapter 1. Introducing REST and DreamFactory](docs/chapter01.md)
 
 So why would you want to use the DreamFactory platform in the first place? It’s likely because even world class developers and administrators are faced with ever-increasing complexity due in large part to the extraordinary number of internal and third-party data sources which must be integrated with mobile and web applications, ERP solutions, and myriad other services. In this chapter you’ll learn how DreamFactory can bring order to this chaos by introducing silo breaking capabilities to your enterprise, offering a platform for which not only can you auto-generate the APIs used to connect to these data sources, but also secure and monitor them. 
 
