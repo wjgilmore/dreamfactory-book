@@ -2,9 +2,13 @@
 
 Welcome to the DreamFactory platform! Whether you’re an open source user, or a paid customer taking advantage of DreamFactory’s advanced capabilities, we wrote this guide to help you begin incorporating the platform into your organization in the most efficient way possible.
 
+::: warning
+This guide is under heavy development, with two of a projected seven chapters complete as of September 25. We estimate a new chapter will be completed every few days, so be sure to check back regularly for updates!
+:::
+
 ## About this Guide
 
-This guide consists of eight chapters, covering the following topics:
+This guide consists of seven chapters, covering the following topics:
 
 ### [Chapter 1. Introducing REST and DreamFactory](docs/chapter01.md)
 
@@ -33,10 +37,6 @@ The DreamFactory team regularly works with customers around the globe to build h
 ### Chapter 7. Monetizing Your APIs using Limiting and Logging
 
 You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
-
-### Chapter 8. Troubleshooting Your APIs
-
-Rest assured the DreamFactory platform is going to do an amazing job at generating your API. We can also guarantee you’ll soon thereafter curse DreamFactory when attempting to query that API. Chances are these initial challenges can be easily overcome using our troubleshooting guide in conjunction with a popular HTTP client. If not, in this chapter we’ll outline ways in which you can contribute to DreamFactory and help us improve the platform!
 
 ## Contact us
 
