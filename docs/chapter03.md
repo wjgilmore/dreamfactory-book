@@ -462,17 +462,7 @@ The equivalent SQL query looks like this:
 
 To delete a record, you'll send a `DELETE` request to the table endpoint associated with the record you'd like to delete. For instance, to delete a record from the `employees` table you'll reference this URL:
 
-    /api/v2/mysql/_table/employees
-
-The record's primary key should be passed along within the JSON-formatted body like so:
-
-    {
-     "resource": [
-       {
-         "emp_no": 500016
-       }
-     ]
-    }
+    /api/v2/mysql/_table/employees/500016
 
 If deletion is successful, DreamFactory will return a 200 status code with a response body containing the deleted record's primary key:
 

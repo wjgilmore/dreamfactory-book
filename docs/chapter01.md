@@ -109,27 +109,63 @@ Of course, the request will need to be accompanied by the data to be created. Th
 
 ### Updating Resources
 
-HTTP supports two different methods to updating data:
+HTTP supports two different methods for updating data:
 
-* **PUT**: The `PUT` request replaces an existing resource in its entirety. This means you need to pass along *all* of the resource attributes regardless of whether the attribute value is actually being modified.
-* **PATCH**: The `PATCH` request updates only part of the existing resource, meaning you only need to supply the resource primary key and the attributes you'd like to update. This is typically a much more convenient update approach than `PUT`, although to be sure both have their advantages.
+* **PUT**: The `PUT` method replaces an existing resource in its entirety. This means you need to pass along *all* of the resource attributes regardless of whether the attribute value is actually being modified.
+* **PATCH**: The `PATCH` method updates only part of the existing resource, meaning you only need to supply the resource primary key and the attributes you'd like to update. This is typically a much more convenient update approach than `PUT`, although to be sure both have their advantages.
 
+When updating resources with `PUT` you'll send a `PUT` request like so:
 
+    PUT /api/v2/employees
+
+You'll send along *all* of the resource attributes within the request payload:
+
+    {
+      "resource": [
+        {
+          "id": 42,
+          "first_name": "Johnny",
+          "last_name": "Baseball"
+        }
+      ]
+    }
+
+To instead update one or more (but not all) attributes associated with a particular record found in the `employees` resource, you'll send a `PATCH` request to the `employees` URL, accompanied by the primary key:
+
+    /api/v2/employees/42
+
+Suppose the `employees` table includes attributes such as `first_name`, `last_name`, and `employee_id`, but we only want to modify the `first_name` value. The JSON request body would look like this:
+
+    {
+      "resource": [
+        {
+          "first_name": "Paul"
+        }
+      ]
+    }
 
 ### Deleting Resources
 
+To delete a resource, you'll send a `DELETE` request to the endpoint associated with the resource you'd like to delete. For instance, to delete an `employees` resource you'll reference this URL:
+
+    DELETE /api/v2/employees/42
+
 ## Introducing DreamFactory
 
-DreamFactory (https://www.dreamfactory.com) is a 
+In light of everything we've discussed thus far with regards to implementing a REST API, the idea of implementing one yourself probably sounds pretty daunting. It should, because it is. In doing so, not only would you be responsible for building out the logic required to process the request methods and URLs, but you'd also be on the hook for integrating authentication and authorization, generating and maintaining documentation, and figuring out how to sanely generate working APIs for any number of third-party data sources. 
+
+And this is really only the beginning of your challenges. As your needs grow, so will the complexity. Consider the amount of work required to add per-endpoint business logic capabilities to your API. Or bolting on API limiting features. Or adding per-service API logging. The amount of work required to build and maintain these features can be staggering, and will surely distract you and your team from the far more important goal of satisfying customers through the creation of superior products and services.
+
+Fortunately, an amazing alternative exists. DreamFactory is an API automation solution that handles *all* of these challenges for you, and for the most part does so through an easy point-and-click web interface. We'll conclude this chapter with a survey of DreamFactory's key features, giving you all of the information you need to determine whether DreamFactory is a worthy addition to your organization's development toolkit.
 
 ### API Generation
 
-
+### OpenAPI Documentation
 
 
 ### API Security
 
-Because 
+ 
 
 ### Business Logic
 
@@ -137,4 +173,7 @@ Because
 ### API Limiting
 
 
-### API Monitoring
+### API Logging
+
+## Conclusion
+
