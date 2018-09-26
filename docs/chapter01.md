@@ -190,7 +190,7 @@ It's often the case that you'll want to tweak the behavior of your APIs, for ins
 
 Your organization has spent months if not years aggregating and curating a valuable trove of data, and lately your customers and other organizations have been clamoring for the ability to access it. This is typically done by *monetizing* the API, assigning customers volume-based access in accordance with a particular pricing plan.
 
-DreamFactory's API limiting features allow you to associate volume-based limits with a particular user, API key, REST API, or even a particular request method. Once enabled, DreamFactory will monitor the configuration in real-time, returning an HTTP 429 status code (Too Many Requests) to the client once the limit is reacched. While a convenient web interface is provided for managing your API limits, it's also possible to programmatically manage these API limits, meaning you can integrate limit management into your SaaS application!
+DreamFactory's API limiting features allow you to associate volume-based limits with a particular user, API key, REST API, or even a particular request method. Once enabled, DreamFactory will monitor the configuration in real-time, returning an HTTP 429 status code (Too Many Requests) to the client once the limit is reached. While a convenient web interface is provided for managing your API limits, it's also possible to programmatically manage these API limits, meaning you can integrate limit management into your SaaS application!
 
 ### API Logging and Reporting
 
