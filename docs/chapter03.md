@@ -267,11 +267,15 @@ The equivalent SQL query looks like this:
 
 You'll often want to select a specific record using a column that uniquely defines it. Often (but not always) this unique value is the *primary key*. You can retrieve a record using its primary key by appending the value to the URL like so:
 
-	http://localhost/api/v2/_table/supplies/45
+	/api/v2/_table/supplies/45
 
 The equivalent SQL query looks like this:
 
     SELECT * FROM supplies where id = 5;
+
+If you'd like to use this URL format to search for another unique value not defined as a primary key, you'll need to additionally pass along the `id_field` and `id_type` fields like so:
+
+    /api/v2/_table/employees/45abchdkd?id_field=guid&id_type=string
 
 ### Joining Tables
 
