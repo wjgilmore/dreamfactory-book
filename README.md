@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # Getting Started with DreamFactory
 
 Welcome to the DreamFactory platform! Whether you’re an open source user, or a paid customer taking advantage of DreamFactory’s advanced capabilities, we wrote this guide to help you begin incorporating the platform into your organization in the most efficient way possible.
@@ -37,6 +41,16 @@ The DreamFactory team regularly works with customers around the globe to build h
 ### Chapter 7. Monetizing Your APIs using Limiting and Logging
 
 You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
+
+## More Ways to Learn
+
+### Videos
+
+Dozens of videos are available via the DreamFactory Youtube channel, including some of these recent favorites:
+
+### The DreamFactory Forum
+
+Volunteers and DreamFactory staff alike regularly patrol our [community forum](http://community.dreamfactory.com/). If Stack Overflow is preferred, be sure to tag the question using the [dreamfactory](https://stackoverflow.com/questions/tagged/dreamfactory) tag! 
 
 ## Contact us
 

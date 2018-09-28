@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # Chapter 2. Installing and Configuring DreamFactory
 
 
@@ -36,7 +40,7 @@ Cloud environments are the hosting solution of choice these days, and for good r
 
 [https://www.dreamfactory.com/downloads](https://www.dreamfactory.com/downloads)
 
-## Configuring DreamFactory
+## Installing and Configuring DreamFactory from Source
 
 If you've cloned the GitHub repository, you'll need to carry out a few additional steps before launching your DreamFactory instance. The first step involves installing the required PHP packages using Composer:
 
