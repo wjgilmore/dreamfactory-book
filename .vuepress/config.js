@@ -7,11 +7,6 @@ module.exports = {
       { text: 'Home', link: '/' },
       { text: 'Contact', link: 'https://www.dreamfactory.com/contact' },
       { text: 'Sales', link: 'https://www.dreamfactory.com/contact' }
-    ],
-    sidebar: [
-      '/',
-      '/page-a',
-      ['/page-b', 'Explicit link text']
     ]
   }
 }
