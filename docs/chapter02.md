@@ -52,11 +52,11 @@ This guide is under heavy development, and certain parts are complete. We sugges
 
 Server configuration is going to vary according to your operating system. To ensure the instructions are as specific and straightforward as possible, we've broken them out into subchapters:
 
-* [Ubuntu](chapter02/ubuntu-server-configuration.md)
+* [Ubuntu](docs/chapter02/ubuntu-server-configuration.md)
 
 If you plan on using PHP in conjunction with one of the following databases, please review the pertinent subchapters presented below:
 
-* [Microsoft SQL Server](chapter02/microsoft-sql-server.md)
+* [Microsoft SQL Server](docs/chapter02/microsoft-sql-server.md)
 
 ### Installing DreamFactory
 
