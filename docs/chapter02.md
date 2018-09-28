@@ -4,7 +4,7 @@ sidebar: auto
 
 # Chapter 2. Installing and Configuring DreamFactory
 
-
+In this chapter you'll learn how to install and configure DreamFactory. A number of installation solutions are available, including GitHub repository, point-and-click installers, Docker container, and cloud-specific installers. Be sure to carefully read through the set of options before making a decision, because some might be more suitable than others for your particular situation.
 
 ## Choosing a DreamFactory Version
 
@@ -42,13 +42,31 @@ Cloud environments are the hosting solution of choice these days, and for good r
 
 ## Installing and Configuring DreamFactory from Source
 
-If you've cloned the GitHub repository, you'll need to carry out a few additional steps before launching your DreamFactory instance. The first step involves installing the required PHP packages using Composer:
+If you've cloned the GitHub repository, you'll need to carry out a few additional steps before launching your DreamFactory instance. The first step involves ensuring your server requirements have been met. Let's tackle those first, followed by an overview of software installation.
+
+### Configuring Your Server
+
+::: warning
+This guide is under heavy development, and certain parts are complete. We suggest reading through the current installation documentation, [available here](http://wiki.dreamfactory.com/DreamFactory/Installation#GitHub).
+:::
+
+Server configuration is going to vary according to your operating system. To ensure the instructions are as specific and straightforward as possible, we've broken them out into subchapters:
+
+* [Ubuntu](chapter02/ubuntu-server-configuration.md)
+
+If you plan on using PHP in conjunction with one of the following databases, please review the pertinent subchapters presented below:
+
+* [Microsoft SQL Server](chapter02/microsoft-sql-server.md)
+
+### Installing DreamFactory
+
+The first step involves installing the required PHP packages using Composer:
 
     $ composer install --no-dev
 
 The `--no-dev` option tells Composer to not install the development-specific dependencies. These development dependencies are used by our OSS community and internal developers alike to assist in software development. You can review the list of both required and developmental dependencies by opening the `composer.json` file found in the project's root directory.
 
-If you receive an error regarding `TODO WHAT IS THIS ERROR TODO`, and you don't require MongoDB, then you can quickly hurdle the issue by additionally supplying the `--ignore-platform-reqs` option when running Composer.
+If you receive an error regarding `Your requirements could not be resolved to an installable set of packages`, and you don't require MongoDB, then you can quickly hurdle the issue by additionally supplying the `--ignore-platform-reqs` option when running Composer.
 
 With the packages installed, you'll next need to configure your system database. This database will house various configuration settings associated with your instance. DreamFactory supports four databases for this purpose, including Microsoft SQL Server, MySQL, PostgreSQL, and SQLite. Keep in mind you'll need to first create this database along with an account DreamFactory will use to connect to it.
 

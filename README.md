@@ -30,7 +30,7 @@ After installing your DreamFactory instance, it’s only natural to want to see 
 
 From the moment your API is generated, rest assured it is protected by at minimum a complicated API key. However this represents only the beginning in terms of your options regarding securing an API. You can use DreamFactory's user authentication and authorization features to provide user-specific login via a variety of authentication solutions, including basic auth, LDAP, Active Directory, and SSO. In this chapter you'll learn all about these solutions, and additionally learn how to use DreamFactory's rate limiting and logging capabilities to closely monitor request volume and behavior.
 
-### Chapter 5. Generating a SOAP-to-REST API
+### [Chapter 5. Generating a SOAP-to-REST API](docs/chapter05.md)
 
 The SOAP Protocol has long been instrumental to network-based data exchange, however over time REST has slowly gained influence within enterprises, with many DreamFactory users seeking to supplant their SOAP services with a REST-based solution.
 
@@ -46,7 +46,7 @@ You've taken months if not years to amass and curate a valuable data set, and no
 
 ### Videos
 
-Dozens of videos are available via the DreamFactory Youtube channel, including some of these recent favorites:
+Dozens of videos are available via the [DreamFactory Youtube channel](https://www.youtube.com/user/dreamfactorysoftware/videos).
 
 ### The DreamFactory Forum
 

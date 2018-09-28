@@ -36,6 +36,10 @@ Before we begin, keep in mind MySQL is just one of DreamFactory supported 18 dat
 
 Best of all, thanks to DreamFactory's unified interface and API generation solution, everything you learn in this chapter applies identically to your chosen database! So if you already plan on using another database, then by all means feel free to follow along using it instead!
 
+::: tip
+Looking for a more concise overview? Check out our blog post, ["Create a MySQL REST API in Minutes Using DreamFactory"](http://blog.dreamfactory.com/create-a-mysql-rest-api-in-minutes-using-dreamfactory/)!
+:::
+
 ## Generating a MySQL-backed API
 
 To generate a MySQL-backed API, login to your DreamFactory instance using an administrator account and click on the Services tab:
