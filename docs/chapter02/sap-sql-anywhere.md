@@ -1,4 +1,8 @@
-# Chapter X. Configuring SAP SQL Anywhere
+---
+sidebar: auto
+---
+
+# Configuring SAP SQL Anywhere
 
 SAP SQL Anywhere is the namesake commercial database solution offered by software giant SAP SE. If your organization relies upon SQL Anywhere, you'll be pleased to know DreamFactory's Silver and Gold editions include support for this powerful database! In this chapter we'll walk you through the server configuration steps necessary to ensure your DreamFactory instance can interact with your SQL Anywhere database.
 
