@@ -58,8 +58,6 @@ With this step complete, let's move on to installing and configuring FreeTDS.
 
 FreeTDS is an open source implementation of a protocol known as Tabular Data Stream (TDS). This protocol is used by both SQL Anywhere and Microsoft SQL Server as a means for passing data between the databases and their respective clients. Therefore your DreamFactory server requires a TDS library which allows it to talk to these databases, and FreeTDS suits that need nicely.
 
-To install 
-
 Open the `/etc/freetds/freetds.conf`
 
 That said, DreamFactory will not work with the SAP-produced drivers. DreamFactory's SAP SQL Anywhere support
@@ -122,10 +120,10 @@ http://infocenter.sybase.com/help/index.jsp?topic=/com.sybase.help.sqlanywhere.1
 
 Finally, you'll need to update the `php.ini` file to ensure PHP recognizes the new modules. You can learn the location of this file using the following command:
 
-$ php --ini
-...
-Loaded Configuration File: /etc/php/7.1/cli/php.ini
-...
+    $ php --ini
+    ...
+    Loaded Configuration File: /etc/php/7.1/cli/php.ini
+    ...
 
 Based on this output, the `php.ini` file is located in `/etc/php/7.1/cli/`. Keep in mind however that this `php.ini` file is *only* used in conjunction with PHP when running via the command line interface (the terminal). You'll also want to modify the `php.ini` file used when PHP interacts with the web server. It's location isn't obvious when running `php --ini`, however if you navigate to the `cli` directory's parent you'll find the directory housing the web server-specific `php.ini` file:
 
