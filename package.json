@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/dreamfactorysoftware/dreamfactory-book#readme",
   "dependencies": {
-    "vuepress": "^0.14.0"
+    "vuepress": "^0.14.4",
+    "yarn": "^1.10.1"
   }
 }
-

@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 # Chapter X. Production Best Practices
-
+While DreamFactory is already fairly fast, secure and maintenance free out of the box, there are quite a few modifications you can make to enhance your instance.  We have broken these down into several categories to make focusing on individual features easier, almost as a checklist.
 ## Performance
 
 For database-backed APIs, there is no more impactful task one could

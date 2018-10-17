@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chapter X. Production Best Practices | Getting Started with DreamFactory</title>
+    <meta name="description" content="A hands-on introduction to the powerful DreamFactory API generation platform">
+    
+    
+    <link rel="preload" href="/assets/css/styles.2b280560.css" as="style"><link rel="preload" href="/assets/js/app.2b280560.js" as="script"><link rel="preload" href="/assets/js/15.1c639c05.js" as="script"><link rel="prefetch" href="/assets/js/6.792a4f18.js"><link rel="prefetch" href="/assets/css/1.styles.f20acb3f.css"><link rel="prefetch" href="/assets/js/1.f20acb3f.js"><link rel="prefetch" href="/assets/css/2.styles.b150b436.css"><link rel="prefetch" href="/assets/js/2.b150b436.js"><link rel="prefetch" href="/assets/js/3.acdb5b23.js"><link rel="prefetch" href="/assets/js/4.023e1b42.js"><link rel="prefetch" href="/assets/js/5.c9fc3e52.js"><link rel="prefetch" href="/assets/js/7.237dfec8.js"><link rel="prefetch" href="/assets/js/8.bd8bb34a.js"><link rel="prefetch" href="/assets/js/9.69c9e198.js"><link rel="prefetch" href="/assets/js/10.51ff962e.js"><link rel="prefetch" href="/assets/js/11.bbca3787.js"><link rel="prefetch" href="/assets/js/12.ff086121.js"><link rel="prefetch" href="/assets/js/13.7b874c98.js"><link rel="prefetch" href="/assets/js/14.2b8d4d5c.js">
+    <link rel="stylesheet" href="/assets/css/1.styles.f20acb3f.css"><link rel="stylesheet" href="/assets/css/2.styles.b150b436.css"><link rel="stylesheet" href="/assets/css/styles.2b280560.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Getting Started with DreamFactory</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">Home</a></div><div class="nav-item"><a href="https://www.dreamfactory.com/contact" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Contact
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://www.dreamfactory.com/contact" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sales
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">Home</a></div><div class="nav-item"><a href="https://www.dreamfactory.com/contact" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Contact
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://www.dreamfactory.com/contact" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Sales
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading open"><span>Chapter X. Production Best Practices</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/docs/chapter10.html#performance" class="sidebar-link">Performance</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/chapter10.html#security" class="sidebar-link">Security</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/docs/chapter10.html#maintenance" class="sidebar-link">Maintenance</a><ul class="sidebar-sub-headers"></ul></li></ul></div></li></ul> </div> <div class="page"> <div class="content"><h1 id="chapter-x-production-best-practices"><a href="#chapter-x-production-best-practices" aria-hidden="true" class="header-anchor">#</a> Chapter X. Production Best Practices</h1> <p>While DreamFactory is already fairly fast, secure and maintenance free out of the box, there are quite a few modifications you can make to enhance your instance.  We have broken these down into several categories to make focusing on individual features easier, almost as a checklist.</p> <h2 id="performance"><a href="#performance" aria-hidden="true" class="header-anchor">#</a> Performance</h2> <p>For database-backed APIs, there is no more impactful task one could
+take than properly indexing the database in addition to ensuring the
+database server has been allocated appropriate hardware and network
+resources.</p> <p>Enable database API caching whenever practical at service creation
+time, as it will undoubtedly improve performance.</p> <p>You can achieve particularly high performance by compiling your
+DreamFactory application code using OPcache. You can learn more about
+OPcache here: http://php.net/manual/en/book.opcache.php.</p> <p>DreamFactory instances may be load balanced, and can be configured to
+share the system database, cache details, and other information
+necessary to operate in a distributed environment.</p> <p>DreamFactory enables file-based caching by default, however you may
+opt to configure one of the other supported caching solutions, such as
+Redis.</p> <h2 id="security"><a href="#security" aria-hidden="true" class="header-anchor">#</a> Security</h2> <p>For database-backed APIs, create the API using a database account
+possessing privileges closely corresponding to your API privilege
+requirements. For instance, if the database includes a table called
+<code>employees</code> but there is no intention for this table to be accessible
+via the API, then configure the proxy user's privileges accordingly.</p> <p>Never use a blanket API key for your APIs! Instead, create roles which
+expressly define the level of privileges intended to be exposed via
+the API, and then associate the role with a new App and corresponding
+API Key. Don't be afraid to create multiple roles and therefore
+multiple corresponding API keys if you'd like to limit API access in
+different ways on a per-client or group basis.</p> <p>Configure your DreamFactory web administration console to use SSL.
+Never run your environment on port 80 as like any web application it
+raises the likelihood your administration login credentials could be
+stolen by a malicious third-party.</p> <p>Should you need to make API documentation available to team members,
+use DreamFactory's user-centric role assignment feature to make solely
+the documentation available to the team members, rather than granting
+unnecessary administrative access.</p> <p>When running DreamFactory in a production environment, be sure to set
+the <code>.env</code> file's <code>APP_ENV</code> value to <code>production</code> and <code>APP_DEBUG</code> to
+<code>false</code>. Leaving it set to <code>local</code> will result in detailed
+error-related information being returned to the client rather than
+quietly logged to the log file.</p> <h2 id="maintenance"><a href="#maintenance" aria-hidden="true" class="header-anchor">#</a> Maintenance</h2> <ul><li><p>Do not use Bitnami in production environments. While Bitnami
+undoubtedly offers a turnkey approach to getting started with
+DreamFactory, it is intended for use solely during the exploratory and
+development phases of your project. Certain Bitnami characteristics
+make subsequent software upgrades difficult and therefore raise the
+likelihood production environment upgrades will be unreasonably
+delayed.</p></li> <li><p>Please monitor the DreamFactory blog at
+https://blog.dreamfactory.com and/or subscribe to the DreamFactory
+newsletter for occasional updates regarding new platform releases. You
+are encouraged to review the release details and take steps to upgrade
+your platform to the latest version as practical.</p></li></ul></div> <div class="page-edit"><!----> <!----></div> <!----> </div> <!----></div></div>
+    <script src="/assets/js/15.1c639c05.js" defer></script><script src="/assets/js/app.2b280560.js" defer></script>
+  </body>
+</html>
