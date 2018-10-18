@@ -1,8 +1,10 @@
 ---
 sidebar: auto
 ---
-# Chapter X. Production Best Practices
-While DreamFactory is already fairly fast, secure and maintenance free out of the box, there are quite a few modifications you can make to enhance your instance.  We have broken these down into several categories to make focusing on individual features easier, almost as a checklist.
+# Chapter 10. Production Best Practices
+
+While DreamFactory is already fairly fast, secure and maintenance free out of the box, there are quite a few modifications you can make to enhance your instance.  We have broken these down into several categories to make focusing on individual features easier, almost as a checklist for optimal performance and maintenance.
+
 ## Performance
 
 For database-backed APIs, there is no more impactful task one could
@@ -15,7 +17,7 @@ time, as it will undoubtedly improve performance.
 
 You can achieve particularly high performance by compiling your
 DreamFactory application code using OPcache. You can learn more about
-OPcache here: http://php.net/manual/en/book.opcache.php.
+OPcache [here](http://php.net/manual/en/book.opcache.php).
 
 DreamFactory instances may be load balanced, and can be configured to
 share the system database, cache details, and other information
@@ -23,7 +25,10 @@ necessary to operate in a distributed environment.
 
 DreamFactory enables file-based caching by default, however you may
 opt to configure one of the other supported caching solutions, such as
-Redis.
+Redis. Please see these links to see connection tutorials:
+
+ 1. [YouTube - Setting up and using Redis](c94200f4d0567522370908afcdafd28d)<br>
+ 2. [Blog - Caching](http://blog.dreamfactory.com/new-dreamfactory-cache-service-supports-redis-memcahed-and-local-storage/)
 
 ## Security
 
@@ -66,8 +71,7 @@ make subsequent software upgrades difficult and therefore raise the
 likelihood production environment upgrades will be unreasonably
 delayed.
 
-* Please monitor the DreamFactory blog at
-https://blog.dreamfactory.com and/or subscribe to the DreamFactory
+* Please monitor the [DreamFactory blog](https://blog.dreamfactory.com) and/or subscribe to the DreamFactory
 newsletter for occasional updates regarding new platform releases. You
 are encouraged to review the release details and take steps to upgrade
-your platform to the latest version as practical.
+your platform to the latest version as practical.  You can find all of the release notes compiled on the [DreamFactory wiki](http://wiki.dreamfactory.com/DreamFactory/Release_Notes) 

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:dev": "vuepress dev",
     "docs:build": "vuepress build"
   },
   "repository": {
@@ -19,7 +20,12 @@
   },
   "homepage": "https://github.com/dreamfactorysoftware/dreamfactory-book#readme",
   "dependencies": {
+    "vue": "^2.5.17",
     "vuepress": "^0.14.4",
+    "webpack": "^4.21.0",
     "yarn": "^1.10.1"
+  },
+  "devDependencies": {
+    "extract-text-webpack-plugin": "^4.0.0-beta.0"
   }
 }
