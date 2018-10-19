@@ -42,6 +42,10 @@ The DreamFactory team regularly works with customers around the globe to build h
 
 You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
+### [Chapter 10. Production Best Practices](docs/chapter10.md)
+
+While DreamFactory is already fairly fast, secure and maintenance free out of the box, there are quite a few modifications you can make to enhance your instance.  We have broken these down into several categories to make focusing on individual features easier, almost as a checklist.
+
 ## More Ways to Learn
 
 ### Videos
