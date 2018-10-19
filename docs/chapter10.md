@@ -44,9 +44,9 @@ Redis. Please see these links to see connection tutorials:
 
 ## Security
 
-Always make sure your CORS settings are only set for the appropriate "scheme/host/port tuple" to ensure you are observing the maximum security you can by only allowing cross origin resources access when there is no other way around it.  For a great explanation of CORS and how they work, please see this [article](http://performantcode.com/web/do-you-really-know-cors).  
+Always make sure your `CORS` settings are only set for the appropriate "scheme/host/port tuple" to ensure you are observing the maximum security you can by only allowing cross origin resources access when there is no other way around it.  For a great explanation of `CORS` and how they work, please see this [article](http://performantcode.com/web/do-you-really-know-cors).  
 
-* You can modify your CORS settings in DreamFactory under the Config tab.
+* You can modify your `CORS` settings in DreamFactory under the `Config` tab.
 
 <img src="/images/10/cors.png" width="800">
 
