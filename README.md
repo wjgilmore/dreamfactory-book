@@ -58,4 +58,4 @@ Volunteers and DreamFactory staff alike regularly patrol our [community forum](h
 
 ## Contact us
 
-Do you have any input or questions about this guide, or the DreamFactory platform? We’d love to hear from you! E-mail us at support@dreamfactory.com with your feedback.
+Do you have any input or questions about this guide, or the DreamFactory platform? We’d love to hear from you! E-mail our [support team](mailto:dspsupport@dreamfactory.com) with your feedback.

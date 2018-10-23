@@ -44,9 +44,9 @@ Redis. Please see these links to see connection tutorials:
 
 ## Security
 
-Always make sure your CORS settings are only set for the appropriate "scheme/host/port tuple" to ensure you are observing the maximum security you can by only allowing cross origin resources access when there is no other way around it.  For a great explanation of CORS and how they work, please see this [article](http://performantcode.com/web/do-you-really-know-cors).  
+Always make sure your `CORS` settings are only set for the appropriate "scheme/host/port tuple" to ensure you are observing the maximum security you can by only allowing cross origin resources access when there is no other way around it.  For a great explanation of `CORS` and how they work, please see this [article](http://performantcode.com/web/do-you-really-know-cors).  
 
-* You can modify your CORS settings in DreamFactory under the Config tab.
+* You can modify your `CORS` settings in DreamFactory under the `Config` tab.
 
 <img src="/images/10/cors.png" width="800">
 
@@ -131,6 +131,29 @@ DF_LICENSE_KEY=YOUR_LICENSE_KEY
 ## Database Settings
 ##------------------------------------------------------------------------------
 ```
+
+### Administer Your DreamFactory Instance From Anywhere
+The app can be configured to manage your DreamFactory instance from another remote server. Simply open the app.js file contained in `app/scripts` directory and add your DreamFactory instance host name to the `INSTANCE_BASE_URL` constant at the top. You can now optionally build the app and deploy the `dist` directory. You must enable CORS in the DreamFactory instance you will be deploying the app to.
+
+#### Theme the app
+In `app/styles/sass/partials` you can find the stylesheets for all the custom parts of the app as well as a few bootswatch templates in the `themes` directory. All of these are added in a specific order in styles.scss. To change to a different bootswatch theme simply change all occurrences of the theme name in `styles.scss`. Dont forget to run `grunt build` to compile the stylesheets and build the app.
+
+#### App Architecture
+The app was designed to have plugable modules. Every module contains it's own routes, events, and logic so as to remove one would not stop the app from working. These modules are stored under app/admin_components. In order to faciliate speed a module was designed as a central repository for data that is used frequently in the app. Many other modules rely on this module for data to do their job but with a small bit of refactoring it can be removed to produce truly untethered modules.
+
+#### Main Application
+The main application files are located in two directories, `scripts` and `views` located under the app directory. The `scripts` directory contains your `app.js` file and a sub directory called `controllers` contains `main.js`. Corresponding `views` for controllers defined in `main.js` can be found in the aforementioned `views` directory. The `app.js` file contains a few constants. The ones of note are the `INSTANCE_BASE_URL`, `INSTANCE_API_PREFIX`, and `APP_API_KEY`. The `INSTANCE_BASE_URL` allows a host to be set which the application and it's modules will refer to for api calls. `INSTANCE_API_PREFIX` can be changed to match the server setup. `APP_API_KEY` is used in a config option defined below the constants that sets the API key for all calls made from the app. `app.js` also defines standard routes for login, logout, registering. These routes have corresponding controllers defined in `main.js`.
+
+`main.js` defines app specific controllers. The MainCtrl acts as a top level scope which other modules can query for app wide data. For example, our top level navigation and component navigation links are stored here in arrays which are passed to directives that render the links and control active link highlighting. Whenever a module is added/removed it's link will need to be handled here. But you shouldn't encounter this very often (or at all).
+
+Authentication controllers provide attachment points for authentication/register events. They implement sparse logic in dealing with auth/register events produced by the user management module. This provides a decoupling between app specific logic for auth/register and the business logic of actually authenticating/registering a user. See `main.js` comments for more info.
+
+#### Data repository and Utility modules
+A data repository module called `dfApplicationData` facilitates the loading and management of frequently used application data. It creates an object called `dfApplicationObj`. It contains generic methods to access, modify, and delete data in the application and on the server. It also provides accessor methods to retrieve and save the actual `dfApplicationObj`. While not recommended to interact with this object directly it is sometimes a necessary evil. The module also contains init code to check whether it is necessary to build a new app object or to refresh the screen with local data as well as what apis to load.
+
+The utility module provides services, factories, directives, and filters related to the operation of modules. Things like our icon service, navs, table filtering/pagination, etc are stored here. Basically, things that multiple modules may need access to and/or have no other place to go.
+
+
 
 ## Maintenance
 
