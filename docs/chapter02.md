@@ -204,11 +204,68 @@ This will start a simple PHP server running on `127.0.0.1` port `8000`. Open you
 
 
 ### Introducing the .env File
+It is often helpful to have different configuration values based on the environment where the application is running. For example, you may wish to use a different cache driver locally than you do on your production server.
 
+To make this a cinch, Laravel utilizes the [DotEnv](https://github.com/vlucas/phpdotenv) PHP library by Vance Lucas. In a fresh Laravel installation, the root directory of your application will contain a `.env.example` file. If you install Laravel via Composer, this file will automatically be renamed to `.env`. Otherwise, you should rename the file manually.  For more information, please see the official documentation from Laravel.
+
+[Laravel Docs on .env](https://laravel.com/docs/5.5/configuration#environment-configuration)
 
 
 ### Enabling Debugging and Logging
+By default, DreamFactory does not enable debugging.  Debugging, while a great tool to help monitor your application, can be a large performance sink inside of a production environment.  In the example `.env` file below you can see where these options live.
 
+```php
+##==============================================================================
+## Environment Settings
+##==============================================================================
+
+## Use the installer.sh file in this directory to easily edit these settings.
+## By default each setting is set to its internal default and commented out.
+
+##------------------------------------------------------------------------------
+## Application Settings
+##------------------------------------------------------------------------------
+
+## Application name used in email templates and other displays
+#APP_NAME=DreamFactory
+## Encryption cipher options are AES-128-CBC or AES-256-CBC (default)
+#APP_CIPHER=AES-256-CBC
+## Return debugging trace in exceptions: true or false (default)
+#APP_DEBUG=false
+## Environment this installation is running in: local, production (default)
+APP_ENV=local
+## Use 'php artisan key:generate' to generate a new key. Key size must be 16, 24 or 32.
+APP_KEY=base64:YOUR_APP_KEY
+#APP_LOCALE=en
+## LOG setting. Where and/or how the log file is setup. Options are single (default), daily, syslog, errorlog
+APP_LOG=daily
+## LOG Level. This is hierarchical and goes in the following order.
+## DEBUG -> INFO -> NOTICE -> WARNING -> ERROR -> CRITICAL -> ALERT -> EMERGENCY
+## If you set log level to WARNING then all WARNING, ERROR, CRITICAL, ALERT, and EMERGENCY
+## will be logged. Setting log level to DEBUG will log everything.
+APP_LOG_LEVEL=debug
+## When APP_LOG is set to 'daily', this setting dictates how many log files to keep.
+APP_LOG_MAX_FILES=5
+## PHP Date and Time function timezone setting
+#APP_TIMEZONE=UTC
+## External URL representing this install
+#APP_URL=http://127.0.0.1:8000
+## The starting point (page, application, etc.) when a browser points to the server root URL,
+#DF_LANDING_PAGE=/dreamfactory/dist/index.html
+DF_LICENSE_KEY=YOUR_LICENSE_KEY
+```
+
+When working to get your environment up and running, DreamFactory recommends turning debugging on, as well as increasing the sensitivity of the logging environment.  In order to turn the application debugging on, please uncomment and change the following value:
+```php
+APP_DEBUG=true
+```
+
+To modify your logging values you will need to uncomment and modify the following snippets of code:
+```php
+APP_LOG=daily
+APP_LOG_LEVEL=debug
+APP_LOG_MAX_FILES=5
+```
 
 ## Choosing an HTTP Client
 
