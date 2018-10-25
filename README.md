@@ -38,7 +38,7 @@ The SOAP Protocol has long been instrumental to network-based data exchange, how
 
 The DreamFactory team regularly works with customers around the globe to build highly customized services based atop our platform. Most often this involves using DreamFactory’s scripting feature, which allows you to write custom code used to validating input parameters, call other APIs, and much, much more.
 
-### Chapter 7. Monetizing Your APIs using Limiting and Logging
+### [Chapter 7. Monetizing Your APIs using Limiting and Logging](docs/chapter07.md)
 
 You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
