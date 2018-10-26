@@ -39,7 +39,42 @@ Like all other services in DreamFactory, limits can be managed via the API alone
 `api/v2/system/limit_cache` - Endpoints to check current limit volume levels and reset limit counters manually.<br>
 
 #### Creating Limits
-Limits are created by sending a POST to /api/v2/system/limit. To create a simple instance limit, POST the following resource to the endpoint:
+Limits are created by sending a `POST` to `/api/v2/system/limit`. To create a simple instance limit, `POST` the following resource to the endpoint:
+
+| Limit Type | API "type" Parameter | Additional Required Params * |
+| ---------- | -------------------- | -------------------------- |
+| Instance| instance | N/A |
+| User | instance.user | user_id |
+| Each User | instance.each_user | N/A |
+| Service | instance.service | service_id |
+| Service By User | instance.user.service | user_id, service_id |
+| Service by Each User | instance.each_user.service | service_id |
+| Endpoint | instance.service.endpoint | service_id, endpoint |
+| Endpoint by User | instance.user.service.endpoint | user_id, service_id, endpoint |
+| Endpoint by Each User | instance.each_user.service.endpoint | service_id, endpoint |
+| Role | instance.role | role_id |
+
+*Standard required parameters include: type, rate, period, and name. 
+Below is a table which describes all of the available parameters that can be passed when creating limits.
+
+| Parameter | Type | Required | Description |
+| --------- | ---- | -------- | ----------- |
+| type	    | {string} | Yes | The type of instance you are creating.  See table above for a detailed description|
+| key_text | {string} | N/A | Informational field only.  This key is built automatically byt the system and is a unique identifier for the limit. |
+| rate | {integer} | Yes | Number of allowed hits during the limit period. |
+| period | {enum} | Yes | Period where limit automatically resets.  Valid values are: 'minute', 'hour', 'day', '7-day', '30-day' |
+| user_id | {integer} | (see above table) | Id of the user for user type limits. |
+| role_id | {integer} | (see above table) | Id of the role for role type limits. |
+| service_id | {integer} | (see above table) | Id of the service for service and endpoint type limits. |
+| name | {string} | Yes | Arbitrary name of the limit (required). |
+| description | {string} | No | Limit description (optional) |
+| is_active | {boolean} | No | Defaults to true.  Additionally, you can create a limit that is in an "inactive" state which can be activated later (optional). |
+| create_date | {timestamp} | N/A | Informational only. |
+| last_modified_date | {timestamp} | N/A | Informational only. |
+| endpoint | {string} | (see above table) | Endpoint string (see table above when required).  Additionally, reference the section on Endpoint Limits for additional information. |
+| verb | {enum} | No | Defaults to all verbs.  Passing an individual verb will only set the limit for those requests.  Can be specified with any limit type.  Valid values are:  `GET`, `POST`, `PUT`, `PATCH`, `DELETE` |
+
+
 
 #### User vs. Each User Limits
 You can assign a limit to a specific user for the entire instance, a particular service, or a specific endpoint. This type of limit will only affect a single user, not the entire instance, service, or endpoint. Each User type limits can also be created for these as well, the main difference being that in an Each User limit, every user will get a separate counter. For example, if you set a limit on a particular service and set the rate at 1,000 hits per day, a single user can reach the limit and it would affect any subsequent requests coming in to that service, regardless of user. In an Each User Service type limit, every user will get a separate counter to reach the 1,000 per day. This also works the same with the other limit types. 
