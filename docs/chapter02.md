@@ -275,14 +275,13 @@ Fortunately, there are a number of HTTP clients which fill this void very well. 
 
 ### Insomnia
 
-Insomnia is a cross-platform REST client, built on top of [Electron](https://electronjs.org/). Insomnia is realtively new on the scene compared to cURL and Postman but offers a bevy of features that certainly make it competitive.  You can also use Swaggymnia to create and modify your [Swagger](https://swagger.io/) docs based on your Insomnia API calls.  They have a very slick UI, and a ton of features, including a team option.  
+Insomnia is a cross-platform REST client, built on top of [Electron](https://electronjs.org/). Insomnia is realtively new on the scene compared to cURL and Postman but offers a bevy of features that certainly make it competitive.  They have a very slick UI, and a ton of features, including a team option.  
 
 * Insomnia Quick Links:<br>
 [Downloads](https://insomnia.rest/download/)<br>
 [Knowledge Base](https://support.insomnia.rest/)<br>
 [Pricing and Plans](https://insomnia.rest/pricing/)<br>
 [Source Code](https://github.com/getinsomnia/insomnia)<br>
-[Swagger Support](https://github.com/mlabouardy/swaggymnia)
 
 <img src="/images/02/insomnia.png" width="800">
 
