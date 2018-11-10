@@ -5,7 +5,7 @@ sidebar: auto
 
 The DreamFactory platform is build atop the open source [Laravel](https://www.laravel.com) framework, which is not only an incredibly popular web framework thanks to its' pragmatic approach, fantastic documentation, and varied ecosystem, but it's also used in mission critical applications around the world. That said, while you're going to be satisfied with DreamFactory's out-of-the-box performance, there are a few modifications you can make to enhance your instance. In this chapter we'll enumerate different considerations, breaking down the suggestions by category.
 
-## Performance
+## Database API Performance
 
 For database-backed APIs, there is no more impactful task one could
 take than properly indexing the database in addition to ensuring the
@@ -14,6 +14,8 @@ resources. Please see the below links for references to database optimization.
 
 1. [MySQL](https://dev.mysql.com/doc/refman/5.7/en/optimization.html)
 2. [SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/performance/performance-center-for-sql-server-database-engine-and-azure-sql-database?view=sql-server-2017)
+
+### Database API Caching
 
 Enable database API caching whenever practical at service creation
 time, as it will undoubtedly improve performance.
@@ -42,7 +44,7 @@ Redis. Please see these links to see connection tutorials:
  1. [YouTube - Setting up and using Redis](c94200f4d0567522370908afcdafd28d)<br>
  2. [Blog - Caching](http://blog.dreamfactory.com/new-dreamfactory-cache-service-supports-redis-memcahed-and-local-storage/)
 
-## Security
+## CORS Security
 
 Always make sure your `CORS` settings are only set for the appropriate "scheme/host/port tuple" to ensure you are observing the maximum security you can by only allowing cross origin resources access when there is no other way around it.  For a great explanation of `CORS` and how they work, please see this [article](http://performantcode.com/web/do-you-really-know-cors).  
 
@@ -62,13 +64,7 @@ the API, and then associate the role with a new App and corresponding
 API Key. Don't be afraid to create multiple roles and therefore
 multiple corresponding API keys if you'd like to limit API access in
 different ways on a per-client or group basis.
-* You can see an example of the multitude of API Keys we have generated on our demo server.  Don't be shy!
 
-<img src="/images/10/api_keys.png" width="800">
-
-* You should always make sure you set up the roles you need.  The first shot is a picture of what the roles tab looks like.  
-
-<img src="/images/10/roles.png" width="800">
 
 * Should you need to make API documentation available to team members,
 use DreamFactory's user-centric role assignment feature to make solely
@@ -77,10 +73,9 @@ unnecessary administrative access.
 
 <img src="/images/10/role_detail.png" width="800">
 
-Configure your DreamFactory web administration console to use SSL.
-Never run your environment on port 80 as like any web application it
-raises the likelihood your administration login credentials could be
-stolen by a malicious third-party.  You should be running on port 443. One of our favorite resources to create SSL certificates is [Let's Encrypt](https://letsencrypt.org/getting-started/).
+### Secure Your Web Traffic
+
+From a networking standpoint DreamFactory is a typical web application, meaning you can easily encrypt all web traffic between the platform and client using an SSL certificate. Unless you've already taken steps to add an SSL certificate to your web server, by default your DreamFactory instance will run on port 80, which means all traffic between your DreamFactory server and client will be unencrypted and therefore subject to capture and review. To fix this, you'll want to install an SSL certificate. One of our favorite resources to create SSL certificates is [Let's Encrypt](https://letsencrypt.org/getting-started/).
 
 Below are resources on how to add an SSL cert to your web server:
 1. [Nginx](http://nginx.org/en/docs/http/configuring_https_servers.html)
