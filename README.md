@@ -7,7 +7,7 @@ sidebar: auto
 Welcome to the DreamFactory platform! Whether you’re an open source user, or a paid customer taking advantage of DreamFactory’s advanced capabilities, we wrote this guide to help you begin incorporating the platform into your organization in the most efficient way possible.
 
 ::: warning
-This guide is under heavy development, with two of a projected seven chapters complete as of September 25. We estimate a new chapter will be completed every few days, so be sure to check back regularly for updates!
+This guide is under heavy development, and is a work-in-progress. Check back regularly as we'll be updating the guide on a daily basis!
 :::
 
 ## About this Guide
