@@ -3,7 +3,7 @@ sidebar: auto
 ---
 # Chapter 10. Production Best Practices
 
-While DreamFactory is already fairly fast, secure and maintenance free out of the box, there are quite a few modifications you can make to enhance your instance.  We have broken these down into several categories to make focusing on individual features easier, almost as a checklist for optimal performance and maintenance.
+The DreamFactory platform is build atop the open source [Laravel](https://www.laravel.com) framework, which is not only an incredibly popular web framework thanks to its' pragmatic approach, fantastic documentation, and varied ecosystem, but it's also used in mission critical applications around the world. That said, while you're going to be satisfied with DreamFactory's out-of-the-box performance, there are a few modifications you can make to enhance your instance. In this chapter we'll enumerate different considerations, breaking down the suggestions by category.
 
 ## Performance
 
