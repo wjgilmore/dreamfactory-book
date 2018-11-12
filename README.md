@@ -42,7 +42,7 @@ The ability to merely auto-generate a REST API is already going to produce an im
 
 You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
-### [Chapter 8. Production Best Practices](docs/chapter10.md)
+### [Chapter 8. Optimizing, Securing, and Maintaining Your DreamFactory Enviroment](docs/chapter08.md)
 
 While DreamFactory is already fairly fast, secure, and relatively maintenance free, there are quite a few modifications you can make to enhance your instance. In this chapter we'll provide a wide ranging overview of the many changes you can make to optimize, maintain, and secure your environment.
 
