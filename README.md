@@ -7,7 +7,7 @@ sidebar: auto
 Welcome to the DreamFactory platform! Whether you’re an open source user, or a paid customer taking advantage of DreamFactory’s advanced capabilities, we wrote this guide to help you begin incorporating the platform into your organization in the most efficient way possible.
 
 ::: warning
-This guide is under heavy development, and is a work-in-progress. Check back regularly as we'll be updating the guide on a daily basis!
+This guide is under heavy development, and is a work-in-progress. Check back often as we'll be publishing updates regularly!
 :::
 
 ## About this Guide
@@ -24,7 +24,7 @@ Much of the DreamFactory platform is open source, with the code made available v
 
 ### [Chapter 3. Generating a Database-backed API](docs/chapter03.md)
 
-After installing your DreamFactory instance, it’s only natural to want to see what the platform can do. For most users, this means generating a database API, because the advantages of doing so are so evident. By merely supplying a set of authentication credentials, DreamFactory will generate an API for any of an array of popular databases, including MySQL, SQL Server, Oracle, PostgreSQL, MongoDB, and others. Once generated, you’ll be able to issue REST calls to carry out record creation, retrieval, modification, and deletion tasks. You’ll also be able to perform advanced queries using the REST API, including filters, grouping, joins, limiting, and more. 
+After installing your DreamFactory instance, you'll naturally want to take the platform for a test drive. Most users desire to begin by generating a database API, because the advantages of doing so are so evident. By merely supplying a set of authentication credentials, DreamFactory will generate an API for any of an array of popular databases, including MySQL, SQL Server, Oracle, PostgreSQL, MongoDB, and others. Once generated, you can immediately beging issuing REST API calls to carry out record creation, retrieval, modification, and deletion tasks. You’ll also be able to perform advanced queries using the REST API, including filters, grouping, joins, limiting, and more. 
 
 ### Chapter 4. Authenticating and Monitoring Users
 
@@ -32,11 +32,11 @@ From the moment your API is generated, rest assured it is protected by at minimu
 
 ### [Chapter 5. Generating a SOAP-to-REST API](docs/chapter05.md)
 
-The SOAP Protocol has long been instrumental to network-based data exchange, however over time REST has slowly gained influence within enterprises, with many DreamFactory users seeking to supplant their SOAP services with a REST-based solution.
+The SOAP Protocol has long been instrumental to network-based data exchange, however over time REST has slowly gained influence within enterprises, with many DreamFactory users seeking to supplant their SOAP services with a REST-based solution. In this chapter you'll learn how to mount an existing SOAP service to DreamFactory and interact with it using an auto-generated REST interface.
 
 ### Chapter 6. Integrating Business Logic
 
-The DreamFactory team regularly works with customers around the globe to build highly customized services based atop our platform. Most often this involves using DreamFactory’s scripting feature, which allows you to write custom code used to validating input parameters, call other APIs, and much, much more.
+The ability to merely auto-generate a REST API is already going to produce an immediate productivity boost, however eventually you're going to want to tweak one or more API endpoints' default behavior to accommodate more sophisticated project requirements. Most often this involves using DreamFactory’s scripting feature, which allows you to write custom code used to validating input parameters, call other APIs, and much more. In this chapter we'll walk through several real-world examples which highlight how easy it is to extend your API endpoints with one of four supported scripting engines (NodeJS, PHP, Python, and V8JS).
 
 ### [Chapter 7. Monetizing Your APIs using Limiting and Logging](docs/chapter07.md)
 
@@ -44,9 +44,15 @@ You've taken months if not years to amass and curate a valuable data set, and no
 
 ### [Chapter 8. Production Best Practices](docs/chapter10.md)
 
-While DreamFactory is already fairly fast, secure and maintenance free out of the box, there are quite a few modifications you can make to enhance your instance.  We have broken these down into several categories to make focusing on individual features easier, almost as a checklist.
+While DreamFactory is already fairly fast, secure, and relatively maintenance free, there are quite a few modifications you can make to enhance your instance. In this chapter we'll provide a wide ranging overview of the many changes you can make to optimize, maintain, and secure your environment.
 
 ## More Ways to Learn
+
+Hopefully you'll find this guide indispensable, however it's just one of several learning resources at your disposal. Check out the following links to learn more about what else is available!
+
+### The DreamFactory Wiki
+
+The [DreamFactory wiki](https://wiki.dreamfactory.com) is our definitive reference guide, providing a terse but comprehensive summary of the platform's key features. Here you'll find installation instructions, scripting examples, and a great deal of other information.
 
 ### Videos
 
