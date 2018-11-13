@@ -2,7 +2,7 @@ module.exports = {
   title: 'Getting Started with DreamFactory',
   description: 'A hands-on introduction to the powerful DreamFactory API generation platform',
   themeConfig: {
-    logo: '/images/dreamfactory-logo.png',
+    logo: '/images/mark-white.png',
   	displayAllHeaders: true,
   	nav: [
       { text: 'Home', link: '/' },
