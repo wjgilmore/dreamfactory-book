@@ -7,7 +7,45 @@ You've taken months if not years to amass and curate a valuable data set, and no
 
 ## Logging
 
-You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
+Logging is one of a few best practice steps you can take to monitor the data exposition of the API endpoints from your DreamFactory instance.  In this day and age, with the amount of data breaches [increasing year over year](https://www.nbcnews.com/business/consumer/data-breaches-happening-record-pace-report-finds-n785881) at an alarming rate, it is no wonder why there are more and more restrictions and sanctions being inforced on how a company handles consumer data.  You may be familiar with one of the biggest pieces of legislation to ever be enacted in order to try and provide some protection for consumers in the European Union, know as the General Data Protection Regulation, or [GDPR](https://eugdpr.org/).  GDPR represents only some of the ways in which privacy information must be guarded, and with it, the access to that information.  Healthcare, Government, and Education sectors all deal with senstive or personal information. With Dreamfactory you can follow these [best practice steps](https://sematext.com/blog/gdpr-top-5-logging-best-practices/) to lock down access to the logged information, but still stay compliant with many of the regulations required in these spaces:
+* Centralize log storage 
+* Delete local logs from your servers (periodically)
+* Structure your logs 
+* Anonymize sensitive data fields in logs 
+* Encrypted logs in transit 
+
+For a deeper look into how that can be accomplished, please read on. 
+
+#### Logstash
+
+In the commercial editions of DreamFactory, a Logstash connector can be exposed in order to dramatically increase your logging capabilites over the standard Open Source or Silver licenses.  This connector can interface easily with the rest of the ELK stack (Elasticsearch, Logstash, Kibana) from [Elastic.io](https://www.elastic.co) or connect to other analytics and monitoring sources such as open source [Grafana](https://grafana.com/).
+
+First things first, though.  You need to get your Logstash connector hooked up and ready to go.  To enable the connector you start by creating service just as you would any other service.  Take a look at the below screenshot.  As you can see at the top of the screenshot, I have selected `Logstash` as the type, and have named the service "Logstash".
+
+<img src="/images/07/logstash.png" alt="Logstash service setup" width="800">
+
+After adding your name, label and description, migrate over to the "Config" tab at the top of the service creation page.  In the next two screenshots you can see the fields and options you will need to select.  In the first screenshot, you will add the host.  In this case, I am hosting the Logstash connector locally, on my DreamFactory instance. The other optios are the "Port" and "Protocol".  In this case I am exposing port 12201 and using the [GELF protocol](https://www.elastic.co/guide/en/logstash/current/plugins-outputs-gelf.html). <br>
+
+<img src="/images/07/logstash_host.png" alt="Logstash hostname setup" width="800">
+
+In this second screenshot, you can see some of the logging options available to you via the Logstash connector.  I have also added a few services that I would like to log.  You can pick various levels information you would like to log.  For more detailed information, please see this [article](https://www.elastic.co/guide/en/logstash/current/logstash-settings-file.html).
+Valid options are:
+
+* fatal
+* error
+* warn
+* info
+* debug
+* trace
+* info
+
+<img src="/images/07/logstash_service_config.png" alt="Logstash service config setup" width="800">
+
+Additional Resources:<br>
+[Logstash Performance Tuning](https://www.elastic.co/guide/en/logstash/current/tuning-logstash.html)<br>
+[ELK Stack GDPR Compliance](https://www.elastic.co/pdf/white-paper-of-gdpr-compliance-with-elastic-and-the-elastic-stack.pdf)<br>
+[DreamFactory Security Whitepaper](http://info.dreamfactory.com/security_whitepaper/)<br>
+[Logz.io Blog Post](https://logz.io/learn/complete-guide-elk-stack/)
 
 ## DreamFactory API Rate Limiting
 
