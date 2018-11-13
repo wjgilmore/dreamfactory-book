@@ -6,14 +6,20 @@ sidebar: auto
 
 The DreamFactory platform is build atop the [Laravel](https://www.laravel.com). Laravel is an amazing PHP-based framework that in just a few short years has grown in popularity to become one of the today's most popular framework solutions regardless of language. We speculate there are several reasons for such soaring popularity, including a thoroughly pragmatic approach, security-first implementation, fantastic documentation, and a comprehensive ecosystem (in addition to the framework itself, the Laravel development team also maintains an e-commerce framework called Spark, an application adminstration toolkit called Nova, and an application deployment service called Envoyer. Further, it's also quite performant, capable of serving as the backbone for high-traffic, mission critical applications. Regardless, like any application you're going to want to learn all you can about how to best go about maintaining, securing, and optimizing the environment. This chapter tackles all three topics.
 
-## Optimizing DreamFactory
+## Optimizing DreamFactory's Database APIs
 
-## Database API Performance
+Ensuring the DreamFactory-generated database APIs are running at peak performance is accomplished by ensuring your database is properly configured, has been allocated appropriate hardware and network resources, and turning on DreamFactory's database caching feature. In this section we'll talk more about all of these tasks.
 
-For database-backed APIs, there is no more impactful task one could take than properly indexing the database in addition to ensuring the database server has been allocated appropriate hardware and network resources. Please see the below links for references to database optimization.
+## Index the Database
 
-1. [MySQL](https://dev.mysql.com/doc/refman/5.7/en/optimization.html)
-2. [SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/performance/performance-center-for-sql-server-database-engine-and-azure-sql-database?view=sql-server-2017)
+For database-backed APIs, there is no more impactful task one could take than properly indexing the database. Database indexing is what allows your database engine to quickly identify which rows match conditions defined by a `where` clause. Refer to the following resources for both general and database-specific indexing information:
+
+* [Database Indexes Defined](https://en.wikipedia.org/wiki/Database_index)
+* [Microsoft SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/indexes/indexes?view=sql-server-2017)
+* [MongoDB](https://docs.mongodb.com/manual/indexes/)
+* [MySQL](https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html)
+* [Oracle](https://docs.oracle.com/cd/E11882_01/server.112/e40540/indexiot.htm#CNCPT721)
+* [PostgreSQL](https://www.postgresql.org/docs/9.1/indexes.html)
 
 ### Database API Caching
 
