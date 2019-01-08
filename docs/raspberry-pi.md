@@ -2,7 +2,7 @@
 sidebar: auto
 ---
 
-# Chapter 3. Installing DreamFactory on a Raspberry Pi
+# Chapter 9. Installing DreamFactory on a Raspberry Pi
 
 For this tutorial we used Raspberry Pi's official [Raspbian](https://www.raspberrypi.org/downloads/) operating system. Raspbian is Debian-based, and although it doesn't include all of the requisites required by DreamFactory, as you'll see those can be installed easily enough.
 
@@ -41,3 +41,12 @@ With these changes in place, you'll be able to install PHP 7.1 or newer and ther
 ### Installing DreamFactory
 
 Next we'll install the DreamFactory and its prerequisite software, beginning with the latter. Rather than create a redundant set of instructions, we'll instead point you to [the DreamFactory wiki](http://wiki.dreamfactory.com/DreamFactory/APT/Ubuntu_16.04/Installation). We followed the NGINX-specific instructions and everything worked perfectly.
+
+### Home Automation Ideas
+
+There are a number of great open source home automation libraries which could be easily integrated into your DreamFactory / Raspberry Pi environment:
+
+* [PHP TP-Link Smartplug](https://github.com/jonnywilliamson/tplinksmartplug): This PHP library supports a variety of TPLink Smartplug devices.
+* [Python TP-Link WiFi SmartPlug Client](https://github.com/softScheck/tplink-smartplug): This Python library also supports a number of TPLink devices
+
+Be sure to let us know if you use these or other libraries in your DreamFactory projects!
