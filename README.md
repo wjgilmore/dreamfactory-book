@@ -12,7 +12,7 @@ This guide is under heavy development, and is a work-in-progress. Check back oft
 
 ## About this Guide
 
-This guide consists of seven chapters, covering the following topics:
+This guide consists of nine chapters, covering the following topics:
 
 ### [Chapter 1. Introducing REST and DreamFactory](docs/chapter01.md)
 
@@ -44,7 +44,11 @@ You've taken months if not years to amass and curate a valuable data set, and no
 
 ### [Chapter 8. Optimizing, Securing, and Maintaining Your DreamFactory Enviroment](docs/chapter08.md)
 
-While DreamFactory is already fairly fast, secure, and relatively maintenance free, there are quite a few modifications you can make to enhance your instance. In this chapter we'll provide a wide ranging overview of the many changes you can make to optimize, maintain, and secure your environment.
+While DreamFactory is already fast, secure, and relatively maintenance free, there are quite a few modifications you can make to enhance your instance. In this chapter we'll provide a wide ranging overview of the many changes you can make to optimize, maintain, and secure your environment.
+
+### [Chapter 9. Running DreamFactory on a Raspberry Pi](docs/raspberry-pi.md)
+
+DreamFactory's a really fascinating project in that its architecture is suitable for infinite horizontal and vertical scaling, yet can be run on small appliance-like devices such as the Raspberry Pi. In this chapter we'll talk about a few configuration-related gotchas associated with installing DreamFactory's prerequisites on the Raspberry Pi.
 
 ## More Ways to Learn
 
