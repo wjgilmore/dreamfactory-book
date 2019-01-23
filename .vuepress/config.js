@@ -9,5 +9,6 @@ module.exports = {
       { text: 'Contact', link: 'https://www.dreamfactory.com/contact' },
       { text: 'Sales', link: 'https://www.dreamfactory.com/contact' }
     ]
-  }
+  },
+  ga: 'UA-40461579-9'
 }
