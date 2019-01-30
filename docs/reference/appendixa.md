@@ -15,7 +15,9 @@ sidebar: auto
 * `APP_TIMEZONE`: Here you may specify the default timezone for your application, which will be used by the PHP date and date-time functions
 * `APP_URL`: This URL is used by the console to properly generate URLs when using the Artisan command line tool. You should set this to the root of your application so that it is used when running Artisan tasks
 * `DF_LANDING_PAGE`: This is the starting point (page, application, etc.) when a browser points to the server root URL
-# Database settings
+
+## Database settings
+
 * `DB_CONNECTION`: This corresponds to the driver that will be supporting connections to the system database server
 * `DB_HOST`: The hostname or IP address of the system database server
 * `DB_PORT`: The connection port for the host given, or blank if the provider default is used
@@ -26,10 +28,14 @@ sidebar: auto
 * `DB_COLLATION`: The character set collation override if required. Defaults use utf8_unicode_ci, except utf8mb4_unicode_ci for MySQL-based database - may cause problems for pre-5.7.7 (MySQL) or pre-10.2.2 (MariaDB), if so, use utf8_unicode_ci
 * `DB_MAX_RECORDS_RETURNED`: This is the default number of records to return at once for database queries
 * `DF_SQLITE_STORAGE`: This is the default location to store SQLite3 database files
-# FreeTDS configuration (Linux and OS X only)
+
+## FreeTDS configuration (Linux and OS X only)
+
 * `DF_FREETDS_DUMP`: Enabling and location of dump file, defaults to disabled or default freetds.conf setting"
 * `DF_FREETDS_DUMPCONFIG`: Location of connection dump file, defaults to disabled"
-# Cache
+
+## Cache
+
 * `CACHE_DRIVER`: What type of driver or connection to use for cache storage
 * `CACHE_DEFAULT_TTL`: Default cache time-to-live, defaults to 300
 * `CACHE_PREFIX`: A prefix used for all cache written out from this installation
@@ -43,7 +49,9 @@ sidebar: auto
 * `CACHE_PERSISTENT_ID`: Memcached persistent ID setting
 * `CACHE_WEIGHT`: Memcached weight setting
 * `CACHE_DATABASE`: The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file
-# Limits
+
+## Limits
+
 * `LIMIT_CACHE_DRIVER`: What type of driver or connection to use for limit cache storage
 * `LIMIT_CACHE_PREFIX`: A prefix used for all cache written out from this installation
 * `LIMIT_CACHE_PATH`: Path to a folder where limit tracking information will be stored
@@ -55,7 +63,9 @@ sidebar: auto
 * `LIMIT_CACHE_PERSISTENT_ID`: Memcached persistent ID setting
 * `LIMIT_CACHE_WEIGHT`: Memcached weight setting
 * `LIMIT_CACHE_DATABASE`: The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file
-# Queuing
+
+## Queuing
+
 * `QUEUE_DRIVER`: What type of driver or connection to use for queuing jobs on the server
 * `QUEUE_NAME`: Name of the queue to use, defaults to 'default'
 * `QUEUE_RETRY_AFTER`: Number of seconds after to retry a failed job, defaults to 90
@@ -68,16 +78,20 @@ sidebar: auto
 * `SQS_SECRET`: AWS credentials
 * `SQS_REGION`: AWS storage region
 * `SQS_PREFIX`: AWS SQS specific prefix for queued jobs
-# Event Broadcasting
+
+## Event Broadcasting
+
 * `BROADCAST_DRIVER`: What type of driver or connection to use for broadcasting events from the server
-* `PUSHER_APP_ID"]=
-* `PUSHER_APP_KEY"]=
-* `PUSHER_APP_SECRET"]=
+* `PUSHER_APP_ID`:
+* `PUSHER_APP_KEY`:
+* `PUSHER_APP_SECRET`:
 * `BROADCAST_HOST`: The hostname or IP address of the redis server
 * `BROADCAST_PORT`: The connection port for the host given, or blank if the provider default is used
 * `BROADCAST_DATABASE`: The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file
 * `BROADCAST_PASSWORD`: Credentials for the service if required
-# User Management
+
+## User Management
+
 * `DF_LOGIN_ATTRIBUTE`: By default DreamFactory uses an email address for user authentication. You can change this to use username instead by setting this to 'username'
 * `DF_CONFIRM_CODE_LENGTH`: New user confirmation code length. Max/Default is 32. Minimum is 5
 * `DF_CONFIRM_CODE_TTL`: Confirmation code expiration. Default is 1440 minutes (24 hours)
@@ -88,11 +102,15 @@ sidebar: auto
 * `DF_CONFIRM_RESET_URL`: Application path to where password resets are to be handled
 * `DF_CONFIRM_INVITE_URL`: Application path to where invited users are to be handled
 * `DF_CONFIRM_REGISTER_URL`: Application path to where user registrations are to be handled
-# Server-side Scripting
+
+## Server-side Scripting
+
 * `DF_SCRIPTING_DISABLE`: To disable all server-side scripting set this to 'all', or comma-delimited list of v8js, nodejs, python, and/or php to disable individually
 * `DF_NODEJS_PATH`: The system will try to detect the executable path, but in some environments it is best to set the path to the installed Node.js executable
 * `DF_PYTHON_PATH`: The system will try to detect the executable path, but in some environments it is best to set the path to the installed Python executable"
-# API
+
+## API
+
 * `DF_API_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/<api_route_prefix>/v<version_number>"
 * `DF_STATUS_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/[<status_route_prefix>/]status"
 * `DF_STORAGE_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/[<storage_route_prefix>/]<storage_service_name>/<file_path>"
@@ -100,10 +118,13 @@ sidebar: auto
 * `DF_ALWAYS_WRAP_RESOURCES`: Most API calls return a resource array or a single resource, if array, do we wrap it?"
 * `DF_RESOURCE_WRAPPER`: Most API calls return a resource array or a single resource, if array, what do we wrap it with?"
 * `DF_CONTENT_TYPE`: Default content-type of response when accepts header is missing or empty
-# Storage
+
+## Storage
+
 * `DF_FILE_CHUNK_SIZE`: File chunk size for downloadable files in bytes. Default is 10MB
-# Other settings
+
+## Other settings
+
 * `DF_PACKAGE_PATH`: Path to a package file, folder, or URL to import during instance launch
 * `DF_LOOKUP_MODIFIERS`: Lookup management, comma-delimited list of allowed lookup modifying functions like urlencode, trim, etc. Note: Setting this will disable a large list of modifiers already internally configured
-* `DF_INSTALL`: This designates from where or how this instance of the application was installed, i.e. Bitnami, GitHub, DockerHub, etc
-)APP_CIPHER
+* `DF_INSTALL`: This designates from where or how this instance of the application was installed, i.e. Bitnami, GitHub, DockerHub, etc.
