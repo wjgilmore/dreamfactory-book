@@ -113,20 +113,18 @@ Next, open your .env file and look for this section:
 
     CACHE_DRIVER=redis
 
-Next, scroll down and uncomment these lines by removing the #, and then update the CACHE_HOST, CACHE_PORT, and (optionally) the CACHE_PASSWORD parameters to match your Redis environment:
+Next, scroll down and uncomment these lines by removing the `#`, and then update the `CACHE_HOST`, `CACHE_PORT`, and (optionally) the `CACHE_PASSWORD` parameters to match your Redis environment:
 
     ## If CACHE_DRIVER = memcached or redis
     #CACHE_HOST=
     #CACHE_PORT=
     #CACHE_PASSWORD=
 
-Finally, scroll down to the following section and uncomment CACHE_DATABASE and REDIS_CLIENT.
+Finally, scroll down to the following section and uncomment `CACHE_DATABASE` and `REDIS_CLIENT`:
 
     ## If CACHE_DRIVER = redis
     #CACHE_DATABASE=2
     ## Which Redis client to use: predis or phpredis (PHP extension)
     #REDIS_CLIENT=predis
 
-You can probably leave CACHE_DATABASE set to 2. For the REDIS_CLIENT you can leave it set to predis if you've installed the predis/predis package (recommended). 
-
-Curious for how long did you program the sleep statement? It is almost certainly the case that Amazon S3 is not yet broadcasting availability of that bucket/file at the point the next script attempts to query it.
+You can probably leave CACHE_DATABASE set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). 
