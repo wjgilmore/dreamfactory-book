@@ -275,38 +275,19 @@ Fortunately, there are a number of HTTP clients which fill this void very well. 
 
 ### Insomnia
 
-Insomnia is a cross-platform REST client, built on top of [Electron](https://electronjs.org/). Insomnia is realtively new on the scene compared to cURL and Postman but offers a bevy of features that certainly make it competitive.  They have a very slick UI, and a ton of features, including a team option.  
-
-* Insomnia Quick Links:<br>
-[Downloads](https://insomnia.rest/download/)<br>
-[Knowledge Base](https://support.insomnia.rest/)<br>
-[Pricing and Plans](https://insomnia.rest/pricing/)<br>
-[Source Code](https://github.com/getinsomnia/insomnia)<br>
+[Insomnia](https://insomnia.rest) is a cross-platform REST client, built on top of [Electron](https://electronjs.org/). Insomnia is realtively new on the scene compared to cURL and Postman but offers a bevy of features that certainly make it competitive.  They have a very slick UI, and a ton of features, including a team option.  
 
 <img src="/images/02/insomnia.png" width="800">
 
 ### Postman
 
-Postman is a tried and true GUI interface with great docs to help you set up your testing environment.  They have plans for everyone, from free solo users to large, enterprise teams.  Postman also has a great feature called [API Network](https://www.getpostman.com/api-network/), which has sample API calls from all sorts of sources.  It is definitely worth a look.
-
-* Postman Quick Links:<br>
-[Downloads](https://www.getpostman.com/apps)<br>
-[Knowledge Base](https://learning.getpostman.com/)<br>
-[Pricing and Plans](https://www.getpostman.com/pricing?_ga=2.241677442.1436173968.1540494277-867852077.1540494277)<br>
-[Source Code](https://github.com/postmanlabs)
+[Postman](https://www.getpostman.com) is a tried and true GUI interface with great docs to help you set up your testing environment.  They have plans for everyone, from free solo users to large, enterprise teams.  Postman also has a great feature called [API Network](https://www.getpostman.com/api-network/), which has sample API calls from all sorts of sources.  It is definitely worth a look.
 
 <img src="/images/02/postman1.png" width="800">
 
 ### cURL
 
-
-cURL's lack of a polished interface may lead you to believe it's inferior to Insomnia and Postman. Not so! cURL is an incomparably capable bit of software.  cURL is a command line tool and library for transferring data with URL syntax, supporting HTTP, HTTPS, FTP, FTPS, GOPHER, TFTP, SCP, SFTP, SMB, TELNET, DICT, LDAP, LDAPS, FILE, IMAP, SMTP, POP3, RTSP and RTMP. libcurl offers a myriad of powerful features
-
-* cURL Quick Links:<br>
-[Downloads](https://curl.haxx.se/download.html)<br>
-[Knowledge Base](https://curl.haxx.se/docs/)<br>
-[Source Code](https://github.com/curl/curl)
-
+[cURL's](https://curl.haxx.se/) lack of a polished interface may lead you to believe it's inferior to Insomnia and Postman. Not so! cURL is an incomparably capable bit of software.  cURL is a command line tool and library for transferring data with URL syntax, supporting HTTP, HTTPS, FTP, FTPS, GOPHER, TFTP, SCP, SFTP, SMB, TELNET, DICT, LDAP, LDAPS, FILE, IMAP, SMTP, POP3, RTSP and RTMP. libcurl offers a myriad of powerful features
 
 ## Conclusion
 
