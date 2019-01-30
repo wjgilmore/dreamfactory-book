@@ -7,7 +7,7 @@ sidebar: auto
 * `APP_CIPHER`: Database encryption cipher, options are AES-128-CBC or AES-256-CBC (default). Only change this if you are starting from a clean database
 * `APP_DEBUG`: When your application is in debug mode, detailed error messages with stack traces will be shown on every error that occurs within your application. If disabled, a simple generic error page is shown
 * `APP_ENV`: This may determine how various services behave in your application
-* `APP_KEY`: This key is used by the application for encryption and should be set to a random, 32 character string, otherwise these encrypted strings will not be safe. Use 'php artisan key:generate' to generate a new key. Please do this before deploying an application!"
+* `APP_KEY`: This key is used by the application for encryption and should be set to a random, 32 character string, otherwise these encrypted strings will not be safe. Use 'php artisan key:generate' to generate a new key. Please do this before deploying an application!
 * `APP_LOCALE`: The application locale determines the default locale that will be used by the translation service provider. Currently only 'en' (English) is supported
 * `APP_LOG`: This setting controls the placement and rotation of the log file used by the application
 * `APP_LOG_LEVEL`: The setting controls the amount and severity of the information logged by the application. This is hierarchical and goes in the following order: DEBUG -> INFO -> NOTICE -> WARNING -> ERROR -> CRITICAL -> ALERT -> EMERGENCY. If you set log level to WARNING then all WARNING, ERROR, CRITICAL, ALERT, and EMERGENCY will be logged. Setting log level to DEBUG will log everything. Default is WARNING
@@ -31,8 +31,8 @@ sidebar: auto
 
 ## FreeTDS configuration (Linux and OS X only)
 
-* `DF_FREETDS_DUMP`: Enabling and location of dump file, defaults to disabled or default freetds.conf setting"
-* `DF_FREETDS_DUMPCONFIG`: Location of connection dump file, defaults to disabled"
+* `DF_FREETDS_DUMP`: Enabling and location of dump file, defaults to disabled or default freetds.conf setting
+* `DF_FREETDS_DUMPCONFIG`: Location of connection dump file, defaults to disabled
 
 ## Cache
 
@@ -95,7 +95,7 @@ sidebar: auto
 * `DF_LOGIN_ATTRIBUTE`: By default DreamFactory uses an email address for user authentication. You can change this to use username instead by setting this to 'username'
 * `DF_CONFIRM_CODE_LENGTH`: New user confirmation code length. Max/Default is 32. Minimum is 5
 * `DF_CONFIRM_CODE_TTL`: Confirmation code expiration. Default is 1440 minutes (24 hours)
-* `DF_ALLOW_FOREVER_SESSIONS`: false"
+* `DF_ALLOW_FOREVER_SESSIONS`: false
 * `JWT_SECRET`: If a separate encryption salt is required for JSON Web Tokens, place it here. Defaults to the APP_KEY setting
 * `DF_JWT_TTL`: The time-to-live for JSON Web Tokens, i.e. how long each token will remain valid to use
 * `DF_JWT_REFRESH_TTL`: The time allowed in which a JSON Web Token can be refreshed from its origination
@@ -107,16 +107,16 @@ sidebar: auto
 
 * `DF_SCRIPTING_DISABLE`: To disable all server-side scripting set this to 'all', or comma-delimited list of v8js, nodejs, python, and/or php to disable individually
 * `DF_NODEJS_PATH`: The system will try to detect the executable path, but in some environments it is best to set the path to the installed Node.js executable
-* `DF_PYTHON_PATH`: The system will try to detect the executable path, but in some environments it is best to set the path to the installed Python executable"
+* `DF_PYTHON_PATH`: The system will try to detect the executable path, but in some environments it is best to set the path to the installed Python executable
 
 ## API
 
-* `DF_API_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/<api_route_prefix>/v<version_number>"
-* `DF_STATUS_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/[<status_route_prefix>/]status"
-* `DF_STORAGE_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/[<storage_route_prefix>/]<storage_service_name>/<file_path>"
+* `DF_API_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/<api_route_prefix>/v<version_number>
+* `DF_STATUS_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/[<status_route_prefix>/]status
+* `DF_STORAGE_ROUTE_PREFIX`: By default, API calls take the form of http://<server_name>/[<storage_route_prefix>/]<storage_service_name>/<file_path>
 * `DF_XML_ROOT`: XML root tag for HTTP responses
-* `DF_ALWAYS_WRAP_RESOURCES`: Most API calls return a resource array or a single resource, if array, do we wrap it?"
-* `DF_RESOURCE_WRAPPER`: Most API calls return a resource array or a single resource, if array, what do we wrap it with?"
+* `DF_ALWAYS_WRAP_RESOURCES`: Most API calls return a resource array or a single resource, if array, do we wrap it?
+* `DF_RESOURCE_WRAPPER`: Most API calls return a resource array or a single resource, if array, what do we wrap it with?
 * `DF_CONTENT_TYPE`: Default content-type of response when accepts header is missing or empty
 
 ## Storage
