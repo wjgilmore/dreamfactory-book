@@ -50,6 +50,10 @@ While DreamFactory is already fast, secure, and relatively maintenance free, the
 
 DreamFactory's a really fascinating project in that its architecture is suitable for infinite horizontal and vertical scaling, yet can be run on small appliance-like devices such as the Raspberry Pi. In this chapter we'll talk about a few configuration-related gotchas associated with installing DreamFactory's prerequisites on the Raspberry Pi.
 
+### [Appendix A. Configuration Parameter Reference](docs/reference/appendixa.md)
+
+DreamFactory is packed with features capable of being tweaked via configuration parameters. These parameters can be managed as server environment variables or within a `.env` file found in the platform's root directory. This appendix defines all available parameters.
+
 ## More Ways to Learn
 
 Hopefully you'll find this guide indispensable, however it's just one of several learning resources at your disposal. Check out the following links to learn more about what else is available!
