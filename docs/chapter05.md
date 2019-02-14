@@ -10,6 +10,6 @@ The SOAP-to-REST connector is available in the DreamFactory Silver and Gold Edit
 
 ## Video-based Learning
 
-If video-based learning is more your style, check out the ~12 minute Youtube video we created which walks 
+If video-based learning is more your style, check out the ~12 minute Youtube video we created which walks you through the configuration and access process:
 
 <iframe width="672" height="378" src="https://www.youtube.com/embed/z-K2VeFaGRQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
