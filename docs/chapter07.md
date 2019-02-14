@@ -1,13 +1,14 @@
 ---
 sidebar: auto
 ---
-# Chapter 7. Monetizing Your APIs using Limiting and Logging
+# Chapter 7. Limiting and Logging Your APIs
 
-You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
+In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
 ## Logging
 
-Logging is one of a few best practice steps you can take to monitor the data exposition of the API endpoints from your DreamFactory instance.  In this day and age, with the amount of data breaches [increasing year over year](https://www.nbcnews.com/business/consumer/data-breaches-happening-record-pace-report-finds-n785881) at an alarming rate, it is no wonder why there are more and more restrictions and sanctions being inforced on how a company handles consumer data.  You may be familiar with one of the biggest pieces of legislation to ever be enacted in order to try and provide some protection for consumers in the European Union, know as the General Data Protection Regulation, or [GDPR](https://eugdpr.org/).  GDPR represents only some of the ways in which privacy information must be guarded, and with it, the access to that information.  Healthcare, Government, and Education sectors all deal with senstive or personal information. With Dreamfactory you can follow these [best practice steps](https://sematext.com/blog/gdpr-top-5-logging-best-practices/) to lock down access to the logged information, but still stay compliant with many of the regulations required in these spaces:
+Logging is one of a few best practice steps you can take to monitor the data exposition of the API endpoints from your DreamFactory instance.  In this day and age, with the amount of data breaches [increasing year over year](https://www.nbcnews.com/business/consumer/data-breaches-happening-record-pace-report-finds-n785881) at an alarming rate, it is no wonder why there are more and more restrictions and sanctions being inforced on how a company handles consumer data.  You may be familiar with one of the biggest pieces of legislation to ever be enacted in order to try and provide some protection for consumers in the European Union, know as the General Data Protection Regulation, or [GDPR](https://eugdpr.org/). GDPR represents only some of the ways in which privacy information must be guarded, and with it, the access to that information.  Healthcare, Government, and Education sectors all deal with senstive or personal information. With Dreamfactory you can follow these [best practice steps](https://sematext.com/blog/gdpr-top-5-logging-best-practices/) to lock down access to the logged information, but still stay compliant with many of the regulations required in these spaces:
+
 * Centralize log storage 
 * Delete local logs from your servers (periodically)
 * Structure your logs 
@@ -18,9 +19,9 @@ For a deeper look into how that can be accomplished, please read on.
 
 #### Logstash
 
-In the commercial editions of DreamFactory, a Logstash connector can be exposed in order to dramatically increase your logging capabilites over the standard Open Source or Silver licenses.  This connector can interface easily with the rest of the ELK stack (Elasticsearch, Logstash, Kibana) from [Elastic.io](https://www.elastic.co) or connect to other analytics and monitoring sources such as open source [Grafana](https://grafana.com/).
+DreamFactory's Gold edition offers ELK (Elasticsearch, Logstash, Kibana) support via the Logstash connector. This connector can interface easily with the rest of the ELK stack (Elasticsearch, Logstash, Kibana) from [Elastic.io](https://www.elastic.co) or connect to other analytics and monitoring sources such as open source [Grafana](https://grafana.com/).
 
-First things first, though.  You need to get your Logstash connector hooked up and ready to go.  To enable the connector you start by creating service just as you would any other service.  Take a look at the below screenshot.  As you can see at the top of the screenshot, I have selected `Logstash` as the type, and have named the service "Logstash".
+First things first, though. You need to get your Logstash connector hooked up and ready to go. To enable the connector you start by creating service just as you would any other service. Take a look at the below screenshot. As you can see at the top of the screenshot, I have selected `Logstash` as the type, and have named the service "Logstash".
 
 <img src="/images/07/logstash.png" alt="Logstash service setup" width="800">
 

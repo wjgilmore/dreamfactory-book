@@ -38,9 +38,9 @@ The SOAP Protocol has long been instrumental to network-based data exchange, how
 
 The ability to merely auto-generate a REST API is already going to produce an immediate productivity boost, however eventually you're going to want to tweak one or more API endpoints' default behavior to accommodate more sophisticated project requirements. Most often this involves using DreamFactory’s scripting feature, which allows you to write custom code used to validating input parameters, call other APIs, and much more. In this chapter we'll walk through several real-world examples which highlight how easy it is to extend your API endpoints with one of four supported scripting engines (NodeJS, PHP, Python, and V8JS).
 
-### [Chapter 7. Monetizing Your APIs using Limiting and Logging](docs/chapter07.md)
+### [Chapter 7. Configuring Limiting and Logging](docs/chapter07.md)
 
-You've taken months if not years to amass and curate a valuable data set, and now it is time to monetize it. In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
+In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
 ### [Chapter 8. Optimizing, Securing, and Maintaining Your DreamFactory Enviroment](docs/chapter08.md)
 
