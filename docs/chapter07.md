@@ -19,17 +19,26 @@ For a deeper look into how that can be accomplished, please read on.
 
 #### Logstash
 
-DreamFactory's Gold edition offers ELK (Elasticsearch, Logstash, Kibana) support via the Logstash connector. This connector can interface easily with the rest of the ELK stack (Elasticsearch, Logstash, Kibana) from [Elastic.io](https://www.elastic.co) or connect to other analytics and monitoring sources such as open source [Grafana](https://grafana.com/).
+DreamFactory's Gold edition offers Elastic Stack (Elasticsearch, Logstash, Kibana) support via the Logstash connector. This connector can interface easily with the rest of the ELK stack (Elasticsearch, Logstash, Kibana) from [Elastic.io](https://www.elastic.co) or connect to other analytics and monitoring sources such as open source [Grafana](https://grafana.com/).
 
-First things first, though. You need to get your Logstash connector hooked up and ready to go. To enable the connector you start by creating service just as you would any other service. Take a look at the below screenshot. As you can see at the top of the screenshot, I have selected `Logstash` as the type, and have named the service "Logstash".
+T> If you're new to Logstash and are searching for an easy and cheap way to get started,
+T> we recommend following along with the excellent Digital Ocean tutorial titled 
+T> [How to Install Elasticsearch, Logstash, and Kibana on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elastic-stack-on-ubuntu-18-04).
+
+To enable the Logstash connector you'll begin as you would when configuring any other service. Navigate to `Services`, then `Create`, then in the `Service Type` select box choose `Log > Logstash`. Then, add a name, label, and description as you would when configuring other services: 
 
 <img src="/images/07/logstash.png" alt="Logstash service setup" width="800">
 
-After adding your name, label and description, migrate over to the "Config" tab at the top of the service creation page.  In the next two screenshots you can see the fields and options you will need to select.  In the first screenshot, you will add the host.  In this case, I am hosting the Logstash connector locally, on my DreamFactory instance. The other optios are the "Port" and "Protocol".  In this case I am exposing port 12201 and using the [GELF protocol](https://www.elastic.co/guide/en/logstash/current/plugins-outputs-gelf.html). <br>
+Next, navigate to the "Config" tab at the top of the service creation page. In the next two screenshots you can see the fields and options you will need to select. In the first screenshot, you will add the host. In this case, I am hosting the Logstash connector locally, on my DreamFactory instance. The other optionss are the `Port` and `Protocol/Format`. The port corresponds to the port in which your Logstash daemon is running. The `Protocol/Format` field should be set to match the protocol/format for which your Logstash service is configured to accept input:
+
+* GELF (UDP): GELF (GrayLog Extended Format) was created as an optimized alternative to syslog formatting. Learn more about it [here](http://docs.graylog.org/en/2.1/pages/gelf.html).
+* HTTP: Choose this option if your Logstash service is configured to listen on HTTP protocol. DreamFactory will send the data to Logstash in JSON format.
+* TCP: Choose this option if your Logstash service is configured to listen on TCP protocol. DreamFactory will send the data to Logstash in JSON format.
+* UDP: Choose this option if your Logstash service is configured to listen on UDP protocol. DreamFactory will send the data to Logstash in JSON format.
 
 <img src="/images/07/logstash_host.png" alt="Logstash hostname setup" width="800">
 
-In this second screenshot, you can see some of the logging options available to you via the Logstash connector.  I have also added a few services that I would like to log.  You can pick various levels information you would like to log.  For more detailed information, please see this [article](https://www.elastic.co/guide/en/logstash/current/logstash-settings-file.html).
+In this second screenshot, you can see some of the logging options available to you via the Logstash connector. I have also added a few services that I would like to log.  You can pick various levels information you would like to log. For more detailed information, please see this [article](https://www.elastic.co/guide/en/logstash/current/logstash-settings-file.html).
 Valid options are:
 
 * fatal
@@ -42,11 +51,31 @@ Valid options are:
 
 <img src="/images/07/logstash_service_config.png" alt="Logstash service config setup" width="800">
 
-Additional Resources:<br>
-[Logstash Performance Tuning](https://www.elastic.co/guide/en/logstash/current/tuning-logstash.html)<br>
-[ELK Stack GDPR Compliance](https://www.elastic.co/pdf/white-paper-of-gdpr-compliance-with-elastic-and-the-elastic-stack.pdf)<br>
-[DreamFactory Security Whitepaper](http://info.dreamfactory.com/security_whitepaper/)<br>
-[Logz.io Blog Post](https://logz.io/learn/complete-guide-elk-stack/)
+### Filtering Sensitive Data from Elastic Stack
+
+Sensitive information such as social security numbers, dates of birth, and genetic data must often be treated in a special manner and often altogether excluded from log files. Fortunately Logstash offers a powerful suite of features for removing and mutating data prior to its insertion within Elasticsearch. For instance, if you wanted to prevent API keys from being logged to Elasticsearch you could define the following filter:
+
+    filter {
+      json {
+        source => "message"
+        remove_field => ["[_platform][session][api_key]", "[_event][request][headers][x-dreamfactory-api-key]"]
+      }
+    }
+
+### Troubleshooting Your Logstash Environment
+
+If you're not seeing results show up within Kibana, the first thing you should do is determine whether Logstash is talking to Elasticsearch. You'll find useful diagnostic information in the Logstash logs, which are found in `LS_HOME/logs` or possibly within `/var/log/logstash`. If your Logstash environment is unable to talk to Elasticsearch you'll find an error message like this in the log:
+
+    [2019-02-14T16:20:24,403][WARN ][logstash.outputs.elasticsearch] Attempted to resurrect connection to dead ES instance, but got an error
+
+If Logstash is unable to talk to Elasticsearch and the services reside on two separate servers, the issue is quite possibly due to a firewall restriction.
+
+### Additional Logstash Resources
+
+* [Logstash Performance Tuning](https://www.elastic.co/guide/en/logstash/current/tuning-logstash.html)<br>
+* [Elastic Stack GDPR Compliance](https://www.elastic.co/pdf/white-paper-of-gdpr-compliance-with-elastic-and-the-elastic-stack.pdf)<br>
+* [DreamFactory Security Whitepaper](http://info.dreamfactory.com/security_whitepaper/)<br>
+* [Logz.io Blog Post](https://logz.io/learn/complete-guide-elk-stack/)
 
 ## DreamFactory API Rate Limiting
 
