@@ -53,8 +53,9 @@ With these libraries added, the template looks like this:
 	  <meta name="description" content="Simple status dashboard">
 	  <meta name="author" content="">
 
-	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70
-	gZWKYbI706tWS" crossorigin="anonymous">
+	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+	  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
+	  crossorigin="anonymous">
 
 	  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
 
@@ -74,8 +75,8 @@ Next up is the JavaScript. We've purposely chosen to use standard JavaScript for
 	  var rows = '';
 	  var disabled = "<i class='fa fa-exclamation-triangle' style='color: red;'></i>";
 	  var enabled = "<i class='fa fa-thumbs-up' style='color: green;'></i>";
-	window.onload = function(){
-	  axios.get('https://example.com/api/v2/mysql/_table/devices', { 'headers': { 'X-DreamFactory-Api-Key': 'YOUR_API_KEY_GOES_HERE' }})
+	  window.onload = function() {
+	    axios.get('https://example.com/api/v2/mysql/_table/devices', { 'headers': { 'X-DreamFactory-Api-Key': 'YOUR_API_KEY_GOES_HERE' }})
 	    .then(function (response) {
 
 	      for (var i= 0; i < response.data.resource.length; i++) {
@@ -92,7 +93,7 @@ Next up is the JavaScript. We've purposely chosen to use standard JavaScript for
 	    .catch(function (error) {
 	      error = error;
 
-	    });
+	   });
 	};
 	</script>
 
