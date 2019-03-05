@@ -40,6 +40,10 @@ Best of all, thanks to DreamFactory's unified interface and API generation solut
 Looking for a more concise overview? Check out our blog post, ["Create a MySQL REST API in Minutes Using DreamFactory"](http://blog.dreamfactory.com/create-a-mysql-rest-api-in-minutes-using-dreamfactory/)!
 :::
 
+::: tip
+Want to create a MySQL API but don't have any test data? You can download a sample database from the MySQL website containing contrived employee-related data. [Click here](https://dev.mysql.com/doc/employee/en/) to learn more about and install the example database.
+:::
+
 ## Generating a MySQL-backed API
 
 To generate a MySQL-backed API, login to your DreamFactory instance using an administrator account and click on the Services tab:
