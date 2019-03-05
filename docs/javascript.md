@@ -101,19 +101,19 @@ The only required change you'll need to make to the above snippet is replacement
 All that remains is the HTML. In the following snippet you'll see we've defined a simple HTML table, adorned with CSS classes exposed by the Bootstrap library. The `tbody` element is assigned the `rows` ID, which is what the above JavaScript will use to insert the table rows into the appropriate page location:
 
 	<div class="container">
-		<div class="row">
-			<div class="col">
-				<h1>Status Dashboard</h1>
-				<table class="table table-striped table-bordered">
-					<thead class="thead-dark">
-						<th>Device</th>
-						<th>Status</th>
-					</thead>
-					<tbody id="rows">
-					</tbody>
-				</table>
-			</div>
-		</div>
+	  <div class="row">
+	    <div class="col">
+	      <h1>Status Dashboard</h1>
+	      <table class="table table-striped table-bordered">
+	        <thead class="thead-dark">
+	          <th>Device</th>
+	          <th>Status</th>
+	        </thead>
+	        <tbody id="rows">
+	        </tbody>
+	      </table>
+	    </div>
+	  </div>
 	</div>
 
 ## Conclusion
