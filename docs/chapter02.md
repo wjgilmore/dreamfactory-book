@@ -279,7 +279,7 @@ $ docker-compose exec web cat .env | grep APP_KEY
 APP_KEY=base64:U/En8zI8WKrZ/F7CA9KncWjGTIhbvpGD5wN3eLoDZuQ=
 ...
 
-A couple of lines of output will be returned, however you should only copy the line beginning with `APP_KEY` into a text file. It is very important you perform this step otherwise you'll run into all sorts of upgrade-related issues.
+A couple of lines of output will be returned, however you should only copy the line beginning with `APP_KEY` into a text file. Keep in mind at a *minimum* you'll need to copy down the `APP_KEY` value. If you've overridden other defaults, such as the type, location, and credentials associated with the system database, you'll need to copy those too. It is very important you perform this step otherwise you'll run into all sorts of upgrade-related issues.
 
 Next, run the following command:
 
