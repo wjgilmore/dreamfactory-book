@@ -201,18 +201,17 @@ This will start a simple PHP server running on `127.0.0.1` port `8000`. Open you
 
 <img src="/images/02/first_boot.png" width="800">
 
-
-
 ### Introducing the .env File
+
 It is often helpful to have different configuration values based on the environment where the application is running. For example, you may wish to use a different cache driver locally than you do on your production server.
 
-To make this a cinch, Laravel utilizes the [DotEnv](https://github.com/vlucas/phpdotenv) PHP library by Vance Lucas. In a fresh Laravel installation, the root directory of your application will contain a `.env.example` file. If you install Laravel via Composer, this file will automatically be renamed to `.env`. Otherwise, you should rename the file manually.  For more information, please see the official documentation from Laravel.
+To make this a cinch, Laravel utilizes the [DotEnv](https://github.com/vlucas/phpdotenv) PHP library by Vance Lucas. In a fresh Laravel installation, the root directory of your application will contain a `.env.example` file. If you install Laravel via Composer, this file will automatically be renamed to `.env`. Otherwise, you should rename the file manually. For more information, please see the official documentation from Laravel.
 
 [Laravel Docs on .env](https://laravel.com/docs/5.5/configuration#environment-configuration)
 
-
 ### Enabling Debugging and Logging
-By default, DreamFactory does not enable debugging.  Debugging, while a great tool to help monitor your application, can be a large performance sink inside of a production environment.  In the example `.env` file below you can see where these options live.
+
+By default, DreamFactory does not enable debugging. Debugging, while a great tool to help monitor your application, can be a large performance sink inside of a production environment. In the example `.env` file below you can see where these options live.
 
 ```php
 ##==============================================================================
@@ -255,7 +254,7 @@ APP_LOG_MAX_FILES=5
 DF_LICENSE_KEY=YOUR_LICENSE_KEY
 ```
 
-When working to get your environment up and running, DreamFactory recommends turning debugging on, as well as increasing the sensitivity of the logging environment.  In order to turn the application debugging on, please uncomment and change the following value:
+When working to get your environment up and running, DreamFactory recommends turning debugging on, as well as increasing the sensitivity of the logging environment. In order to turn the application debugging on, please uncomment and change the following value:
 ```php
 APP_DEBUG=true
 ```
@@ -266,6 +265,84 @@ APP_LOG=daily
 APP_LOG_LEVEL=debug
 APP_LOG_MAX_FILES=5
 ```
+### Updating Your DreamFactory Docker Environment
+
+Our DreamFactory environment is still a work-in-progress, however many users are actively using it thanks to Docker's streamlined configuration and deployment capabilities. Occasionally you'll want to update to a newer version of DreamFactory so we've assembled the following instructions as a guide.
+
+::: warning
+You are presumably reading this section with the intention of upgrading a DreamFactory production environment. As with any software, things can and do go wrong with upgrading production environments, and therefore you are urged to possess a readily accessible file and system database backup and recovery plan before attempting an upgrade. You have been warned!
+::: 
+
+Begin by opening a terminal and entering your DreamFactory instance's root directory. Then execute this command:
+
+$ docker-compose exec web cat .env | grep APP_KEY
+APP_KEY=base64:U/En8zI8WKrZ/F7CA9KncWjGTIhbvpGD5wN3eLoDZuQ=
+...
+
+A couple of lines of output will be returned, however you should only copy the line beginning with `APP_KEY` into a text file. It is very important you perform this step otherwise you'll run into all sorts of upgrade-related issues.
+
+Next, run the following command:
+
+	$ git tag --list
+	2.1
+	2.14.1
+	2.2
+	2.2.1
+	...
+
+This displays all of the tagged versions. Begin by stopping the running DreamFactory container without deleting it. Keep in mind that when you run this command, your DreamFactory instance will go offline until the upgrade process is completed:
+
+	$ docker-compose stop
+	Stopping df-docker_web_1   ... done
+	Stopping df-docker_mysql_1 ... done
+	Stopping df-docker_redis_1 ... done
+
+For the purposes of this example we'll presume you're running 2.12 and want to upgrade to 2.14.1. To do so you'll first want to checkout the 2.14.1 tag:
+
+	$ git checkout tags/2.14.1
+
+Next, you'll need to add that `APP_KEY` to the `docker-compose.yml` file. Open `docker-compose.yml` in your favorite code editor, scroll down to the `web` service, and add the `APP_KEY` property and associated value alongside the other environment variables:
+
+	...
+    DB_DATABASE: dreamfactory
+    APP_KEY: 'base64:U\/En8zI8WKrZ\/F7CA9KncWjGTIhbvpGD5wN3eLoDZuQ='
+    CACHE_DRIVER: redis
+    ...
+
+It is crucial that you encapsulate the `APP_KEY` value within single quotes, and additionally escape with a backslash any forward slashes appearing in your key! Save these changes, and then rebuild your container using the following command:
+
+	$ docker-compose up -d --build
+
+Once complete, you can run the following command to confirm the containers are up and running:
+
+	$ docker-compose ps
+	      Name                     Command               State          Ports
+	--------------------------------------------------------------------------------
+	df-docker_mysql_1   docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/tcp
+	df-docker_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
+	df-docker_web_1     /docker-entrypoint.sh            Up      0.0.0.0:80->80/tcp
+
+If something has gone wrong, and one of the containers indicates it has exited, you can view the logs for that container:
+
+	$ docker-compose logs web
+
+Presuming the containers are up and running, you'll next want to determine whether the DreamFactory system database schema has changed. To do so run this command:
+
+	$ docker-compose exec web php artisan migrate:status
+
+If you see `Y` in the tabular output's `Ran?` column, then the schema has not changed. If you see `N` at any point, then you'll need to run the following command to update your system database schema:
+
+	$ docker-compose exec web php artisan migrate
+
+Finally, you'll want to clear your application and configuration caches by executing the following commands:
+
+	$ docker-compose exec web php artisan config:clear
+	Configuration cache cleared!
+
+	$ docker-compose exec web php artisan cache:clear
+	Cache cleared successfully.
+
+With that done, open your DreamFactory instance in the browser, and confirm the environment is operational.
 
 ## Choosing an HTTP Client
 
@@ -291,4 +368,4 @@ Fortunately, there are a number of HTTP clients which fill this void very well. 
 
 ## Conclusion
 
-TODO 
+With DreamFactory installed and configured, it's time to build your first API! In the next chapter we'll do exactly that, walking through the steps necessary to generate a database-based API.
