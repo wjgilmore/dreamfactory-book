@@ -309,7 +309,11 @@ Next, you'll need to add that `APP_KEY` to the `docker-compose.yml` file. Open `
     CACHE_DRIVER: redis
     ...
 
-It is crucial that you encapsulate the `APP_KEY` value within single quotes, and additionally escape with a backslash any forward slashes appearing in your key! Save these changes, and then rebuild your container using the following command:
+::: danger
+It is crucial that you encapsulate the `APP_KEY` value within single quotes, and additionally escape with a backslash any forward slashes appearing in your key! As an example, compare the `APP_KEY` entry found above with the output displayed earlier.
+:::
+
+Save these changes, and then rebuild your container using the following command:
 
 	$ docker-compose up -d --build
 
