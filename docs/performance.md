@@ -31,7 +31,7 @@ The clearest takeaway here is that enabling database caching can have a tremendo
 
 Ensuring the DreamFactory-generated database APIs are running at peak performance is accomplished by ensuring your database is properly configured, has been allocated appropriate hardware and network resources, and turning on DreamFactory's database caching feature. In this section we'll talk more about all of these tasks.
 
-## Index the Database
+### Index the Database
 
 For database-backed APIs, there is no more impactful task one could take than properly indexing the database. Database indexing is what allows your database engine to quickly identify which rows match conditions defined by a `where` clause. Refer to the following resources for both general and database-specific indexing information:
 
@@ -60,17 +60,23 @@ DreamFactory enables file-based caching by default, however you may opt to confi
  1. [YouTube - Setting up and using Redis](c94200f4d0567522370908afcdafd28d)
  2. [Blog - Caching](http://blog.dreamfactory.com/new-dreamfactory-cache-service-supports-redis-memcahed-and-local-storage/)
 
-### Load Balancing Your DreamFactory Environment
+## Load Balancing Your DreamFactory Environment
 
 You can use a load balancer to distribute API requests among multiple servers. A load balancer can also perform health checks and remove an unhealthy server from the pool automatically. Most large server architectures include load balancers at several points throughout the infrastructure. You can cluster load balancers to avoid a single point of failure. DreamFactory is specifically designed to work with load balancers and all of the various scheduling algorithms. A REST API request can be sent to any one of the web servers at any time and handled in a stateless manner.
 
 <img src="/images/performance/load-balanced-diagram.png">
 
-### Compiling the DreamFactory Code with OPcache
+## Compiling the DreamFactory Code with OPcache
 
 You can achieve particularly high performance by compiling your DreamFactory application code using OPcache. The following 
 
 1. [PHP's OPcache Documentation](http://php.net/manual/en/book.opcache.php)
 2. [How to Make your Laravel App Fly](https://medium.com/appstract/make-your-laravel-app-fly-with-php-opcache-9948db2a5f93) 
 
+## Third-party Resources
 
+Thanks to NGINX, the company behind the namesake high performance web server, you can download a free copy of [“NGINX Cookbook: Advanced Recipes for High Performance Load Balancing”](https://www.nginx.com/resources/library/complete-nginx-cookbook/).
+
+## Conclusion
+
+These are just a few tips intended to help you ensure your DreamFactory environment is running at peak capacity! If you have other ideas, please send them to code AT dreamfactory.com!
