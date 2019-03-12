@@ -12,7 +12,7 @@ This guide is under heavy development, and is a work-in-progress. Check back oft
 
 ## About this Guide
 
-This guide consists of ten chapters, covering the following topics:
+This guide consists of numerous chapters covering the following topics:
 
 ### [Chapter 1. Introducing REST and DreamFactory](./chapter01.md)
 
@@ -42,15 +42,19 @@ The ability to merely auto-generate a REST API is already going to produce an im
 
 In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
-### [Chapter 8. Optimizing, Securing, and Maintaining Your DreamFactory Enviroment](./chapter08.md)
+### [Chapter 8. Securing, and Maintaining Your DreamFactory Enviroment](./chapter08.md)
 
-While DreamFactory is already fast, secure, and relatively maintenance free, there are quite a few modifications you can make to enhance your instance. In this chapter we'll provide a wide ranging overview of the many changes you can make to optimize, maintain, and secure your environment.
+While DreamFactory is already secure, and relatively maintenance free, there are quite a few modifications you can make to enhance your instance. In this chapter we'll provide a wide ranging overview of the many changes you can make to maintain, and secure your environment.
 
-### [Chapter 9. Running DreamFactory on a Raspberry Pi](./raspberry-pi.md)
+### [Chapter 9. Performance Considerations](./performance.md)
+
+DreamFactory is already very performant out of the box, however logically you'll want to do everything practical to ensure your instance can really fly. In this chapter we'll provide some benchmarks, and guidance regarding how to properly tune your instance environment.
+
+### [Chapter 10. Running DreamFactory on a Raspberry Pi](./raspberry-pi.md)
 
 DreamFactory's a really fascinating project in that its architecture is suitable for infinite horizontal and vertical scaling, yet can be run on small appliance-like devices such as the Raspberry Pi. In this chapter we'll talk about a few configuration-related gotchas associated with installing DreamFactory's prerequisites on the Raspberry Pi.
 
-### [Chapter 10. JavaScript Examples](./javascript.md)
+### [Chapter 11. JavaScript Examples](./javascript.md)
 
 In this chapter we'll provide a few JavaScript-based examples demonstrating how web applications can interact with DreamFactory-exposed APIs.
 

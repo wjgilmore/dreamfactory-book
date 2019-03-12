@@ -2,47 +2,9 @@
 sidebar: auto
 ---
 
-# Chapter 08. Optimizing, Securing, and Maintaining Your DreamFactory Enviroment
+# Chapter 9. Securing, and Maintaining Your DreamFactory Enviroment
 
-The DreamFactory platform is build atop the [Laravel](https://www.laravel.com). Laravel is an amazing PHP-based framework that in just a few short years has grown in popularity to become one of the today's most popular framework solutions regardless of language. We speculate there are several reasons for such soaring popularity, including a thoroughly pragmatic approach, security-first implementation, fantastic documentation, and a comprehensive ecosystem (in addition to the framework itself, the Laravel development team also maintains an e-commerce framework called Spark, an application adminstration toolkit called Nova, and an application deployment service called Envoyer. Further, it's also quite performant, capable of serving as the backbone for high-traffic, mission critical applications. Regardless, like any application you're going to want to learn all you can about how to best go about maintaining, securing, and optimizing the environment. This chapter tackles all three topics.
-
-## Optimizing DreamFactory's Database APIs
-
-Ensuring the DreamFactory-generated database APIs are running at peak performance is accomplished by ensuring your database is properly configured, has been allocated appropriate hardware and network resources, and turning on DreamFactory's database caching feature. In this section we'll talk more about all of these tasks.
-
-## Index the Database
-
-For database-backed APIs, there is no more impactful task one could take than properly indexing the database. Database indexing is what allows your database engine to quickly identify which rows match conditions defined by a `where` clause. Refer to the following resources for both general and database-specific indexing information:
-
-* [Database Indexes Defined](https://en.wikipedia.org/wiki/Database_index)
-* [Microsoft SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/indexes/indexes?view=sql-server-2017)
-* [MongoDB](https://docs.mongodb.com/manual/indexes/)
-* [MySQL](https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html)
-* [Oracle](https://docs.oracle.com/cd/E11882_01/server.112/e40540/indexiot.htm#CNCPT721)
-* [PostgreSQL](https://www.postgresql.org/docs/9.1/indexes.html)
-
-### Database API Caching
-
-Enable database API caching whenever practical at service creation time, as it will undoubtedly improve performance.
-
-<img src="/images/10/database_caching.png" width="800">
-
-You can achieve particularly high performance by compiling your DreamFactory application code using OPcache. You can learn more about OPcache in these links:
-
-1. [Official PHP Docs](http://php.net/manual/en/book.opcache.php)
-2. [How to Make your Laravel App Fly](https://medium.com/appstract/make-your-laravel-app-fly-with-php-opcache-9948db2a5f93) 
-
-DreamFactory instances may be load balanced, and can be configured to share the system database, cache details, and other information necessary to operate in a distributed environment. Below are some links that may help you configure a load balancer with some of the most common cloud providers.
-
-1. [Amazon Web Services](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancer-getting-started.html)
-2. [Google Cloud](https://cloud.google.com/load-balancing/)
-3. [Microsoft Azure](https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview)
-4. [IBM Cloud](https://www.ibm.com/cloud/load-balancer)
-
-DreamFactory enables file-based caching by default, however you may opt to configure one of the other supported caching solutions, such as Redis. Please see these links to see connection tutorials:
-
- 1. [YouTube - Setting up and using Redis](c94200f4d0567522370908afcdafd28d)<br>
- 2. [Blog - Caching](http://blog.dreamfactory.com/new-dreamfactory-cache-service-supports-redis-memcahed-and-local-storage/)
+The DreamFactory platform is built atop the [Laravel](https://www.laravel.com) framework. Laravel is an amazing PHP-based framework that in just a few short years has grown in popularity to become one of the today's most popular framework solutions regardless of language. We speculate there are several reasons for such soaring popularity, including a thoroughly pragmatic approach, security-first implementation, fantastic documentation, and a comprehensive ecosystem (in addition to the framework itself, the Laravel development team also maintains an e-commerce framework called Spark, an application adminstration toolkit called Nova, and an application deployment service called Envoyer. Regardless, like any application you're going to want to learn all you can about how to best go about maintaining and securing the environment. 
 
 ## Security
 
