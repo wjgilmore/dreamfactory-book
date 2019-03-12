@@ -75,7 +75,8 @@ You can achieve particularly high performance by compiling your DreamFactory app
 
 ## Third-party Resources
 
-Thanks to NGINX, the company behind the namesake high performance web server, you can download a free copy of [“NGINX Cookbook: Advanced Recipes for High Performance Load Balancing”](https://www.nginx.com/resources/library/complete-nginx-cookbook/).
+* ["NGINX Cookbook: Advanced Recipes for High Performance Load Balancing"](https://www.nginx.com/resources/library/complete-nginx-cookbook/): This 175 page guide offers deep insights into and concrete solutions regarding NGINX scaling.
+* [Amazon EC2 cost calculator](https://calculator.s3.amazonaws.com/): This calculator can help you navigate AWS' notoriously opaque EC2 instance pricing model.
 
 ## Conclusion
 
