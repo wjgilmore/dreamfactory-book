@@ -494,6 +494,43 @@ The equivalent SQL query looks like this:
 
     DELETE FROM employees WHERE emp_no = 500016;
 
+## Troubleshooting
+
+If you'd like to see what queries are being executed by your MySQL database, you can enable query logging. Begin by creating a file named `query.log` in your Linux environment's `/var/log/mysql` directory:
+
+    $ cd /var/log/mysql
+    $ sudo touch query.log
+
+Next, make sure the MySQL daemon can write to the log. Note you might have to adjust the user and group found in the below `chmod` command to suit your particular environment:
+
+    $ sudo chown mysql.mysql /var/log/mysql/query.log
+    $ sudo chmod u+w /var/log/mysql/query.log
+
+Finally, turn on query logging by running the following two commands:
+
+    mysql> SET GLOBAL general_log_file = '/var/log/mysql/query.log';
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> SET GLOBAL general_log = 'ON';
+    Query OK, 0 rows affected (0.00 sec)
+
+To view your executed queries in real-time, `tail` the query log:
+
+    $ tail -f /var/log/mysql/query.log
+    /usr/sbin/mysqld, Version: 5.7.19-0ubuntu0.16.04.1 ((Ubuntu)). started with:
+    Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+    Time                 Id Command    Argument
+    2019-03-28T14:50:19.758466Z	   76 Quit
+    2019-03-28T14:50:31.648530Z	   77 Connect	homestead@dreamfactory.test on employees using TCP/IP
+    2019-03-28T14:50:31.648635Z	   77 Query	use `employees`
+    2019-03-28T14:50:31.648865Z	   77 Prepare	set names 'utf8' collate 'utf8_unicode_ci'
+    2019-03-28T14:50:31.648923Z	   77 Execute	set names 'utf8' collate 'utf8_unicode_ci'
+    2019-03-28T14:50:31.649029Z	   77 Close stmt
+    2019-03-28T14:50:31.649305Z	   77 Prepare	select `first_name`, `hire_date` from `employees`.`employees` limit 5 offset 0
+    2019-03-28T14:50:31.649551Z	   77 Execute	select `first_name`, `hire_date` from `employees`.`employees` limit 5 offset 0
+    2019-03-28T14:50:31.649753Z	   77 Close stmt
+    2019-03-28T14:50:31.696379Z	   77 Quit
+
 ## Conclusion
 
 Congratulations! In less than an hour you've successfully generated, secured, and deployed a database-backed API. In the next chapter, you'll learn how to add additional authentication and authorization solutions to your APIs.
