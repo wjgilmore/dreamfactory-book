@@ -219,6 +219,16 @@ The equivalent SQL query would look like this:
 
     SELECT * FROM employees LIMIT 10;
 
+### Offsetting Results
+
+The above example will limit your results found in the `employees` table to 10, but what if you want to select records 11 - 21? You would use the `offset` parameter like this:
+
+    http://localhost/api/v2/_table/employees?limit=10&offset=10
+
+The equivalent SQL query would look like this:
+
+    SELECT * FROM employees LIMIT 10 OFFSET 10;
+
 ### Ordering Results
 
 You can order results by any column using the `order` parameter. For instance to order the `employees` tab by the `emp_no` field, modify your URL to look like this:
