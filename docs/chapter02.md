@@ -265,6 +265,17 @@ APP_LOG=daily
 APP_LOG_LEVEL=debug
 APP_LOG_MAX_FILES=5
 ```
+
+### Increasing Your Session Lifetime
+
+For security reasons DreamFactory sessions are limited to 60 minutes. You can however change the lifetime to any desired duration by opening your `.env` file and finding the following variable:
+
+#DF_JWT_TTL=60
+
+Change `DF_JWT_TTL` to any duration you please, defined in minutes. For instance, the following settings will persist your session for a week:
+
+DF_JWT_TTL=10080
+
 ### Updating Your DreamFactory Docker Environment
 
 Our DreamFactory environment is still a work-in-progress, however many users are actively using it thanks to Docker's streamlined configuration and deployment capabilities. Occasionally you'll want to update to a newer version of DreamFactory so we've assembled the following instructions as a guide.
