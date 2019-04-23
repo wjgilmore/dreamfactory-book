@@ -26,7 +26,7 @@ Much of the DreamFactory platform is open source, with the code made available v
 
 After installing your DreamFactory instance, you'll naturally want to take the platform for a test drive. Most users desire to begin by generating a database API, because the advantages of doing so are so evident. By merely supplying a set of authentication credentials, DreamFactory will generate an API for any of an array of popular databases, including MySQL, SQL Server, Oracle, PostgreSQL, MongoDB, and others. Once generated, you can immediately beging issuing REST API calls to carry out record creation, retrieval, modification, and deletion tasks. You’ll also be able to perform advanced queries using the REST API, including filters, grouping, joins, limiting, and more. 
 
-### Chapter 4. Authenticating and Monitoring Users
+### [Chapter 4. Authenticating and Monitoring Users](./chapter04.md)
 
 From the moment your API is generated, rest assured it is protected by at minimum a complicated API key. However this represents only the beginning in terms of your options regarding securing an API. You can use DreamFactory's user authentication and authorization features to provide user-specific login via a variety of authentication solutions, including basic auth, LDAP, Active Directory, and SSO. In this chapter you'll learn all about these solutions, and additionally learn how to use DreamFactory's rate limiting and logging capabilities to closely monitor request volume and behavior.
 
