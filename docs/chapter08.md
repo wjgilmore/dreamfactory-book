@@ -89,4 +89,4 @@ Finally, scroll down to the following section and uncomment `CACHE_DATABASE` and
     ## Which Redis client to use: predis or phpredis (PHP extension)
     #REDIS_CLIENT=predis
 
-You can probably leave CACHE_DATABASE set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). 
+You can leave CACHE_DATABASE set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). By default your Redis Database will be on 0, so be sure to `SELECT` whatever the number is you have set your `CACHE_DATABASE` equal to. Then you can start seeing the `KEYS` populate.
