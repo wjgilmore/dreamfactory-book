@@ -12,13 +12,13 @@ You'll be pleased to know DreamFactory supports all of these options through a c
 
 [Section Forthcoming]
 
-## Authenticating with OpenID
+## Authenticating with OpenID Connect
 
 OpenID affords users the convenience of using an existing account for signing into different websites. Not only does this eliminate the need to juggle multiple passwords, but OpenID also gives users greater control over what personal information is shared with websites that support OpenID. OpenID has been widely adopted since its inception in 2005, with companies such as Google, Microsoft, and Facebook offering OpenID provider services. Additionally, several OpenID libraries are available for integrating with these providers. Commercial editions of DreamFactory (versions 2.7 and newer) also support OpenID, allowing you to use OpenID-based authentication in conjunction with your APIs.
 
 ### Configuring OpenID Connect
 
-To configure DreamFactory's OpenID connector, you'll first need to identify an OpenID provider. This provider manages the credentials your users will use for authentication purposes. For the purposes of this tutorial we'll use Google's implementation. If you want to follow along with this specific example you'll first need to login to [Google's API Console](https://console.developers.google.com) to create a set of OAuth2 credentials. After logging in, use the search field at the top of the screen to search for `OAuth`. In the dropdown that appears choose `Credentials` (see below screenshot).
+To configure DreamFactory's OpenID connector, you'll first need to identify an OpenID provider. This provider manages the credentials your users will use for authentication purposes. For the purposes of this tutorial we'll use [Google's OpenID implementation](https://developers.google.com/identity/protocols/OpenIDConnect). If you want to follow along with this specific example you'll first need to login to [Google's API Console](https://console.developers.google.com) to create a set of OAuth2 credentials. After logging in, use the search field at the top of the screen to search for `OAuth`. In the dropdown that appears choose `Credentials` (see below screenshot).
 
 <p>
 <img src="/images/04/openid/google-search.png" width="600">
@@ -32,13 +32,13 @@ Next, click on the `Create credentials` dropdown and select `OAuth client ID`:
 
 Next you'll be prompted to configure your consent screen. This is the screen the user sees when initiating the authentication process. Click `Configure consent screen`, and you'll be prompted to add or confirm the following items:
 
-* Application type: Will this OpenID integration be used solely for users of your organization, or could users outside of your organization also use it to authenticate?
-* Application name: The name of the application associated with OpenID integration.
-* Application logo: You can optionally upload your organization or project logo for presentation on the consent screen.
-* Support email: An organizational e-mail address which the user could contact with questions and issues.
-* Scopes for Google APIs: This settings determines what data your application will be able to access on behalf of the authenticated user. We'll use the default scopes for this example (email, profile, and openid).
-* Privacy policy URL: Self-explanatory
-* Terms of service URL: Self-explanatory
+* **Application type**: Will this OpenID integration be used solely for users of your organization, or could users outside of your organization also use it to authenticate?
+* **Application name**: The name of the application associated with OpenID integration.
+* **Application logo**: You can optionally upload your organization or project logo for presentation on the consent screen.
+* **Support email**: An organizational e-mail address which the user could contact with questions and issues.
+* **Scopes for Google APIs**: This settings determines what data your application will be able to access on behalf of the authenticated user. We'll use the default scopes for this example (email, profile, and openid).
+* **Privacy policy URL**: Self-explanatory
+* **Terms of service URL**: Self-explanatory
 
 After saving these changes, you'll be prompted for two final pieces of information:
 
@@ -62,19 +62,18 @@ DreamFactory's authentication connectors are found in the same location as the s
 
 With these fields completed, click the `Config` tab to finish configuration. On this screen you'll be presented with a number of fields, including:
 
-* `Default Role`:
-* `Discovery Document Endpoint`: If your identity provider offers a discovery document endpoint, then this will be the *fastest* way to configure your OpenID Connect connector. This is because all you will need to supply is this value, the client ID, client secret, and redirection URL.
-* `Authorization Endpoint`:
-* `Token Endpoint`:
-* `User Info Endpoint`:
-* `Validate ID Token`:
-* `JWKS URI`:
-* `Scopes`:
-* `Client ID`:
-* `Client Secret`:
-* `Redirect URL`:
-* `Icon Class`:
-* `Role per App`:
+* **Default Role**: DreamFactory can automatically assign a default role (learn more about roles [here](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role)) to a user following successful login. You can identify that role here. If you want to more selectively grant roles, see the **Role per App** field, introduced below.
+* **Discovery Document Endpoint**: If your identity provider offers a discovery document endpoint, adding it here will be the *fastest* way to configure your OpenID Connect connector. This is because doing so will automatically configure the rest of the fields, requiring you to only additionally supply the client ID, client secret, and redirection URL.
+* **Authorization Endpoint**: This endpoint authorizes access to a protected resource such as the resource owner's identity. It will be invoked following the resource owner's successful login and authorization for the requester to access said protected resource.
+* **Token Endpoint**: The token endpoint is contacted by the client after receiving an authorization code from the authorization endpoint. The client passes this authorization code to the token endpoint where if validated, tokens are returned to the client.
+* **User Info Endpoint**: This endpoint can be contacted by the client for reason of retrieving information about the logged-in user's claims (name, email, etc.).
+* **Validate ID Token**: By checking this field, DreamFactory will validate the ID token by performing tasks such as checking that the encryption algorithm used to encrypt the token matches that specified by the OpenID provider, validating the token signature, and validating the token claims.
+* **JWKS URI**: This identifies the JSON Web Key Set (JWKS) URI. The JWKS contains the set of public keys used for JWT verification. For instance Google defines this URI as `https://www.googleapis.com/oauth2/v3/certs`.
+* **Scopes**: Scopes identify the level of restricted access requested by the client. For instance this might be some user profile information such as the name and e-mail address, or it might be access to an otherwise private service such as the user's Google Calendar. Using this field you'll define your scopes in comma-delimited format, such as `openid,email,profile`.
+* **Client ID**: Along with the client secret (introduced next), the client ID forms one part of the credentials pair used by the client to interact with the identity provider. You'll obtain the client ID when creating a developer's account with the desired identity provider.
+* **Client Secret**: The client secret is used in conjunction with the client ID to authenticate with the identity provider. You'll receive this secret along with the client ID when creating a developer's account with the identity provider.
+* **Redirect URL**: Perhaps more than any other, the OpenID redirect URL causes considerable confusion amongst developers when creating an OpenID flow. This is because a bit of additional coding *within the application* is required in order to complete the OpenID flow. Upon successful authentication and authorization on behalf of the identity provider, this URL will be contacted with a set of parameters that the URL's script must then forward on to DreamFactory. DreamFactory will contact the identity provider one last time to verify the parameters, and then return a session token (JWT) to the script that initiated the forwarding. Without this additional sequence it would not be possible for your custom application to obtain the JWT! Don't worry though, later in this section we provide an example script demonstrating this process.
+* **Role per App**: If assigning a blanket role through the **Default Role** setting is not desired, you can instead use this setting to assign roles on a per application basis.
 
 After configuring these settings, press `Save` to persist the changes. Next we'll complete the configuration process by creating a script responsible for completing the OAuth callback and generating the session token (JWT)
 
@@ -125,7 +124,28 @@ And here is the formatted JSON output:
         ["id_token"]=> string(1245) "ID_TOKEN_HERE" 
     }
 
-You'll add a script like this to your application in order to retrieve the JWT (defined within the `session_token` attribute) and subsequently pass that JWT along with future API requests.
+You'll add a script like this to your application in order to retrieve the JWT (defined within the `session_token` attribute) and subsequently pass that JWT along with future API requests. So now that all of the pieces to the puzzle are in place, what does the authentication workflow look like? Let's walk through the entire process.
+
+### Step #1. User clicks on authentication link
+
+To create the authentication link, you'll use this URL:
+
+    https://YOUR_DREAMFACTORY_SERVER.com/api/v2/user/session?service=YOUR_SERVICE_NAME
+
+Of course you'll need to replace `YOUR_DREAMFACTORY_SERVER` with your DreamFactory server's domain name, and `YOUR_SERVICE_NAME` with the name of the OpenID service you created inside DreamFactory. Once the user clicks on this link he will be redirected to the authentication form, which when using Google OpenID looks like this:
+
+<p>
+<img src="/images/04/openid/google-email-prompt.png" width="500">
+</p>
+
+After entering your e-mail address and password, the user will next be prompted to confirm permission for the client to access a specified set of resources:
+
+<p>
+<img src="/images/04/openid/google-allow-deny.png" width="500">
+</p>
+
+Once the user clicks `Allow`, the OpenID provider will return the authorization information *to the redirect URL*. At this point the script associated with the redirect URL will forward that information on to DreamFactory (see above script), and DreamFactory will return the session token to the script, at which point your application can persist it and include it with subsequent requests.
+
 
 ## Authenticating with Okta
 
