@@ -126,13 +126,17 @@ And here is the formatted JSON output:
 
 You'll add a script like this to your application in order to retrieve the JWT (defined within the `session_token` attribute) and subsequently pass that JWT along with future API requests. So now that all of the pieces to the puzzle are in place, what does the authentication workflow look like? Let's walk through the entire process.
 
-### Step #1. User clicks on authentication link
+#### Step #1. User clicks on authentication link
 
 To create the authentication link, you'll use this URL:
 
     https://YOUR_DREAMFACTORY_SERVER.com/api/v2/user/session?service=YOUR_SERVICE_NAME
 
-Of course you'll need to replace `YOUR_DREAMFACTORY_SERVER` with your DreamFactory server's domain name, and `YOUR_SERVICE_NAME` with the name of the OpenID service you created inside DreamFactory. Once the user clicks on this link he will be redirected to the authentication form, which when using Google OpenID looks like this:
+Of course you'll need to replace `YOUR_DREAMFACTORY_SERVER` with your DreamFactory server's domain name, and `YOUR_SERVICE_NAME` with the name of the OpenID service you created inside DreamFactory. 
+
+#### Step #2. Login Using the Designated Identity Provider
+
+Once the user clicks on this link he will be redirected to the authentication form, which when using Google OpenID looks like this:
 
 <p>
 <img src="/images/04/openid/google-email-prompt.png" width="500">
@@ -144,8 +148,9 @@ After entering your e-mail address and password, the user will next be prompted 
 <img src="/images/04/openid/google-allow-deny.png" width="500">
 </p>
 
-Once the user clicks `Allow`, the OpenID provider will return the authorization information *to the redirect URL*. At this point the script associated with the redirect URL will forward that information on to DreamFactory (see above script), and DreamFactory will return the session token to the script, at which point your application can persist it and include it with subsequent requests.
+#### Step #3. DreamFactory Generates the Session Key
 
+Once the user clicks `Allow`, the OpenID provider will return the authorization information *to the redirect URL*. At this point the script associated with the redirect URL will forward that information on to DreamFactory (see above script), and DreamFactory will return the session token to the script, at which point your application can persist it and include it with subsequent requests.
 
 ## Authenticating with Okta
 
