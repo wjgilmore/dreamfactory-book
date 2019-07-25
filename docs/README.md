@@ -58,6 +58,10 @@ DreamFactory's a really fascinating project in that its architecture is suitable
 
 In this chapter we'll provide a few JavaScript-based examples demonstrating how web applications can interact with DreamFactory-exposed APIs.
 
+### [Chapter 12. Creating File System APIs](./chapter12.md)
+
+DreamFactory supports file system-based API generation, meaning you can create REST APIs for AWS S3, SFTP, local file storage, and more. In this chapter we'll show you how.
+
 ### [Appendix A. Configuration Parameter Reference](./reference/appendixa.md)
 
 DreamFactory is packed with features capable of being tweaked via configuration parameters. These parameters can be managed as server environment variables or within a `.env` file found in the platform's root directory. This appendix defines all available parameters.
