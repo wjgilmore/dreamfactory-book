@@ -62,6 +62,10 @@ In this chapter we'll provide a few JavaScript-based examples demonstrating how 
 
 DreamFactory supports file system-based API generation, meaning you can create REST APIs for AWS S3, SFTP, local file storage, and more. In this chapter we'll show you how.
 
+### [Chapter 13. Building Salesforce Applications with DreamFactory (./salesforce.md)
+
+In this chapter you'll learn how to configure the connector, and then interact with your Salesforce database using the DreamFactory-generated REST API.
+
 ### [Appendix A. Configuration Parameter Reference](./reference/appendixa.md)
 
 DreamFactory is packed with features capable of being tweaked via configuration parameters. These parameters can be managed as server environment variables or within a `.env` file found in the platform's root directory. This appendix defines all available parameters.
