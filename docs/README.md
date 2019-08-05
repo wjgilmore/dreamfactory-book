@@ -62,7 +62,7 @@ In this chapter we'll provide a few JavaScript-based examples demonstrating how 
 
 DreamFactory supports file system-based API generation, meaning you can create REST APIs for AWS S3, SFTP, local file storage, and more. In this chapter we'll show you how.
 
-### [Chapter 13. Building Salesforce Applications with DreamFactory](./salesforce.md)
+### [Chapter 13. Integrating Salesforce Data Using DreamFactory](./salesforce.md)
 
 In this chapter you'll learn how to configure the connector, and then interact with your Salesforce database using the DreamFactory-generated REST API.
 
