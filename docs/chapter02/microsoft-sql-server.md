@@ -4,7 +4,7 @@ sidebar: auto
 
 # Configuring Microsoft SQL Server for DreamFactory
 
-Configuring Microsoft SQL Server for use with DreamFactory is a two-step process:
+Configuring [Microsoft SQL Server](https://www.dreamfactory.com/hub/integrations/microsoft-sql-server/) for use with DreamFactory is a two-step process:
 
 * Configure your SQL Server instance to accept ODBC connections.
 * Configure your DreamFactory server to allow PHP to talk to SQL Server.
