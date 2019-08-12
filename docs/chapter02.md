@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Installing and Configuring DreamFactory
+  - name: "description"
+    content: This chapter introduces the different DreamFactory installers and walks readers through the standard installation and configuration process.
 ---
 
 # Chapter 2. Installing and Configuring DreamFactory

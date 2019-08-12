@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Generating a Database-backed API
+  - name: "description"
+    content: This chapter walks readers through the creation of a MySQL API. Readers also learn how to create a role-based access control, API key, and how to query the API.
 ---
 
 # Chapter 3. Generating a Database-backed API
