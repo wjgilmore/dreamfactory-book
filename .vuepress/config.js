@@ -7,7 +7,8 @@ module.exports = {
   	nav: [
       { text: 'Home', link: '/' },
       { text: 'Contact', link: 'https://www.dreamfactory.com/contact' },
-      { text: 'Sales', link: 'https://www.dreamfactory.com/contact' }
+      { text: 'Sales', link: 'https://www.dreamfactory.com/contact' },
+      { text: 'Free Hosted Trial', link: 'https://genie.dreamfactory.com/register' },
     ]
   },
   ga: 'UA-40461579-9'
