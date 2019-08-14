@@ -1,8 +1,13 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: How to Secure Your REST APIs
+  - name: "description"
+    content: This chapter explains how DreamFactory can secure your APIs using a variety of solutions, including basic HTTP authentication, LDAP, Active Directory, OpenID Connect, and Okta.
 ---
 
-# Chapter 4. Securing Your APIs
+# Chapter 4. How to Secure Your REST APIs
 
 One of DreamFactory's most popular features is the wide-ranging authentication support. While API Key-based authentication is suffice for many DreamFactory-powered applications, developers often require a higher degree of security through user-specific authentication. In some cases [Basic HTTP authentication](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Basic_Auth) will get the job done, however many enterprises require more sophisticated and flexible approaches largely because of the growing adoption of Single Sign On (SSO)-based solutions such as Active Directory and LDAP, and use of third-party identity providers and solutions such as [AWS Cognito](https://aws.amazon.com/cognito/), [Auth0](https://auth0.com/), and [Okta](https://www.okta.com/). 
 
@@ -11,6 +16,13 @@ You'll be pleased to know DreamFactory supports all of these options through a c
 ## Authenticating with Basic HTTP Authentication
 
 [Section Forthcoming]
+
+> GET /api/v2/mysql/_table/employees HTTP/1.1
+> Host: demo.dreamfactory.com
+> User-Agent: insomnia/6.6.0
+> Authorization: Basic d2pAd2pnaWxtb3JlLmNvbTpqYXNvbjEyMw==
+> Accept: */*
+
 
 ## Authenticating with OpenID Connect
 

@@ -70,6 +70,10 @@ In this chapter you'll learn how to configure the connector, and then interact w
 
 DreamFactory is packed with features capable of being tweaked via configuration parameters. These parameters can be managed as server environment variables or within a `.env` file found in the platform's root directory. This appendix defines all available parameters.
 
+### [Appendix B. Security FAQ](./reference/security.md)
+
+Customers tasked with managing sensitive data often ask rigorous questions regarding company and platform security policies. 
+
 ## More Ways to Learn
 
 Hopefully you'll find this guide indispensable, however it's just one of several learning resources at your disposal. Check out the following links to learn more about what else is available!

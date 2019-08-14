@@ -1,6 +1,7 @@
 ---
 home: true
 heroText: Getting Started with DreamFactory
+heroImage: /images/df-ebook.png
 tagline: Instant APIs to Integrate Everything
 actionText: Get Started →
 actionLink: /docs/
