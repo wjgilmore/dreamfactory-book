@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Getting Started with DreamFactory
+  - name: "description"
+    content: This guide provides a thorough overview of the popular DreamFactory API management platform.
 ---
 
 # Getting Started with DreamFactory
@@ -34,15 +39,15 @@ From the moment your API is generated, rest assured it is protected by at minimu
 
 The SOAP Protocol has long been instrumental to network-based data exchange, however over time REST has slowly gained influence within enterprises, with many DreamFactory users seeking to supplant their SOAP services with a REST-based solution. In this chapter you'll learn how to mount an existing SOAP service to DreamFactory and interact with it using an auto-generated REST interface.
 
-### Chapter 6. Integrating Business Logic
+### Chapter 6. Integrating Business Logic Into Your DreamFactory APIs(./chapter06.md)
 
 The ability to merely auto-generate a REST API is already going to produce an immediate productivity boost, however eventually you're going to want to tweak one or more API endpoints' default behavior to accommodate more sophisticated project requirements. Most often this involves using DreamFactory’s scripting feature, which allows you to write custom code used to validating input parameters, call other APIs, and much more. In this chapter we'll walk through several real-world examples which highlight how easy it is to extend your API endpoints with one of four supported scripting engines (NodeJS, PHP, Python, and V8JS).
 
-### [Chapter 7. Configuring Limiting and Logging](./chapter07.md)
+### [Chapter 7. Limiting and Logging API Requests](./chapter07.md)
 
 In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
-### [Chapter 8. Securing, and Maintaining Your DreamFactory Enviroment](./chapter08.md)
+### [Chapter 8. Securing Your DreamFactory Environment](./chapter08.md)
 
 While DreamFactory is already secure, and relatively maintenance free, there are quite a few modifications you can make to enhance your instance. In this chapter we'll provide a wide ranging overview of the many changes you can make to maintain, and secure your environment.
 
@@ -50,7 +55,7 @@ While DreamFactory is already secure, and relatively maintenance free, there are
 
 DreamFactory is already very performant out of the box, however logically you'll want to do everything practical to ensure your instance can really fly. In this chapter we'll provide some benchmarks, and guidance regarding how to properly tune your instance environment.
 
-### [Chapter 10. Running DreamFactory on a Raspberry Pi](./raspberry-pi.md)
+### [Chapter 10. Installing DreamFactory on a Raspberry Pi](./raspberry-pi.md)
 
 DreamFactory's a really fascinating project in that its architecture is suitable for infinite horizontal and vertical scaling, yet can be run on small appliance-like devices such as the Raspberry Pi. In this chapter we'll talk about a few configuration-related gotchas associated with installing DreamFactory's prerequisites on the Raspberry Pi.
 
@@ -84,11 +89,15 @@ The [DreamFactory wiki](https://wiki.dreamfactory.com) is our definitive referen
 
 ### Videos
 
-Dozens of videos are available via the [DreamFactory Youtube channel](https://www.youtube.com/user/dreamfactorysoftware/videos).
+Dozens of videos are available via the [DreamFactory Youtube channel](https://www.youtube.com/user/dreamfactorysoftware/videos). Also check out [DreamFactory Academy](https://academy.dreamfactory.com/)
 
 ### The DreamFactory Forum
 
 Volunteers and DreamFactory staff alike regularly patrol our [community forum](http://community.dreamfactory.com/). If Stack Overflow is preferred, be sure to tag the question using the [dreamfactory](https://stackoverflow.com/questions/tagged/dreamfactory) tag! 
+
+### API Cost Calculator
+
+Wondering how much it costs to build an API? Check out our [API calculator](https://calculator.dreamfactory.com/), which calculates API development costs based on numerous research studies and our own interactions with thousands of customers around the globe.
 
 ## Contact us
 

@@ -1,8 +1,13 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Securing and Maintaining Your DreamFactory Enviroment
+  - name: "description"
+    content: This chapter introduces DreamFactory's layer-based security approach, discussing the many ways in which you can ensure your APIs are fully secured. 
 ---
 
-# Chapter 9. Securing, and Maintaining Your DreamFactory Enviroment
+# Chapter 8. Securing Your DreamFactory Enviroment
 
 The DreamFactory platform is built atop the [Laravel](https://www.laravel.com) framework. Laravel is an amazing PHP-based framework that in just a few short years has grown in popularity to become one of the today's most popular framework solutions regardless of language. We speculate there are several reasons for such soaring popularity, including a thoroughly pragmatic approach, security-first implementation, fantastic documentation, and a comprehensive ecosystem (in addition to the framework itself, the Laravel development team also maintains an e-commerce framework called Spark, an application adminstration toolkit called Nova, and an application deployment service called Envoyer. Regardless, like any application you're going to want to learn all you can about how to best go about maintaining and securing the environment. 
 
@@ -20,8 +25,7 @@ For database-backed APIs, create the API using a database account privileges tha
 
 Never use a blanket API key for your APIs! Instead, create roles which expressly define the level of privileges intended to be exposed via the API, and then associate the role with a new App and corresponding API Key. Don't be afraid to create multiple roles and therefore multiple corresponding API keys if you'd like to limit API access in different ways on a per-client or group basis.
 
-
-* Should you need to make API documentation available to team members, use DreamFactory's user-centric role assignment feature to make solely the documentation available to the team members, rather than granting unnecessary administrative access.
+Should you need to make API documentation available to team members, use DreamFactory's user-centric role assignment feature to make solely the documentation available to the team members, rather than granting unnecessary administrative access.
 
 <img src="/images/10/role_detail.png" width="800">
 
@@ -46,47 +50,14 @@ APP_DEBUG=false
 APP_ENV=production
 ```
 
-## Separating the Web Administration Interface from the Platform
+### Enforcing Role-based Access Controls
+
+### Obfuscating Sensitive Data
+
+### Separating the Web Administration Interface from the Platform
 
 New DreamFactory users often conflate the web administration interface with the API platform; in fact, the web administration interface is just a client like any other. It just so happens that the DreamFactory team built this particular interface expressly for managing the platform in an administrative capacity. This interface talks to the platform using a series of administrative APIs exposed by the platform, and accessible only when requests are accompanied by a session token associated with an authenticated administrator.
 
 By default this interface runs on the same server as the platform itself. Some users prefer to entirely separate the two, running the interface in one networking environment and entirely isolating the platform in another.
 
 TODO: Add link to df-admin-app README.
-
-## Implementing Key Security Safeguards
-
-### Obfuscating Sensitive Data
-
-## Adding Redis Caching
-
-One of DreamFactory's great advantages is it is built atop Laravel, and as such, you can take advantage of Laravel's support for shared caching solutions, among other things. This is great because it means the caching solution has been extensively tested and proven in production environments. 
-
-To install the predis package you just need to navigate to your project's root directory and execute this command:
-
-    $ composer require predis/predis
-
-Next, open your .env file and look for this section:
-
-    ## CACHE_DRIVER options: apc, array, database, file, memcached, redis
-    CACHE_DRIVER=file
-
-    Change CACHE_DRIVER to:
-
-    CACHE_DRIVER=redis
-
-Next, scroll down and uncomment these lines by removing the `#`, and then update the `CACHE_HOST`, `CACHE_PORT`, and (optionally) the `CACHE_PASSWORD` parameters to match your Redis environment:
-
-    ## If CACHE_DRIVER = memcached or redis
-    #CACHE_HOST=
-    #CACHE_PORT=
-    #CACHE_PASSWORD=
-
-Finally, scroll down to the following section and uncomment `CACHE_DATABASE` and `REDIS_CLIENT`:
-
-    ## If CACHE_DRIVER = redis
-    #CACHE_DATABASE=2
-    ## Which Redis client to use: predis or phpredis (PHP extension)
-    #REDIS_CLIENT=predis
-
-You can leave CACHE_DATABASE set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). By default your Redis Database will be on 0, so be sure to `SELECT` whatever the number is you have set your `CACHE_DATABASE` equal to. Then you can start seeing the `KEYS` populate.

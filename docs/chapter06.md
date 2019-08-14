@@ -1,48 +1,27 @@
-# Chapter 6. Integrating Business Logic
+---
+sidebar: auto
+meta:
+  - name: "name"
+    content: Integrating Business Logic Into Your DreamFactory APIs
+  - name: "description"
+    content: This chapter shows you how to add business logic to your DreamFactory APIs, allowing you to validate input parameters, transform responses, call other APIs, and more.
+---
 
-## Transforming Response Content
+# Chapter 6. Integrating Business Logic Into Your DreamFactory APIs
 
-## Calling Other APIs
+TODO
 
-Need to simplify this, using just a single loop rather than a nested syntax. Also, could probably just use a Laravel collection method and eliminate the loop altogether.
+## The Scripting Interface
 
-	$api = $platform['api'];
-	$options = [];
+### Supported Scripting Engines
 
-	$responseBody = $event['response']['content'];
+## Scripting Examples
 
-	foreach ($responseBody['resource'] as $n => $record) {
-	    
-	    $statusUpdates = [];
-	    
-	    if(isset($record['status_history'])) {
-	    
-	        foreach($record['status_history'] as $sh) {
-	        
-	           $translate = [];
-	        
-	           $translate['text'][] = $sh['STATUS'];
-	           $translate['source'] = "English";
-	           $translate['target'] = "Spanish";
-	    
-	           $payload = json_encode($translate);
-	        
-	           $url = "watson/";
-	           $post = $api->post;
-	           $result = $post($url, $payload, $options);    
-	         
-	           $sh['STATUS'] = $result['content']['translations'][0]['translation'];
-	    
-	           $statusUpdates[] = $sh;
-	    
-	        }
-	    
-	    }
+### Validating Client Input
 
-	    $record['status_history'] = $statusUpdates;
-	    
-	    $responseBody['resource'][$n] = $record;
-	    
-	}
+### Masking Sensitive Data
 
-	$event['response']['content'] = $responseBody;
+### Transforming Response Content
+
+### Calling Other APIs
+

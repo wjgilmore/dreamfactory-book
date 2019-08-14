@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Example DreamFactory applications
+  - name: "description"
+    content: Looking for DreamFactory inspriation? Check out these example DreamFactory applications.
 ---
 
 # Chapter 10. JavaScript Examples

@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Generating a SOAP-based REST API
+  - name: "description"
+    content: This chapter shows you how to use the DreamFactory platform to generate a REST API for a SOAP service.
 ---
 
 # Chapter 5. Generating a SOAP-to-REST API

@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Installing DreamFactory On a Raspberry Pi
+  - name: "description"
+    content: Learn how to install DreamFactory on a Raspberry Pi
 ---
 
 # Chapter 9. Installing DreamFactory on a Raspberry Pi

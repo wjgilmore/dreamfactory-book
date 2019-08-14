@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Creating File System APIs
+  - name: "description"
+    content: This chapter shows you how to create REST APIs for SFTP, AWS S3, and more using the DreamFactory platform.
 ---
 
 # Chapter 12. Creating File System APIs
@@ -88,5 +93,4 @@ Note the `X-Folder-Name` field is identified as a header, meaning you'll need to
 
 ### Creating an AWS S3 REST API
 
-Section forthcoming.
-
+TODO

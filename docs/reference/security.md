@@ -4,7 +4,7 @@ meta:
   - name: "name"
     content: DreamFactory Security
   - name: "description"
-    content: This appendix answers frequently asked questions pertaining to company and platform security policies, safeguards, and procedures.
+    content: This appendix answers frequently asked questions pertaining to Dreamfactory platform security policies, safeguards, and procedures.
 ---
 
 # Appendix B. Security FAQ

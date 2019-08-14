@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Scaling DreamFactory
+  - name: "description"
+    content: This chapter shows you how to scale your DreamFactory APIs to suit any performance requirements.
 ---
 
 # Chapter 8. Performance Considerations
@@ -59,6 +64,39 @@ DreamFactory enables file-based caching by default, however you may opt to confi
 
  1. [YouTube - Setting up and using Redis](c94200f4d0567522370908afcdafd28d)
  2. [Blog - Caching](http://blog.dreamfactory.com/new-dreamfactory-cache-service-supports-redis-memcahed-and-local-storage/)
+
+## Adding Redis Caching
+
+One of DreamFactory's great advantages is it is built atop Laravel, and as such, you can take advantage of Laravel's support for shared caching solutions, among other things. This is great because it means the caching solution has been extensively tested and proven in production environments. 
+
+To install the predis package you just need to navigate to your project's root directory and execute this command:
+
+    $ composer require predis/predis
+
+Next, open your .env file and look for this section:
+
+    ## CACHE_DRIVER options: apc, array, database, file, memcached, redis
+    CACHE_DRIVER=file
+
+    Change CACHE_DRIVER to:
+
+    CACHE_DRIVER=redis
+
+Next, scroll down and uncomment these lines by removing the `#`, and then update the `CACHE_HOST`, `CACHE_PORT`, and (optionally) the `CACHE_PASSWORD` parameters to match your Redis environment:
+
+    ## If CACHE_DRIVER = memcached or redis
+    #CACHE_HOST=
+    #CACHE_PORT=
+    #CACHE_PASSWORD=
+
+Finally, scroll down to the following section and uncomment `CACHE_DATABASE` and `REDIS_CLIENT`:
+
+    ## If CACHE_DRIVER = redis
+    #CACHE_DATABASE=2
+    ## Which Redis client to use: predis or phpredis (PHP extension)
+    #REDIS_CLIENT=predis
+
+You can leave CACHE_DATABASE set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). By default your Redis Database will be on 0, so be sure to `SELECT` whatever the number is you have set your `CACHE_DATABASE` equal to. Then you can start seeing the `KEYS` populate.
 
 ## Load Balancing Your DreamFactory Environment
 

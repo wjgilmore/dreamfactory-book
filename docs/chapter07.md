@@ -1,7 +1,12 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Limiting and Logging API Requests
+  - name: "description"
+    content: This chapter shows you how to limit the number of APIs requests made over a specific period of time, and how to configure DreamFactory's various supported logging solutions.
 ---
-# Chapter 7. Limiting and Logging Your APIs
+# Chapter 7. Limiting and Logging API Requests
 
 In this chapter you'll learn how to use DreamFactory's API limiting and logging capabilities to assign and monitor access to your restricted APIs.
 
