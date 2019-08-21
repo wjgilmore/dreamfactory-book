@@ -104,6 +104,37 @@ You can use a load balancer to distribute API requests among multiple servers. A
 
 <img src="/images/performance/load-balanced-diagram.png">
 
+## Managing Sessions in Redis
+
+DreamFactory can manage sessions using a variety of drivers, including within files stored on the same server as the DreamFactory instance, within a database, or within Memcached or Redis. To use one of these management solutions, open up your `.env` file and add the following configuration parameter:
+
+    SESSION_DRIVER=redis 
+
+Next we'll define the Redis configuration used for session management. Open `config/database.php` and search for the `connections` key. Add the following entry to this array:
+
+    'redis' => [
+        'cluster' => false,
+        'sessions' => [
+            'host' => env('REDIS_HOST', 'localhost'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_PORT', 6379),
+            'database' => 0,
+        ],
+
+    ],
+
+The `sessions` key identifies a specific Redis environment used by your DreamFactory instance. You can however change this to any desired name. Update the `.env` file to point to your Redis host (`REDIS_HOST`), port (`REDIS_PORT`) if not using the default `6379`, and the password (`REDIS_PASSWORD`) if the Redis environment is password protected.
+
+Finally, open your `config/session.php` and search for the following key:
+
+    'connection' => null,
+
+Change this to read:
+
+    'connection' => 'sessions',
+
+After saving these changes, restart your web server and PHP FPM daemon. Establish a new DreamFactory session and confirm the session data is stored inside Redis.
+
 ## Compiling the DreamFactory Code with OPcache
 
 You can achieve particularly high performance by compiling your DreamFactory application code using OPcache. The following 
