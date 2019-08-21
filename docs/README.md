@@ -39,7 +39,7 @@ From the moment your API is generated, rest assured it is protected by at minimu
 
 The SOAP Protocol has long been instrumental to network-based data exchange, however over time REST has slowly gained influence within enterprises, with many DreamFactory users seeking to supplant their SOAP services with a REST-based solution. In this chapter you'll learn how to mount an existing SOAP service to DreamFactory and interact with it using an auto-generated REST interface.
 
-### Chapter 6. Integrating Business Logic Into Your DreamFactory APIs(./chapter06.md)
+### [Chapter 6. Integrating Business Logic Into Your DreamFactory APIs](./chapter06.md)
 
 The ability to merely auto-generate a REST API is already going to produce an immediate productivity boost, however eventually you're going to want to tweak one or more API endpoints' default behavior to accommodate more sophisticated project requirements. Most often this involves using DreamFactory’s scripting feature, which allows you to write custom code used to validating input parameters, call other APIs, and much more. In this chapter we'll walk through several real-world examples which highlight how easy it is to extend your API endpoints with one of four supported scripting engines (NodeJS, PHP, Python, and V8JS).
 
