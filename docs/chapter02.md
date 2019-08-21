@@ -271,6 +271,20 @@ APP_LOG_LEVEL=debug
 APP_LOG_MAX_FILES=5
 ```
 
+### Enabling Email Registration
+
+When creating new users and admins it is not ideal to be setting a password for each one. To get around this, you can enable email registration to be able to select "Send email invite". This will send an email invite to the new user containing a link to your instance and allow them to set a password themselves.
+
+You will need to add the below lines to your `.env` file and then you can get to registering new users immedietly!
+
+```php
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=YOUR_EMAIL@gmail.com
+MAIL_PASSWORD=YOUR_PASSWORD
+```
+
 ### Increasing Your Session Lifetime
 
 For security reasons DreamFactory sessions are limited to 60 minutes. You can however change the lifetime to any desired duration by opening your `.env` file and finding the following variable:
