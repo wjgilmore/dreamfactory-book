@@ -17,6 +17,7 @@ In this chapter you'll learn all about DreamFactory's ability to generate, secur
 * Secure API access to your API using API keys and roles
 * Interact with the auto-generated Swagger documentation
 * Query the API using a third-party HTTP client
+* Synchronize records between two databases
 
 We chose MySQL as the basis for examples throughout the chapter, because it is free, ubiquitously available on hosting providers and cloud environments, and can otherwise be easily installed on all operating systems. Therefore to follow along with this chapter you'll need: 
 
@@ -508,6 +509,48 @@ If deletion is successful, DreamFactory will return a 200 status code with a res
 The equivalent SQL query looks like this:
 
     DELETE FROM employees WHERE emp_no = 500016;
+
+### Synchronizing Records Between Two Databases
+
+You can easily synchronize records between two databases by adding a pre_process event script to the database API endpoint for which the originating data is found. To do so, navigate to the Scripts tab, select the desired database API, and then drill down to the desired endpoint. For instance, if we wanted to retrieve a record from a table named employees found within database API named mysql and send it to another database API (MySQL, SQL Server, etc.) named contacts and possessing a table named names, we would drill down to the following endpoint within the Scripts interface:
+
+	mysql > mysql._table.{table_name} > mysql._table.{table_name}.get.post_process  mysql._table.employees.get.post_process
+
+Once there, you'll choose the desired scripting language. We've chosen PHP for this example, but you can learn more about other available scripting engines [within our wiki documentation](https://wiki.dreamfactory.com/DreamFactory/Features/Scripting). Enable the `Active` checkbox, and add the following script to the glorified code editor:
+
+	// Assign the $platform['api'] array value to a convenient variable
+	$api = $platform['api'];
+
+	// Declare a few arrays for later use
+	$options = [];
+	$record = [];
+
+	// Retrieve the response body. This contains the returned records.
+	$responseBody = $event['response']['content'];
+
+	// Peel off just the first (and possibly only) record
+	$employee = $responseBody["resource"][0];
+
+	// Peel the employee record's first_name and last_name values, 
+	// and assign them to two array keys named first and last, respectively.
+	$record["resource"] = [
+	    [
+	        'first' => $employee["first_name"],
+	        'last' => $employee["last_name"],
+	    ]
+	];
+
+	// Identify the location to which $record will be POSTed
+	// and execute an API POST call. 
+	$url = "contacts/_table/names";
+	$post = $api->post;
+	$result = $post($url, $record, $options);
+
+Save the changes, making sure the script's `Active` checkbox is enabled. Then make a call to the `employees` table which will result in the return of a single record, such as:
+
+	/api/v2/mysql/_table/employees?filter=emp_no=10001
+
+Of course, there's nothing stopping you from modifying the script logic to iterate over an array of returned records.
 
 ## Troubleshooting
 
