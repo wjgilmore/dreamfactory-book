@@ -71,6 +71,10 @@ DreamFactory supports file system-based API generation, meaning you can create R
 
 In this chapter you'll learn how to configure the connector, and then interact with your Salesforce database using the DreamFactory-generated REST API.
 
+### [Chapter 14. Using DreamFactory's Remote HTTP and SOAP Connectors](./remote-soap.md)
+
+Although the DreamFactory Platform is best known for the ability to generate REST APIs, many also take advantage of the platform's Remote Service connectors. In this chapter you'll learn how to proxy third-party HTTP APIs through DreamFactory, and additionally convert SOAP services to REST with no additional coding required.
+
 ### [Appendix A. Configuration Parameter Reference](./reference/appendixa.md)
 
 DreamFactory is packed with features capable of being tweaked via configuration parameters. These parameters can be managed as server environment variables or within a `.env` file found in the platform's root directory. This appendix defines all available parameters.

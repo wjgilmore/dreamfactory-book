@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Integrating Salesforce Data Using DreamFactory
+  - name: "description"
+    content: Learn how to integrate Salesforce data into other applications using DreamFactory.
 ---
 
 # Chapter 13. Integrating Salesforce Data Using DreamFactory
