@@ -163,7 +163,46 @@ To do so, navigate to the `Scripts` tab inside your DreamFactory administration 
 
 Here you'll be presented with the scripting interface. Four scripting engines are supported, including PHP, Python (2 and 3), NodeJS, and V8JS. You can link to a script found in a repository hosted on GitHub, GitLab, or BitBucket, however for the purposes of this example I'll just use the glorified text area included in the interface.
 
-TODO: Example forthcoming
+Returning to our earlier example, recall that this request:
+
+	/api/v2/salesforce/_table/account/0016A00000MJRN9QAP?fields=Name,BillingCity
+
+Will return this response:
+
+	{
+	  "attributes": {
+	    "type": "Account",
+	    "url": "/services/data/v46.0/sobjects/Account/0016A00000MJRN9QAP"
+	  },
+	  "Name": "United Oil & Gas Corp.",
+	  "BillingCity": "New York",
+	  "Id": "0016A00000MJRN9QAP"
+	}
+
+The JSON will automatically be converted into an array and made available to your script within the `$event` array which is injected into the script. Specifically, you'll find it within `$event['response']['content']`. The following example script retrieves this array, and repurposes the desired data within another array named `$record` which is subsequently POSTed to another API named `mysql`, specifically to the API's `billing` table: 
+
+	$api = $platform['api'];
+
+	// Retrieve the response body. This contains the returned records.
+	$responseBody = $event['response']['content'];
+
+    $record = [];
+    
+    $record["resource"] = [
+        [
+            'name' => $responseBody["Name"],
+            'billing_city' => $responseBody["BillingCity"]
+        ]
+    ];
+    
+    $url = "mysql/_table/billing/";
+    $post = $api->post;
+    
+    $result = $post($url, $record, []);
+    
+    return $result;
+
+Keep in mind the supported scripting engines (PHP, Python, NodeJS, V8JS) are not incomplete or hobbled versions. These are the very same engines installed on the same server as DreamFactory, and as such you are free to take advantage of any language-specific packages or libraries simply by installing them on the server.
 
 ## Conclusion
 
