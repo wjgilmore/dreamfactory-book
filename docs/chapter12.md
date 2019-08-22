@@ -91,6 +91,38 @@ Note the `X-Folder-Name` field is identified as a header, meaning you'll need to
 <img src="/images/12/sftp-create-directory.png" width="600">
 </p>
 
-### Creating an AWS S3 REST API
+### Uploading Files
+
+To upload a file, you'll send a `POST` request to the SFTP API. You must specify the file name, and can do so either via the URL like this:
+
+https://example.com/api/v2/sftp/dreamfactory-ebook.png
+
+Alternatively you can use the `X-File-Name` in header to identify file name.
+
+Upload size limitations aren't so much a function of DreamFactory as they are web server configuration. For instance, Nginx' default maximum body size is 1MB, so if you plan on uploading files larger than that you'll need to add the following configuration directive to your `nginx.conf` file:
+
+	client_max_body_size 10M;
+
+You'll know if the `client_max_body_size` setting isn't suffice because you'll receive a `413 Request Entity Too Large` HTTP error if the file size surpasses the setting.
+
+Additionally, you'll receive a `413 Payload Too Large` HTTP error if PHP's `upload_max_filesize` setting isn't suffice. To change this setting you'll open the `php.ini` file associated with the PHP-FPM daemon and modify it accordingly:
+
+	upload_max_filesize = 100M
+
+Don't forget to restart the respective daemons after making changes to the Nginx and PHP configuration files.
+
+### Downloading Files
+
+To download a file you'll send a GET request to the SFTP API, identifying the path and file name in the URL:
+
+	https://demo.dreamfactory.com/api/v2/sftp/Marketing/df-ebook.png
+
+If you're using a tool such as Insomnia, you can view many file types within the response preview:
+
+<p>
+<img src="/images/12/sftp-download-file.png" width="600">
+</p>
+
+## Creating an AWS S3 REST API
 
 TODO
