@@ -63,6 +63,7 @@ If you plan on using PHP in conjunction with one of the following databases, ple
 
 * [Microsoft SQL Server](chapter02/microsoft-sql-server.md)
 * [SAP SQL Anywhere](chapter02/sap-sql-anywhere.md)
+* [Firebird](chapter02/firebird.md)
 
 ### Installing DreamFactory
 
