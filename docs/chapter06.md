@@ -33,7 +33,9 @@ DreamFactory does not natively support scheduled tasks but you can easily setup 
 
 First we will have to create the script to call the API. We can go to the `API Docs` tab and get the cURL command for the appropriate call we would like to make. In this case we have business logic attached to `GET` on `_table/employees` that is syncing data between [two databases](chapter03.html#synchronizing-records-between-two-databases).
 
-insert image https://cl.ly/93eb950b8ada
+<p>
+<img src="/images/06/curl-schedule.png" width="800">
+</p>
 
 Once we have the cURL command we can convert it to PHP by using this [useful tool](https://incarnate.github.io/curl-to-php/). After we will create a file named `cron.php` in the `public` folder containing the output from [Curl to PHP](https://incarnate.github.io/curl-to-php/).
 
