@@ -81,7 +81,13 @@ DreamFactory is packed with features capable of being tweaked via configuration 
 
 ### [Appendix B. Security FAQ](./reference/security.md)
 
-Customers tasked with managing sensitive data often ask rigorous questions regarding company and platform security policies. 
+Customers tasked with managing sensitive data often ask rigorous questions regarding company and platform security policies.
+
+### [Appendix C. Leveraging an API Gateway for GDPR Readiness](./reference/gdpr.md)
+
+This paper outlines how to leverage an API platform to retrofit existing infrastructure for
+"GDPR readiness", essentially as a byproduct of implementing a modern architecture for digital
+transformation.
 
 ## More Ways to Learn
 
