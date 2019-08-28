@@ -379,6 +379,46 @@ Finally, you'll want to clear your application and configuration caches by execu
 
 With that done, open your DreamFactory instance in the browser, and confirm the environment is operational.
 
+## Installing and Configuring DreamFactory on CentOS
+
+First I pull in the CentOS Docker image.
+
+	docker pull centos
+
+Then I start the image in a detached state.
+
+	docker run -itd {Container_ID}
+
+Once the image is running we can exec into it and begin installing DreamFactory.
+
+	docker exec -it {Container_ID} /bin/bash
+
+### Using the DreamFactory Install Script
+
+Instead of spending time copying and pasting a lenghty list of commands we are going to use our installation script that can be found [here](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers).
+
+To start we will have to bring the script into our container by using `wget`.
+
+	wget -O cent.sh {RAW_GITHUB_SCRIPT_URL}
+
+Now that we have the script on our server, let's make it executable.
+
+	chmod +x cent.sh
+
+We can now run the script, but first let's take a look at additional configuration flags. You may pass several options into the script to alter its behavior. If you do not use these options, the script will install the Nginx web server, DreamFactory, and the required system and PHP extensions, but will **not install a database server**. To see a full list of installation options check it our [here](https://github.com/dreamfactorysoftware/df-genie#installation-options), otherwise we will be using the `--with-mysql` flag to be able to use MySQL as our system database.
+
+Now we can run the script!
+
+	sudo ./cent.sh --with-mysql
+
+You should now see the script running like so.
+
+<p>
+<img src="/images/02/install-script.png" width="600">
+</p>
+
+Upon completion you can now go to your browser and access your instance!
+
 ## Choosing an HTTP Client
 
 Whether your API consumer is an iPhone or Android application, a SPA (Single Page Application), or another server altogether, that consumer is often referred to as the *client*. The client issues HTTP requests to the REST API, parsing the responses and reacting accordingly. Although in most cases your team will use libraries such as [Alamofire](https://github.com/Alamofire/Alamofire) or [Axios](https://github.com/axios/axios) to manage these requests, you'll often want to interact with the APIs in a much more fluid manner during the investigatory and learning phase. The API Docs feature serves this need well, however the API Docs interface lacks the ability to bookmark and otherwise persist queries, manage parameters programmatically using variables, and other features useful for maintaining a set of easily accessible configurations.
