@@ -94,6 +94,10 @@ transformation.
 This paper answers frequently asked questions pertaining to Dreamfactorys system and an anatomy of various API calls as they travel
 through the system.
 
+### [Appendix E. Scaling DreamFactory](./reference/scalability.md)
+
+This paper is designed to provide information to enterprise customers about how to scale a DreamFactory Instance. The sections below talks about horizontal, vertical, and cloud scaling capabilities.
+
 ## More Ways to Learn
 
 Hopefully you'll find this guide indispensable, however it's just one of several learning resources at your disposal. Check out the following links to learn more about what else is available!
