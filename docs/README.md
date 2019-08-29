@@ -89,7 +89,7 @@ This paper outlines how to leverage an API platform to retrofit existing infrast
 "GDPR readiness", essentially as a byproduct of implementing a modern architecture for digital
 transformation.
 
-### [Appendix D. Leveraging an API Gateway for GDPR Readiness](./reference/architecture.md)
+### [Appendix D. Examining DreamFactorys Architecture](./reference/architecture.md)
 
 This paper answers frequently asked questions pertaining to Dreamfactorys system and an anatomy of various API calls as they travel
 through the system.
