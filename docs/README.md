@@ -37,7 +37,7 @@ From the moment your API is generated, rest assured it is protected by at minimu
 
 ### [Chapter 5. Generating a SOAP-to-REST API](./chapter05.md)
 
-The SOAP Protocol has long been instrumental to network-based data exchange, however over time REST has slowly gained influence within enterprises, with many DreamFactory users seeking to supplant their SOAP services with a REST-based solution. In this chapter you'll learn how to mount an existing SOAP service to DreamFactory and interact with it using an auto-generated REST interface.
+DreamFactory offers an extraordinarily powerful solution for creating APIs and adding business logic to existing APIs using a variety of popular scripting languages including PHP, Python (versions 2 and 3), Node.js, and JavaScript. In this chapter we'll walk you through several examples which will hopefully spur the imagination regarding the many ways in which you can take advantage of this great feature.
 
 ### [Chapter 6. Integrating Business Logic Into Your DreamFactory APIs](./chapter06.md)
 
@@ -73,7 +73,11 @@ In this chapter you'll learn how to configure the connector, and then interact w
 
 ### [Chapter 14. Using DreamFactory's Remote HTTP and SOAP Connectors](./remote-soap.md)
 
-Although the DreamFactory Platform is best known for the ability to generate REST APIs, many also take advantage of the platform's Remote Service connectors. In this chapter you'll learn how to proxy third-party HTTP APIs through DreamFactory, and additionally convert SOAP services to REST with no additional coding required.
+Although the DreamFactory Platform is best known for the ability to generate REST APIs, many also take advantage of the platform's Remote Service connectors. In this chapter you'll learn how to proxy third-party HTTP APIs through DreamFactory, and additionally mount an existing SOAP service to DreamFactory and interact with it using an auto-generated REST interface.
+
+### [Chapter 15. Using the System APIs](./system-apis.md)
+
+All DreamFactory versions include a web-based administration console used to manage all aspects of the platform. While this console offers a user-friendly solution for performing tasks such as managing APIs, administrators, and business logic, many companies desire to instead automate management tasks through scripting. In this chapter you'll learn how to interact with the system APIs to easily manage multiple DreamFactory environments, and integrate DreamFactory features into third-party applications such as an API monetization SaaS.
 
 ### [Appendix A. Configuration Parameter Reference](./reference/appendixa.md)
 
