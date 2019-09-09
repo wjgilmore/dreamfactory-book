@@ -7,7 +7,7 @@ meta:
     content: Looking for DreamFactory inspriation? Check out these example DreamFactory applications.
 ---
 
-# Chapter 10. JavaScript Examples
+# Chapter 11. JavaScript Examples
 
 We regularly receive requests for examples involving connecting DreamFactory to a web interface. In this chapter we'll include several examples involving modern JavaScript technologies, and in the near future will provide a GitHub repository where these and other examples can be downloaded.
 

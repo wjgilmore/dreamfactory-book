@@ -7,7 +7,7 @@ meta:
     content: This chapter shows you how to scale your DreamFactory APIs to suit any performance requirements.
 ---
 
-# Chapter 8. Performance Considerations
+# Chapter 9. Performance Considerations
 
 DreamFactory is a PHP-based application, and while we work hard to optimize the code at every opportunity, performance is going to largely be dictated by decisions made at the infrastructure level. Fortunately, these decisions are not so much dictated by budget as by sound technology and hosting choices. While your DreamFactory environment will undoubtedly be more performant on for instance an AWS t2.large than on a $15 Digital Ocean Droplet, the chasm between the two can be dramatically reduced when care is taken to properly configure and tune the environment. In this chapter we'll provide some general performance benchmarks, and then provide guidance how to ensure your DreamFactory instance is running at peak capacity. 
 
