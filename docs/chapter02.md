@@ -39,6 +39,10 @@ Installers are available for Linux, Windows, and Mac OS X. Download your desired
 
 [https://www.dreamfactory.com/downloads](https://www.dreamfactory.com/downloads)
 
+If you're using DreamFactory's commercial Bitnami edition and would like to configure Oracle, follow these instructions:
+
+* [Configuring Oracle with Bitnami](chapter02/bitnami-oracle.md)
+
 ### Cloud Images
 
 Cloud environments are the hosting solution of choice these days, and for good reason. Cloud service providers offer unsurpassed levels of stability, performance, and security, and countless additional features capable of maximizing IT teams' efficiency while minimizing costs. DreamFactory offers Bitnami images targeting all of the major cloud providers, including AWS, Azure, Google, and Oracle Cloud. Download your desired version via the following link:
