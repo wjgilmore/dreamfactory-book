@@ -40,6 +40,48 @@ DreamFactory currently supports four scripting engines, including:
 
 Keep in mind these aren't hobbled or incomplete versions of the scripting engine. DreamFactory works in conjunction with the actual language interpreters installed on the server, and allows you to import third-party libraries and packages into your scripting environment.
 
+## Examples
+
+
+### Reformatting a Response
+
+	{
+	  "resource": [
+	    {
+	      "Id": 1,
+	      "FirstName": "Bob",
+	      "LastName": "Anders",
+	      "City": "Berlin",
+	      "Country": "Germany",
+	      "Phone": "030-0074321",
+	      "messages": []
+	    },
+	    {
+	      "Id": 2,
+	      "FirstName": "Ana",
+	      "LastName": "Trujillo",
+	      "City": "México D.F.",
+	      "Country": "Mexico",
+	      "Phone": "(5) 555-4729",
+	      "messages": []
+	    },
+	    ...
+	    ]
+	}
+
+	$responseBody = $event['response']['content'];
+
+	foreach ($responseBody['resource'] as $n => $record) {
+		$record["Name”]["FirstName"] = $record["FirstName"];
+		$record["Name”]["LastName"] = $record["LastName"];
+		unset($record["FirstName"]);
+		unset($record["LastName"]);
+		$responseBody['resource'][$n] = $record;
+	}
+
+	$event['response']['content'] = $responseBody;
+
+
 ### More Information
 
 We're still in the process of migrating scripting documentation into this guide, so for the time being please consult our wiki for more information about scripting:
@@ -75,5 +117,27 @@ Next you will edit the `crontab` by running the following:
 
 You will be put into the text editor where you can simply paste in your CRON job and save it. Now you have a scheduled task running every minute to call your API!
 
+## Configuring Python 3
 
+DreamFactory 3.0 added support for Python 3 due to Python 2.X offically being retired on [January 1, 2020](https://pythonclock.org). Keep in mind DreamFactory's Python 2 integration hasn't gone away! We just wanted to provide users with plenty of time to begin upgrading their scripts to use Python 3 if so desired.
+
+Python 3 scripting support will automatically be made available inside all DreamFactory 3 instances. However, there is an important configuration change that new and upgrading users must consider in order for Python 3 scripting to function properly. Whereas DreamFactory's Python 2 support depends upon [Bunch](https://github.com/dsc/bunch), Bunch does not support Python 3 and so a fork of the Bunch package called [Munch](https://github.com/Infinidat/munch) must be used instead.
+
+You'll install Munch via Python's [pip](https://pip.pypa.io/en/stable/) package manager. A Python 3-specific version of pip known as pip3 should be used for the installation. If your server doesn't already include pip3 (find out by executing `which pip3`), you can install it using your server operating system's package manager. For instance on Ubuntu you can install it like this:
+
+	$ apt-get install -y --allow-unauthenticated python3-pip
+
+With pip3 installed, you can install munch:
+
+	$ pip3 install munch
+
+Once installed, you'll need to update your `.env` file (or server environment variables) to point to the Python 3 interpreter:
+
+	DF_PYTHON3_PATH=/usr/local/bin/python3
+
+You can find your Python 3 interpreter path by executing this command:
+
+	$ which python3
+
+After saving these changes, restart your PHP-FPM and Apache/Nginx service.
 
