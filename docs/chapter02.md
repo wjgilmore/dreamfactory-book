@@ -278,27 +278,27 @@ APP_LOG_MAX_FILES=5
 
 ### Enabling Email Registration
 
-When creating new users and admins it is not ideal to be setting a password for each one. To get around this, you can enable email registration to be able to select "Send email invite". This will send an email invite to the new user containing a link to your instance and allow them to set a password themselves.
+When creating new users and admins it is not ideal nor secure to manually set a password for each one. You can instead enable email registration which will allow you to instead send e-mail invitations by checking the `Send email invite` option. This will send an email invite to the new user containing a link to your instance and allow them to set a password.
 
-You will need to add the below lines to your `.env` file and then you can get to registering new users immedietly!
+To enable e-mail support, you will need to add the below lines to your `.env` file and then you can send new users registration notifications!
 
-```php
-MAIL_DRIVER=smtp
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=YOUR_EMAIL@gmail.com
-MAIL_PASSWORD=YOUR_PASSWORD
-```
+	MAIL_DRIVER=smtp
+	MAIL_HOST=smtp.gmail.com
+	MAIL_PORT=587
+	MAIL_USERNAME=YOUR_EMAIL@gmail.com
+	MAIL_PASSWORD=YOUR_PASSWORD
+
+Keep in mind `smtp` is but one of several available delivery options.
 
 ### Increasing Your Session Lifetime
 
 For security reasons DreamFactory sessions are limited to 60 minutes. You can however change the lifetime to any desired duration by opening your `.env` file and finding the following variable:
 
-#DF_JWT_TTL=60
+	#DF_JWT_TTL=60
 
 Change `DF_JWT_TTL` to any duration you please, defined in minutes. For instance, the following settings will persist your session for a week:
 
-DF_JWT_TTL=10080
+	DF_JWT_TTL=10080
 
 ### Updating Your DreamFactory Docker Environment
 
