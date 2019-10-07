@@ -27,7 +27,7 @@ If you continue drilling down to a specific endpoint, you'll eventually arrive a
 DreamFactory's ability to display a comprehensive list of API endpoints is contingent upon availability of corresponding OpenAPI documentation. This documentation is automatically generated for the native connectors, however for connectors such as Remote HTTP and Scripted, you'll need to supply the documentation in order to peruse the endpoints via the scripting interface.
 :::
 
-These scripts can be managed within a simple web-based editing interface, or managed within version control (GitHub, BitBucket, and GitLab are all supported). So in what languages can these scripts be written in? Read on to learn more!
+Although the basic script editor is fine for simple scripts, you'll probably want to manage more complicated scripts using version control. After configuring a version control (GitHub, BitBucket, and GitLab are all supported) or file system-based API, you'll be able to link to a script by selecting the desired API via the `Link to a service` select box located at the bottom left of the interface presented in the above screenshot.
 
 ### Supported Scripting Engines
 
@@ -43,7 +43,7 @@ Keep in mind these aren't hobbled or incomplete versions of the scripting engine
 ## Examples
 
 
-### Reformatting a Response
+### Transforming a Response
 
 	{
 	  "resource": [
@@ -81,8 +81,94 @@ Keep in mind these aren't hobbled or incomplete versions of the scripting engine
 
 	$event['response']['content'] = $responseBody;
 
+## Using Third-Party Libraries
 
-### More Information
+As mentioned earlier in this chapter, DreamFactory passes the scripts along to the designed scripting language that's installed on the server. This means you not only have access to all of the scripting language's syntax (as opposed to some hobbled version), but also the language community's third-party packages and libraries! 
+
+### Adding a Composer Package
+
+DreamFactory is built atop the PHP language, and uses [Composer](https://getcomposer.org/) to install and manage a number of internally built and third-party packages which are used throughout the platform. If you'd like to take advantage of a Composer package within your scripts, install it globally using the `global` modifier. For instance, suppose you wanted to send out a Tweet from a script. You can use the [twitteroauth](https://github.com/abraham/twitteroauth) package to do so:
+
+	$ composer global require abraham/twitteroauth
+
+Once installed, you can use the package within a DreamFactory script via it's namespace as demonstrated in the following example:
+
+	$consumerKey    = env('TWITTER_CONSUMER_KEY'); 
+	$consumerSecret = env('TWITTER_CONSUMER_SECRET');
+	$oauthToken     = env('TWITTER_OAUTH_TOKEN');  
+	$oauthSecret    = env('TWITTER_OAUTH_SECRET');
+
+	$connection = new \Abraham\TwitterOAuth\TwitterOAuth(
+		$consumerKey, 
+		$consumerSecret, 
+		$oauthToken, 
+		$oauthSecret
+	);
+
+	if ($event['request']['method'] == "POST") {
+
+	   $message = $event['request']['payload']['resource'][0]['message'];
+	   $response = $connection->post("statuses/update", ["status" => $message]);
+
+	}
+
+	return json_encode(["response" => $response]);
+
+::: tip
+You'll want to install packages globally because the only other alternative is to install them locally via DreamFactory's Composer files. The packages will behave identically to those installed globally, however you'll eventually overwrite DreamFactory's Composer files when it's time to upgrade.
+:::
+
+### Adding a PHP Class Library
+
+If you'd like to reuse custom code within scripts, and don't want to manage the code within a Composer package, you could alternatively add the class to PHP's include path using the [set_include_path()](https://www.php.net/manual/en/function.set-include-path.php) function. Once included, you can use the [require_once](https://www.php.net/require_once) statement to import the class. This approach is demonstrated in the following example script:
+
+	set_include_path("/home/wjgilmore/libraries");
+
+	require_once('Filter.php');
+
+	$filter = new \WJGilmore\Validate\Validate();
+
+	try {
+	    
+	    $filter->username("dreamfactory");
+	    
+	} catch (\Exception $e) {
+	    
+	    $event['response'] = [
+	        'status_code' => 400, 
+	        'content' => [
+	            'success' => false,
+	            'message' => $e->getMessage()
+	        ]
+	    ];
+	    
+	}
+
+The referenced `Filter` class is found in a file named `Filter.php` and looks like this:
+
+	<?php
+
+	namespace WJGilmore\Validate;
+
+	use Exception;
+
+	class Validate {
+
+	        public function username($username) {
+
+                if (preg_match("/^[a-zA-Z0-9\s]*$/", $username) != 1) {
+                        throw new Exception("Username must be alphanumeric.");
+                }
+
+                return true;
+
+	        }
+
+	}
+
+If you'd like to permanently add a particular directory to PHP's include path, modify the [include_path](https://www.php.net/manual/en/ini.core.php#ini.include-path) configuration directive.
+
+## More Information
 
 We're still in the process of migrating scripting documentation into this guide, so for the time being please consult our wiki for more information about scripting:
 
