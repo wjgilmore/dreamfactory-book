@@ -3,9 +3,11 @@ module.exports = {
   description: 'A hands-on introduction to the powerful DreamFactory API generation platform',
   themeConfig: {
     logo: '/images/mark-white.png',
-  	displayAllHeaders: true,
+    displayAllHeaders: true,
+    author: 'DreamFactory Documentation Team',
   	nav: [
       { text: 'Home', link: '/' },
+      { text: 'DreamFactory.com', link: 'https://www.dreamfactory.com/' },
       { text: 'Contact', link: 'https://www.dreamfactory.com/contact' },
       { text: 'Sales', link: 'https://www.dreamfactory.com/contact' },
       { text: 'Free Hosted Trial', link: 'https://genie.dreamfactory.com/register' },
