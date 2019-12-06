@@ -73,3 +73,27 @@ meta:
 * As a rule, DreamFactory collects only the information absolutely required, stores it only as long as it is needed, and shares it with the absolute minimum number of employees.
 * Our policies are designed in compliance with key privacy regulations such as GDPR, PIPEDA, COPPA, HIPAA and FERPA.
 * Our goal is to be fully transparent and responsive with our customers on privacy issues. 
+
+**What is the recommended application hardening document for production deployment of DreamFactory?**
+
+DreamFactory is an HTTP-based platform which supports a wide array of operating systems (both Windows and Linux) and web servers (notably Nginx, Apache, and IIs), and therefore administrators are encouraged to follow any of the many available hardening resources for general guidance. Hardening in the context of DreamFactory would primarily be a result of software-level hardening, and several best practices are presented in the next answer. We're happy to provide further guidance on this matter after learning more about the target operating system.
+
+**How should DreamFactory administrators ensure the data security and integrity for production deployment?**
+
+Data security and integrity is ensured by following key best practices associated with building any HTTP-based API solution:
+
+* Ensure the server software (Nginx, PHP, etc) and associated dependencies are updated to reduce the possibility of third-party intrusion through disclosed exploits.
+* Stay up to date with DreamFactory correspondence regarding any potential platform security issues.
+* Periodically audit the DreamFactory role definitions to ensure proper configuration.
+* Periodically audit database user accounts used for API generation and communication to ensure proper configuration. In this case, proper configuration is defined as ensuring each user account is assigned a minimally viable set of privileges required for the API to function is desired.
+* Periodically audit API keys, disabling or deleting keys no longer in active use.
+* If applicable (requires Enterprise license), use DreamFactory’s logging integration to send traffic logs to a real-time monitoring solution such as Elastic Stack or Splunk.
+* If applicable (requires Enterprise license), use DreamFactory’s restricted administrator feature to limit administrator privileges.
+
+**What is the method for DreamFactory Encryption for data at Rest ? is it enabled by default or do we have to do it manually?**
+
+DreamFactory does not by default store any API data as it passes through the platform. Some connectors offer an API data caching option which will improve performance, however the administrator must explicitly enable this option. Should caching be enabled, data can be stored in one of several supported caching solutions, including Redis and Memcached. Solutions such as Redis are designed to be accessed by "trusted clients within trusted environments", as described by for instance the Redis documentation: https://redis.io/topics/security.
+
+**How does DreamFactory encrypt data in transit? Is it enabled by default or are additional steps required?**
+
+DreamFactory plugs into a variety of third-party data sources, including databases such as Microsoft SQL Server and MySQL, file systems such as S3, and third-party HTTP APIs such as Salesforce, Intercom, and Twitter. DreamFactory will then serve as a conduit for clients desiring to interacting with these data sources via an HTTP-based API. DreamFactory runs atop a standard web server such as Apache or Nginx, both of which support SSL-based communication. Provided HTTPS is enabled, all correspondence between DreamFactory and the respective clients will be encrypted.
