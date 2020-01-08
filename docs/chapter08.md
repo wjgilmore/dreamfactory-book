@@ -59,6 +59,10 @@ Below are resources on how to add an SSL cert to your web server:
 	* [Nginx YouTube Video](https://www.youtube.com/watch?v=X3Pr5VATOyA)
 2. [Apache YouTube Example](https://www.youtube.com/watch?v=NfUoiv4FTSs)
 
+### Securing Your Credentials
+
+When generating APIs using DreamFactory's native connectors, you'll logically need to supply a set of credentials so DreamFactory can connect to and interact with the underlying data source. These credentials are stored in the system database, and are encrypted using [AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption. The credentials are decrypted on-the-fly when DreamFactory connects to the destination data source, and are never cached in plaintext.
+
 ### Suppressing Errors
 
 When running DreamFactory in a production environment, be sure to set the `.env` file's `APP_ENV` value to `production` and `APP_DEBUG` to `false`. Leaving it set to `local` will result in detailed error-related information being returned to the client rather than quietly logged to the log file. When set properly in a production environment, your `.env` file will look like this:
