@@ -15,7 +15,7 @@ You'll be pleased to know DreamFactory supports all of these options through a c
 
 ## Authenticating with Basic HTTP Authentication
 
-[Section Forthcoming]
+[Section forthcoming real soon]
 
 > GET /api/v2/mysql/_table/employees HTTP/1.1
 > Host: demo.dreamfactory.com
@@ -305,3 +305,10 @@ Don't forget add your application to the CORS interface via `Config > CORS`. Our
 <p>
     <img src="/images/04/okta/6a3f1331_2019.18.04..png" width="800" />
 </p>
+
+### Debugging SAML
+
+You can use a browser extension to view SAML messages as they are passed from client to the authentication service provider.
+
+* [SAML-tracer](https://chrome.google.com/webstore/detail/saml-tracer/mpdajninpobndbfcldcmbpnnbhibjmch?hl=en): Chrome extension
+* [SAML-tracer](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/): Firefox extension
