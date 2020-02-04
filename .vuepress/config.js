@@ -8,7 +8,7 @@ module.exports = {
   	nav: [
       { text: 'Home', link: '/' },
       { text: 'DreamFactory.com', link: 'https://www.dreamfactory.com/' },
-      { text: 'Contact', link: 'https://www.dreamfactory.com/contact' },
+      { text: 'Contact', link: 'https://www.dreamfactory.com/demo' },
       { text: 'Sales', link: 'https://www.dreamfactory.com/contact' },
       { text: 'Free Hosted Trial', link: 'https://genie.dreamfactory.com/register' },
     ]
