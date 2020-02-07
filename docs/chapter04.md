@@ -2,12 +2,12 @@
 sidebar: auto
 meta:
   - name: "name"
-    content: How to Secure Your REST APIs
+    content: Authenticating Your APIs
   - name: "description"
     content: This chapter explains how DreamFactory can secure your APIs using a variety of solutions, including basic HTTP authentication, LDAP, Active Directory, OpenID Connect, and Okta.
 ---
 
-# Chapter 4. How to Secure Your REST APIs
+# Chapter 4. Authenticating Your APIs
 
 One of DreamFactory's most popular features is the wide-ranging authentication support. While API Key-based authentication is suffice for many DreamFactory-powered applications, developers often require a higher degree of security through user-specific authentication. In some cases [Basic HTTP authentication](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Basic_Auth) will get the job done, however many enterprises require more sophisticated and flexible approaches largely because of the growing adoption of Single Sign On (SSO)-based solutions such as Active Directory and LDAP, and use of third-party identity providers and solutions such as [AWS Cognito](https://aws.amazon.com/cognito/), [Auth0](https://auth0.com/), and [Okta](https://www.okta.com/). 
 
@@ -312,3 +312,51 @@ You can use a browser extension to view SAML messages as they are passed from cl
 
 * [SAML-tracer](https://chrome.google.com/webstore/detail/saml-tracer/mpdajninpobndbfcldcmbpnnbhibjmch?hl=en): Chrome extension
 * [SAML-tracer](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/): Firefox extension
+
+## Managing User Profiles
+
+The `Users` tab offers a convenient interface for managing user profiles, however it only provides a window for essential information such as e-mail address, password, and phone number. You can however extend the profile by adding custom user attributes. How exactly this is accomplished will depend upon whether the user is authenticated or unauthenticated. 
+
+The former would apply when the user is perhaps logged into a profile manager and actively maintaining his own profile via a web form, for instance. The latter would apply in cases where an administrator was editing profiles using an administrative interface, or perhaps a script was bulk updating user information. In this section we'll show you how to update user profiles to suit both situations.
+
+#### Adding Custom Attributes to Authenticated Users
+
+If the user is authenticated and managing his own profile, you'll use the `POST /api/v2/user/custom` endpoint, passing along the user's session key and a payload containing the custom attributes. For instance if the user wanted to update his office building and number, then the following payload would be sent to the aforementioned endpoint:
+
+    {
+        "resource": [{
+            "name": "Building",
+            "value": "Folsby"
+        },
+        {
+            "name": "Room",
+            "value": "456"
+        }
+        ]
+    }
+
+Note how the payload itemizes each attribute using a `name` and `value` pair. Also, don't forget to additionally send along the user's session token using the `X-DreamFactory-Session-Token` header.
+
+For more information about 
+
+#### Adding Custom Attributes to Unauthenticated Users
+
+If you want to administratively modify an unauthenticated user's custom attributes, you'll use the `PUT /api/v2/system/user/{ID}` endpoint and additionally supply the `related` parameter. Here is an example URI:
+
+    `/api/v2/system/user/7?related=user_custom_by_user_id`
+
+As with authenticated users, you'll pass along a payload that looks like this:
+
+    {
+        "resource": [{
+            "name": "Building",
+            "value": "Folsby"
+        },
+        {
+            "name": "Room",
+            "value": "456"
+        }
+        ]
+    }
+
+For more information about managing custom user attributes, check out [this wiki page](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Managing_user_custom_data).
