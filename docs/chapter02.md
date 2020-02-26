@@ -69,6 +69,24 @@ If you plan on using PHP in conjunction with one of the following databases, ple
 * [SAP SQL Anywhere](./chapter02/sap-sql-anywhere.md)
 * [Firebird](./chapter02/firebird.md)
 
+#### Server Hardware Requirements
+
+DreamFactory is surprisingly performant even under minimally provisioned servers, you'll want to install DreamFactory on a 64-bit server with at least 4GB RAM. If you're planning on hosting the system database on the same server as DreamFactory, then we recommend at least 8GB RAM. This server will house not only the operating system and DreamFactory, but also a web server such as Nginx (recommended) or Apache, and PHP-FPM. Keep in mind these are the *minimum* RAM requirements; many customers can and do run DreamFactory in far larger production environments.
+
+Under heavier loads you'll want to load balance DreamFactory across multiple servers, and take advantage of a shared caching (Redis or Memcached are typically used) and database layer (which houses the system database).
+
+| Cloud Environment   | Minimum Server
+| --------------------|------------------|
+| AWS                 | t2.large         |
+| Azure               | D2 v3            |
+| Oracle Cloud        | VM.Standard.E2.1 |
+| Digital Ocean       | Standard 8/160/5 |
+| Google Cloud        | n1-standard-2    |
+
+Although DreamFactory can run on Windows Server and IIS, we recommend instead using a popular Linux distribution such as Ubuntu, Debian, or CentOS in order to take advantage of our automated installers targeting those specific operating systems.
+
+Prior to launching your project, we recommend thoroughly testing your APIs under estimated production loads using a tool such as [loader.io](https://loader.io/).
+
 ### Installing DreamFactory
 
 The first step involves installing the required PHP packages using Composer:
