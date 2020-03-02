@@ -37,7 +37,7 @@ To enable CORS for a specific originating network address such and an IP address
 
 * `Methods`: The `Methods` field determines which HTTP methods can be used in conjunction with this CORS definition. The selected values will be passed along to the client using the `Access-Control-Allow-Methods` field.
 
-* `Supports Credentials`: The `Supports Credentials` field determines whether this CORS configuration can be used in conjunction with user authentication.
+* `Supports Credentials`: The `Supports Credentials` field determines whether this CORS configuration can be used in conjunction with user authentication. When enabled, the `Access-Control-Allow-Credentials` header will be passed and set to `true`.
 
 * `Enabled`: To enable the CORS configuration, make sure this field is enabled.
 
