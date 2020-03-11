@@ -33,19 +33,19 @@ Python 3 scripting support will automatically be made available inside all Dream
 
 You'll install Munch via Python's [pip](https://pip.pypa.io/en/stable/) package manager. A Python 3-specific version of pip known as pip3 should be used for the installation. If your server doesn't already include pip3 (find out by executing `which pip3`), you can install it using your server operating system's package manager. For instance on Ubuntu you can install it like this:
 
-		$ apt-get install -y --allow-unauthenticated python3-pip
+	$ apt-get install -y --allow-unauthenticated python3-pip
 
 With pip3 installed, you can install munch:
 
-		$ pip3 install munch
+	$ pip3 install munch
 
 Once installed, you'll need to update your `.env` file (or server environment variables) to point to the Python 3 interpreter:
 
-		DF_PYTHON3_PATH=/usr/local/bin/python3
+	DF_PYTHON3_PATH=/usr/local/bin/python3
 
 You can find your Python 3 interpreter path by executing this command:
 
-		$ which python3
+	$ which python3
 
 After saving these changes, restart your PHP-FPM and Apache/Nginx service.
 
@@ -75,59 +75,59 @@ Let's review a few scripting examples to get your mind racing regarding what's p
 
 When inserting a new record into a database you'll naturally want to first validate the input parameters. To do so you'll add a `pre_process` event handler to the target table's `post` method endpoint. For instance, if the API namespace was `mysql`, and the target table was `employees`, you would add the scripting logic to the `mysql._table.account.post.pre_process` endpoint. Here's a PHP-based example that examines the `POST` payload for missing values and also confirms that a salary-related parameter is greater than zero:
 
-		$payload = $event['request']['payload'];
+	$payload = $event['request']['payload'];
 
-		if(!empty($payload['resource'])){
-				foreach($payload['resource'] as $record){
-						if(!array_key_exists('first_name', $record)){
-								throw new \Exception('Missing first_name.');
-						}
-						
-						if(!array_key_exists('hire_date', $record)){
-								throw new \Exception('Missing hire_date.');
-						}
+	if(!empty($payload['resource'])){
+			foreach($payload['resource'] as $record){
+					if(!array_key_exists('first_name', $record)){
+							throw new \Exception('Missing first_name.');
+					}
+					
+					if(!array_key_exists('hire_date', $record)){
+							throw new \Exception('Missing hire_date.');
+					}
 
-						if($record['salary'] <= 0){
-								throw new \Exception('Annual salary must be > 0');
-						}
-				}
-		}
+					if($record['salary'] <= 0){
+							throw new \Exception('Annual salary must be > 0');
+					}
+			}
+	}
 
 ### Transforming a Response
 
 Suppose the API data source returns a response which is not compatible with the destination client. Perhaps the client expects response parameters to be named differently, or maybe some additional nesting should occur. To do so, you can add business logic to a `post_process` endpoint. For instance, to modify the response being returned from the sample MySQL database API's `employees` table endpoint, you'll add a script to `mysql._table.employees.get.post_process`. As an example, here's what a record from the default response looks like:
 
-    {
-      "emp_no": 10001,
-      "birth_date": "1953-09-02",
-      "first_name": "Georgi",
-      "last_name": "Facello",
-      "gender": "M",
-      "hire_date": "1986-06-26"
-    }
+	{
+		"emp_no": 10001,
+		"birth_date": "1953-09-02",
+		"first_name": "Georgi",
+		"last_name": "Facello",
+		"gender": "M",
+		"hire_date": "1986-06-26"
+	}
 
 Suppose you instead want it to look like this:
 
-    {
-      "emp_no": 10001,
-      "birth_date": "1953-09-02",
-      "name": "Georgi Facello",
-      "gender": "M"
-    }
+	{
+		"emp_no": 10001,
+		"birth_date": "1953-09-02",
+		"name": "Georgi Facello",
+		"gender": "M"
+	}
 
 Specifically, we've combined the `first_name` and `last_name` parameters, and removed the `hire_date` parameter. To accomplish this you can add the following PHP script to the `mysql._table.employees.get.post_process` endpoint:
 
-		$responseBody = $event['response']['content'];
+	$responseBody = $event['response']['content'];
 
-		foreach ($responseBody['resource'] as $n => $record) {
-			$record["name"] = $record["first_name"] . " " . $record["last_name"];
-			unset($record["first_name"]);
-			unset($record["last_name"]);
-				unset($record["hire_date"]);
-			$responseBody['resource'][$n] = $record;
-		}
+	foreach ($responseBody['resource'] as $n => $record) {
+		$record["name"] = $record["first_name"] . " " . $record["last_name"];
+		unset($record["first_name"]);
+		unset($record["last_name"]);
+			unset($record["hire_date"]);
+		$responseBody['resource'][$n] = $record;
+	}
 
-		$event['response']['content'] = $responseBody;
+	$event['response']['content'] = $responseBody;
 
 ## Using Third-Party Libraries
 
@@ -137,30 +137,30 @@ As mentioned earlier in this chapter, DreamFactory passes the scripts along to t
 
 DreamFactory is built atop the PHP language, and uses [Composer](https://getcomposer.org/) to install and manage a number of internally built and third-party packages which are used throughout the platform. If you'd like to take advantage of a Composer package within your scripts, install it globally using the `global` modifier. For instance, suppose you wanted to send out a Tweet from a script. You can use the [twitteroauth](https://github.com/abraham/twitteroauth) package to do so:
 
-		$ composer global require abraham/twitteroauth
+	$ composer global require abraham/twitteroauth
 
 Once installed, you can use the package within a DreamFactory script via it's namespace as demonstrated in the following example:
 
-		$consumerKey    = env('TWITTER_CONSUMER_KEY'); 
-		$consumerSecret = env('TWITTER_CONSUMER_SECRET');
-		$oauthToken     = env('TWITTER_OAUTH_TOKEN');  
-		$oauthSecret    = env('TWITTER_OAUTH_SECRET');
+	$consumerKey    = env('TWITTER_CONSUMER_KEY'); 
+	$consumerSecret = env('TWITTER_CONSUMER_SECRET');
+	$oauthToken     = env('TWITTER_OAUTH_TOKEN');  
+	$oauthSecret    = env('TWITTER_OAUTH_SECRET');
 
-		$connection = new \Abraham\TwitterOAuth\TwitterOAuth(
-			$consumerKey, 
-			$consumerSecret, 
-			$oauthToken, 
-			$oauthSecret
-		);
+	$connection = new \Abraham\TwitterOAuth\TwitterOAuth(
+		$consumerKey, 
+		$consumerSecret, 
+		$oauthToken, 
+		$oauthSecret
+	);
 
-		if ($event['request']['method'] == "POST") {
+	if ($event['request']['method'] == "POST") {
 
-			$message = $event['request']['payload']['resource'][0]['message'];
-			$response = $connection->post("statuses/update", ["status" => $message]);
+		$message = $event['request']['payload']['resource'][0]['message'];
+		$response = $connection->post("statuses/update", ["status" => $message]);
 
-		}
+	}
 
-		return json_encode(["response" => $response]);
+	return json_encode(["response" => $response]);
 
 ::: tip
 You'll want to install packages globally because the only other alternative is to install them locally via DreamFactory's Composer files. The packages will behave identically to those installed globally, however you'll eventually overwrite DreamFactory's Composer files when it's time to upgrade.
@@ -170,49 +170,49 @@ You'll want to install packages globally because the only other alternative is t
 
 If you'd like to reuse custom code within scripts, and don't want to manage the code within a Composer package, you could alternatively add the class to PHP's include path using the [set_include_path()](https://www.php.net/manual/en/function.set-include-path.php) function. Once included, you can use the [require_once](https://www.php.net/require_once) statement to import the class. This approach is demonstrated in the following example script:
 
-		set_include_path("/home/wjgilmore/libraries");
+	set_include_path("/home/wjgilmore/libraries");
 
-		require_once('Filter.php');
+	require_once('Filter.php');
 
-		$filter = new \WJGilmore\Validate\Validate();
+	$filter = new \WJGilmore\Validate\Validate();
 
-		try {
-				
-				$filter->username("dreamfactory");
-				
-		} catch (\Exception $e) {
-				
-				$event['response'] = [
-						'status_code' => 400, 
-						'content' => [
-								'success' => false,
-								'message' => $e->getMessage()
-						]
-				];
-				
-		}
+	try {
+			
+			$filter->username("dreamfactory");
+			
+	} catch (\Exception $e) {
+			
+			$event['response'] = [
+					'status_code' => 400, 
+					'content' => [
+							'success' => false,
+							'message' => $e->getMessage()
+					]
+			];
+			
+	}
 
 The referenced `Filter` class is found in a file named `Filter.php` and looks like this:
 
-		<?php
+	<?php
 
-		namespace WJGilmore\Validate;
+	namespace WJGilmore\Validate;
 
-		use Exception;
+	use Exception;
 
-		class Validate {
+	class Validate {
 
-						public function username($username) {
+					public function username($username) {
 
-									if (preg_match("/^[a-zA-Z0-9\s]*$/", $username) != 1) {
-													throw new Exception("Username must be alphanumeric.");
-									}
+								if (preg_match("/^[a-zA-Z0-9\s]*$/", $username) != 1) {
+												throw new Exception("Username must be alphanumeric.");
+								}
 
-									return true;
+								return true;
 
-						}
+					}
 
-		}
+	}
 
 If you'd like to permanently add a particular directory to PHP's include path, modify the [include_path](https://www.php.net/manual/en/ini.core.php#ini.include-path) configuration directive.
 
@@ -241,13 +241,13 @@ Once we have the cURL command we can convert it to PHP by using this [useful too
 
 To start let's define the CRON job parameters:
 
-    * * * * * /usr/bin/php /opt/dreamfactory/public/cron.php >/dev/null 2>&1
+	* * * * * /usr/bin/php /opt/dreamfactory/public/cron.php >/dev/null 2>&1
 
 This can be broken into 4 parts, the timing, execute PHP, path to script, and the output. In this example the `* * * * *` means it will run once every minute. The second portion is the path to PHP to allow it to be executed. The important part is now providing the full path to the file you would like to run. Finally you can write the output to a file or discard it, in this case I have set it to be discarded. If you would like to learn more about the structure, check out this [article](https://crontab-generator.org/).
 
 Next you will edit the `crontab` by running the following:
     
-    crontab -e
+	$ crontab -e
 
 You will be put into the text editor where you can simply paste in your CRON job and save it. Now you have a scheduled task running every minute to call your API!
 
