@@ -13,7 +13,7 @@ DreamFactory does a very good job of generating APIs for a wide variety of data 
 
 The scripting engine can also be used to create standalone APIs. This is particularly useful when no native nor third-party API exists to interact with a data source. For instance you might want to create an API capable of converting CSV files into a JSON stream, or you might wish to use a Python package to create a machine learning-oriented API. Such tasks can be accomplished with the scripting engine.
 
-In this chapter you'll learn how to both extend existing APIs and create standalone APIs using the scripting engine. But first let's review DreamFactory's scripting engine support.
+In this chapter you'll learn how to both extend existing APIs and create standalone APIs using the scripting engine. Finally, the chapter concludes with a section explaining how to configure DreamFactory's API request scheduler. First though let's review DreamFactory's scripting engine support.
 
 ## Supported Scripting Engines
 
@@ -67,33 +67,33 @@ DreamFactory's ability to display a comprehensive list of API endpoints is conti
 
 Although the basic script editor is fine for simple scripts, you'll probably want to manage more complicated scripts using source control. After configuring a source control API using one of the native Source Control connectors (GitHub, BitBucket, and GitLab are all supported), you'll be able to link to a script by selecting the desired API via the `Link to a service` select box located at the bottom left of the interface presented in the above screenshot.
 
-## Examples
+### Examples
 
 Let's review a few scripting examples to get your mind racing regarding what's possible.
 
-### Validating Input Parameters
+#### Validating Input Parameters
 
 When inserting a new record into a database you'll naturally want to first validate the input parameters. To do so you'll add a `pre_process` event handler to the target table's `post` method endpoint. For instance, if the API namespace was `mysql`, and the target table was `employees`, you would add the scripting logic to the `mysql._table.account.post.pre_process` endpoint. Here's a PHP-based example that examines the `POST` payload for missing values and also confirms that a salary-related parameter is greater than zero:
 
 	$payload = $event['request']['payload'];
 
 	if(!empty($payload['resource'])){
-			foreach($payload['resource'] as $record){
-					if(!array_key_exists('first_name', $record)){
-							throw new \Exception('Missing first_name.');
-					}
-					
-					if(!array_key_exists('hire_date', $record)){
-							throw new \Exception('Missing hire_date.');
-					}
-
-					if($record['salary'] <= 0){
-							throw new \Exception('Annual salary must be > 0');
-					}
+		foreach($payload['resource'] as $record){
+			if(!array_key_exists('first_name', $record)){
+				throw new \Exception('Missing first_name.');
 			}
+			
+			if(!array_key_exists('hire_date', $record)){
+				throw new \Exception('Missing hire_date.');
+			}
+
+			if($record['salary'] <= 0){
+				throw new \Exception('Annual salary must be > 0');
+			}
+		}
 	}
 
-### Transforming a Response
+#### Transforming a Response
 
 Suppose the API data source returns a response which is not compatible with the destination client. Perhaps the client expects response parameters to be named differently, or maybe some additional nesting should occur. To do so, you can add business logic to a `post_process` endpoint. For instance, to modify the response being returned from the sample MySQL database API's `employees` table endpoint, you'll add a script to `mysql._table.employees.get.post_process`. As an example, here's what a record from the default response looks like:
 
@@ -129,6 +129,50 @@ Specifically, we've combined the `first_name` and `last_name` parameters, and re
 
 	$event['response']['content'] = $responseBody;
 
+## Creating Standalone Scripted Services
+
+To create a standalone scripted service, you'll navigate to `Services > Create` and then click the `Select Service Type` dropdown. There you'll find a scripted service type called `Script`, and under it you'll find links to the supported scripting engine languages (PHP, Python, and NodeJS):
+
+<img src="/images/06/choose-scripted-language.png" width="800">
+
+After choosing your desired language you'll be prompted to supply the usual namespace, label, and description for your API. Click the `Next` button and you'll be presented with a simple text editor. You're free to experiment by writing your script inside this editor, or could use the `Link to a service` option to reference a script stored in a file system, or within a repository. Keep in mind you'll first need to configure the source control or file API in order for it to be included in the `Link to a service` dropdown.
+
+In addition to taking full advantage of the scripting language syntax, you can also use special data structures and functionality DreamFactory injects into the scripting environment. For instance, you can listen for request methods using the `$event['request']['method']` array value. For instance try adding the following code to a scripted service:
+
+	if ($event['request']['method'] == "POST") {
+	  dd("POST request!);
+	} elseif ($event['request']['method'] == "GET") {
+	  dd("GET request!);
+	}
+
+Save the changes, and then try contacting the scripted service endpoint with `GET` and `POST` methods. The `dd()` function will fire for each respective conditional block.
+
+For more sophisticated routing requirements, we recommend taking advantage of one of the many OSS routing libraries. For instance [bramus/router](https://github.com/bramus/router) offers a lightweight PHP routing package that can easily be added to DreamFactory (see the next section, "Using Third-Party Libraries"). Once added, you'll be able to create sophisticated scripted service routing solutions such as this:
+
+	set_include_path("/home/dreamfactory/libraries");
+
+	require_once('CustomResponse.php');
+
+	$router = new \Bramus\Router\Router();
+	$response = new \DreamFactory\CustomResponse();
+
+	$router->before('GET', '/.*', function () {
+	  header('X-Powered-By: bramus/router');
+	});
+
+	$router->get('/.*', function() use($response) {
+	  $response->setContent('Hello Router World!');
+	});
+
+	$router->set404(function() {
+	  header('HTTP/1.1 404 Not Found');
+	  $response->setContent('404 not found');
+	});
+
+	$router->run();
+
+	return $response->getContent();
+
 ## Using Third-Party Libraries
 
 As mentioned earlier in this chapter, DreamFactory passes the scripts along to the designed scripting language that's installed on the server. This means you not only have access to all of the scripting language's syntax (as opposed to some hobbled version), but also the language community's third-party packages and libraries! 
@@ -147,17 +191,15 @@ Once installed, you can use the package within a DreamFactory script via it's na
 	$oauthSecret    = env('TWITTER_OAUTH_SECRET');
 
 	$connection = new \Abraham\TwitterOAuth\TwitterOAuth(
-		$consumerKey, 
-		$consumerSecret, 
-		$oauthToken, 
-		$oauthSecret
+	  $consumerKey, 
+	  $consumerSecret, 
+	  $oauthToken, 
+	  $oauthSecret
 	);
 
 	if ($event['request']['method'] == "POST") {
-
-		$message = $event['request']['payload']['resource'][0]['message'];
-		$response = $connection->post("statuses/update", ["status" => $message]);
-
+	  $message = $event['request']['payload']['resource'][0]['message'];
+	  $response = $connection->post("statuses/update", ["status" => $message]);
 	}
 
 	return json_encode(["response" => $response]);
@@ -178,18 +220,18 @@ If you'd like to reuse custom code within scripts, and don't want to manage the 
 
 	try {
 			
-			$filter->username("dreamfactory");
+	  $filter->username("dreamfactory");
 			
 	} catch (\Exception $e) {
 			
-			$event['response'] = [
-					'status_code' => 400, 
-					'content' => [
-							'success' => false,
-							'message' => $e->getMessage()
-					]
-			];
-			
+	  $event['response'] = [
+	    'status_code' => 400, 
+	    'content' => [
+	      'success' => false,
+	      'message' => $e->getMessage()
+	    ]
+	];
+
 	}
 
 The referenced `Filter` class is found in a file named `Filter.php` and looks like this:
@@ -202,15 +244,15 @@ The referenced `Filter` class is found in a file named `Filter.php` and looks li
 
 	class Validate {
 
-					public function username($username) {
+	  public function username($username) {
 
-								if (preg_match("/^[a-zA-Z0-9\s]*$/", $username) != 1) {
-												throw new Exception("Username must be alphanumeric.");
-								}
+	    if (preg_match("/^[a-zA-Z0-9\s]*$/", $username) != 1) {
+	      throw new Exception("Username must be alphanumeric.");
+	    }
 
-								return true;
+      return true;
 
-					}
+	  }
 
 	}
 
