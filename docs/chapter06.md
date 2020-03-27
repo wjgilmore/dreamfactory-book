@@ -49,6 +49,59 @@ You can find your Python 3 interpreter path by executing this command:
 
 After saving these changes, restart your PHP-FPM and Apache/Nginx service.
 
+## Resources Available to Scripts
+
+When a script is executed, DreamFactory passes in two very useful resources that allow each script to access many parts of the system including system states, configuration, and even a means to call other services or external APIs. They are the **event** resource and the **platform** resource.
+
+Note: The term "resource" is used generically here, based on the scripting language used, the resource could either be an object (i.e. Node.js) or an array (i.e. PHP).
+
+### The Event Resource
+
+The event resource contains the structured data about the event triggered (Event Scripting) or from the API service call (Script Services). As seen below, this includes things like the request and response information available to this "event".
+
+Note: Determined by the type of event triggering the script, parts of this event resource are writable. Modifications to this resource while executing the script do not result in a change to that resource (i.e. request or response) in further internal handling of the API call, unless the event script is configured with the allow_event_modification setting to true, or it is the response on a script service. Prior to 2.1.2, the allow_event_modification was accomplished by setting a content_changed element in the request or response object to true.
+
+The **event** resource has the following properties:
+
+| Property            | Type             | Description         
+| --------------------|------------------|------------------------------------------------------------------------------------
+| request             | resource         | A resource representing the inbound REST API call, i.e. the HTTP request.
+| response            | resource         | A resource representing the response to an inbound REST API call, i.e. the HTTP response.    
+| resource            | string           | Any additional resource names typically represented as a replaceable part of the path, i.e. "table name" on a db/_table/{tableName} call.
+
+#### Event Request
+
+The **request** resource contains all the components of the original HTTP request. This resource is always available, and is writable during pre-process event scripting.
+
+| Property            | Type             | Description         
+| --------------------|------------------|------------------------------------------------------------------------------------
+| api_version         | string           | The API version used for the request (i.e. 2.0).
+| method              | string           | The HTTP method of the request (i.e. GET, POST, PUT).  
+| parameters          | resource         | An object/array of query string parameters received with the request, indexed by the parameter name.
+| headers             | resource         | An object/array of HTTP headers from the request, indexed by the lowercase header name. Including content-length, content-type, user-agent, authorization, and host.
+| content             | string           | The body of the request in raw string format.    
+| content_type        | string           | The format type (i.e. "application/json") of the raw content of the request.
+| payload             | resource         | The body (POST body) of the request, i.e. the content, converted to an internally usable object/array if possible.
+| uri                 | string           | Resource path, i.e. /api/v2/php.
+| service             | string           | The type of service, i.e. php, nodejs, python.
+
+Please note any allowed changes to this data will overwrite existing data in the request, before further listeners are called and/or the request is handled by the called service.
+
+#### Event Response
+
+The **response** resource contains the data being sent back to the client from the request.
+
+**Note:** This resource is only available/relevant on post-process event and script service scripts.
+
+| Property            | Type             | Description         
+| --------------------|------------------|------------------------------------------------------------------------------------
+| status_code         | integer          | The HTTP status code of the response (i.e. 200, 404, 500, etc).
+| headers             | resource         | An object/array of HTTP headers for the response back to the client.
+| content             | mixed            | The body of the request as an object if the content_type is not set, or in raw string format.
+| content_type        | string           | The content type (i.e. json) of the raw content of the request.
+
+
+
 ## Modifying Existing API Endpoint Logic
 
 The scripting interface is accessible via the `Scripts` tab located at the top of the DreamFactory administration console. Once entered, you'll be presented with a list of APIs hosted within your DreamFactory instance. Enter one of the APIs and you'll see a top-level summary of the endpoint branches associated with that API. For instance, if you enter a database-backed API you'll see branches such as `_func` (stored function), `_proc` (stored procedure), `_schema` (table structure), and `_table` (tables). For instance, this screenshot presents the top-level interface for a Microsoft SQL Server API:
