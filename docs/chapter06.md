@@ -100,7 +100,60 @@ The **response** resource contains the data being sent back to the client from t
 | content             | mixed            | The body of the request as an object if the content_type is not set, or in raw string format.
 | content_type        | string           | The content type (i.e. json) of the raw content of the request.
 
+### The Platform Resource
 
+This **platform** resource may be used to access configuration and system states, as well as, the REST API of your instance via inline calls. This makes internal requests to other services directly without requiring an HTTP call.
+
+The **platform** resource has the following properties:
+
+| Property            | Type             | Description         
+| --------------------|------------------|------------------------------------------------------------------------------------
+| api                 | resource         | An array/object that allows access to the instance's REST API.
+| config              | resource         | An array/object consisting of the current configuration of the instance.
+| session             | resource         | An array/object consisting of the current session information.
+
+#### Platform API
+
+The **api** resource contains methods for instance API access. This object contains a method for each type of REST verb.
+
+| Function            | Description         
+| --------------------|------------------
+| get                 | GET a resource         
+| post                | POST a resource         
+| put                 | PUT a resource         
+| patch               | PATCH a resource         
+| delete              | DELETE a resource 
+
+They all accept the same arguments:
+
+	method( "service[/resource_path]"[, payload[, options]] );              
+A breakdown of the above:
+
+| Property            | Is Required      | Description         
+| --------------------|------------------|------------------------------------------------------------------------------------
+| method              | true             | The method/verb listed above.
+| service             | true             | The service name (as used in API calls) or external URI.
+| resource_path       | optional         | Resources of the service called.
+| payload             | optional         | Must contain a valid object for the language of the script.
+| options             | optional         | May contain headers, query parameters, and cURL options.
+
+#### Platform Config
+
+The **config** object contains configuration settings for the instance.
+
+| Function            | Description         
+| --------------------|------------------
+| df                  |	Configuration settings specific to DreamFactory containing but not limited to the version, api_version, always_wrap_resources, resources_wrapper, and storage_path.
+
+#### Platform Session
+
+| Function            | Description         
+| --------------------|------------------
+| api_key             |	DreamFactory API key.
+| session_token       |	Session token, i.e. JWT.
+| user                |	User information derived from the supplied session token, i.e. JWT. Includes display_name, first_name, last_name, email, is_sys_admin, and last_login_date
+| app                 |	App information derived from the supplied API key.
+| lookup              |	Available lookups for the session.
 
 ## Modifying Existing API Endpoint Logic
 
