@@ -19,11 +19,11 @@ In this chapter you'll learn all about DreamFactory's ability to generate, secur
 * Query the API using a third-party HTTP client
 * Synchronize records between two databases
 
-We chose MySQL as the basis for examples throughout the chapter, because it is free, ubiquitously available on hosting providers and cloud environments, and can otherwise be easily installed on all operating systems. Therefore to follow along with this chapter you'll need: 
+We chose MySQL as the basis for examples throughout the chapter, because it is free, ubiquitously available on hosting providers and cloud environments, and can otherwise be easily installed on all operating systems. Therefore to follow along with this chapter you'll need:
 
-* Access to a DreamFactory instance and a MySQL database. 
+* Access to a DreamFactory instance and a MySQL database.
 * If your MySQL database is running somewhere other than your laptop, you'll need to make sure your firewall is configured to allow traffic between port 3306 and the location where your DreamFactory instance is running.
-* A MySQL user account configured in such a way that it can connect to your MySQL server from the DreamFactory instance's IP address. 
+* A MySQL user account configured in such a way that it can connect to your MySQL server from the DreamFactory instance's IP address.
 
 Before we begin, keep in mind MySQL is just one of DreamFactory supported 18 databases. The following table presents a complete list of what's supported:
 
@@ -35,7 +35,7 @@ Before we begin, keep in mind MySQL is just one of DreamFactory supported 18 dat
 | Azure Table Storage | Oracle           |
 | Cassandra           | PostgreSQL       |
 | Couchbase           | Salesforce       |
-| CouchDB             | SAP SQL Anywhere | 
+| CouchDB             | SAP SQL Anywhere |
 | Firebird            | SQLite           |
 | IBM Db2             | SQL Server       |
 
@@ -110,6 +110,18 @@ Because DreamFactory connects to your database on behalf of this user, the resul
 
 Further, keep in mind this can serve as an excellent way to further lock down your API. Although as you'll later learn DreamFactory offers some excellent security-related features for restricting API access, it certainly wouldn't hurt to additionally configure the connecting database user's privileges to reflect the desired API capabilities. For instance, if you intend for the API to be read-only, then create a database user with read-only authorization. If API read and create capabilities are desired, then configure the user accordingly.
 
+## Interaction using Postman
+
+### Installation
+
+Postman is a utility that allows you to quickly test and use REST APIs. To use the latest published version, click the following button to import the DreamFactory MYSQL API as a collection:
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/a01fb99056769a35df72)
+
+You can also download the collection file from [this repo](https://github.com/dreamfactorysoftware/dreamfactory-postman-collection), then import directly into Postman.
+
+
+
 ## Interacting with Your API via the API Docs Tab
 
 The `Service Saved Successfully` message which appears following successful generation of a new REST API is rather anticlimactic, because this simple message really doesn't convey exactly how much tedious work DreamFactory has just saved you and your team. Not only did it generate a fully-featured REST API, but also secured it from unauthorized access and additionally generated interactive [OpenAPI documentation](https://swagger.io/) for all of your endpoints! If you haven't used Swagger before, you're in for a treat because it's a really amazing tool which allows developers to get familiar with an API without being first required to write any code. Further, each endpoint is documented with details about both the input parameters and response.
@@ -122,7 +134,7 @@ You'll be presented with a list of all documentation associated with your DreamF
 
 <img src="/images/03/apidocs-mysql.png" width="800">
 
-Scrolling through this list, you can see that quite a few API endpoints have been generated! If you generated an API for a database which supports stored procedures, towards the top you'll find endpoints named `GET /_proc/{procedure_name}` and `POST /_proc/{procedure_name}`. Scrolling down, you'll encounter quite a few endpoints used to manage your schema, followed by a set of CRUD (create, retrieve, update, delete) endpoints which are undoubtedly the most commonly used of the bunch. 
+Scrolling through this list, you can see that quite a few API endpoints have been generated! If you generated an API for a database which supports stored procedures, towards the top you'll find endpoints named `GET /_proc/{procedure_name}` and `POST /_proc/{procedure_name}`. Scrolling down, you'll encounter quite a few endpoints used to manage your schema, followed by a set of CRUD (create, retrieve, update, delete) endpoints which are undoubtedly the most commonly used of the bunch.
 
 ### Querying Table Records
 
@@ -138,7 +150,7 @@ To test the endpoint, click the `Try it out` button located on the right. When y
 
 Congratulations! You've just successfully interacted with the database API by way of the Swagger documentation. If you don't see a list of records, be sure to confirm the following:
 
-* Does the specified table exist? 
+* Does the specified table exist?
 * If you received a `500` status code, check the service configuration credentials. The `500` code almost certainly means DreamFactory was unable to connect to the database. If everything checks out, make sure you can connect to the database from the DreamFactory instance's IP address via the database port. If you can't then it's probably a firewall issue.
 
 The API Docs interface is fantastically useful for getting familiar with an API, and we encourage you to continue experimenting with the different endpoints to learn more about how it works. However, you'll eventually want to transition from interacting with your APIs via the API Docs interface to doing so using a third-party client, and ultimately by way of your own custom applications. So let's take that next step now, and interact with the new API using an HTTP client. In the last chapter you were introduced to a few such clients. We'll be using Insomnia for the following examples however there will be no material differences between Insomnia, Postman, or any other similar client.
@@ -201,7 +213,7 @@ Let's begin by retrieving all of a particular table's records just as was done w
 
     http://localhost/api/v2/_table/employees
 
-Also, because we're retrieving records the method will be set to `GET`. 
+Also, because we're retrieving records the method will be set to `GET`.
 
 Next, we'll need to set the header which defines the API key. This header should be named `X-DreamFactory-Api-Key`. You might have to hunt around for a moment within your HTTP client to figure out where this is placed, but we promise it is definitely there. In the case of Insomnia the header is added via a tab found directly below the address bar:
 
@@ -247,7 +259,7 @@ The equivalent SQL query looks like this:
 
 To order in descending fashion, just append `desc` to the `order` string:
 
-	http://localhost/api/v2/_table/employees?order=emp_no%20desc
+    http://localhost/api/v2/_table/employees?order=emp_no%20desc
 
 Note the space separating `emp_no` and `desc` has been HTML encoded. Most programming languages offer HTML encoding capabilities either natively or through a third-party library so there's no need for you to do this manually within your applications. The equivalent SQL query looks like this:
 
@@ -257,7 +269,7 @@ Note the space separating `emp_no` and `desc` has been HTML encoded. Most progra
 
 It's often the case that you'll only require a few of the fields found in a table. To limit the fields returned, use the `fields` parameter:
 
-	http://localhost/api/v2/_table/employees?fields=emp_no%2Clast_name
+    http://localhost/api/v2/_table/employees?fields=emp_no%2Clast_name
 
 The equivalent SQL query looks like this:
 
@@ -267,7 +279,7 @@ The equivalent SQL query looks like this:
 
 You can filter records by a particular condition using the `filter` parameter. For instance to return only those records having a `gender` equal to `M`, set the `filter` parameter like so:
 
-	http://localhost/api/v2/_table/employees?filter=(gender=M)
+    http://localhost/api/v2/_table/employees?filter=(gender=M)
 
 The equivalent SQL query looks like this:
 
@@ -295,7 +307,7 @@ The equivalent SQL query looks like this:
 
 You'll often want to select a specific record using a column that uniquely defines it. Often (but not always) this unique value is the *primary key*. You can retrieve a record using its primary key by appending the value to the URL like so:
 
-	/api/v2/_table/supplies/45
+    /api/v2/_table/supplies/45
 
 The equivalent SQL query looks like this:
 
@@ -313,39 +325,39 @@ One of DreamFactory's most interesting database-related features is the automati
 
 Using these aliases along with the `related` parameter we can easily return sets of joined records via the API. For instance, the following URI would be used to join the `employees` and `departments` tables together:
 
-	/api/v2/mysql/_table/employees?related=dept_emp_by_emp_no
+    /api/v2/mysql/_table/employees?related=dept_emp_by_emp_no
 
 The equivalent SQL query looks like this:
 
-	SELECT * FROM employees 
-	  LEFT JOIN departments on employees.emp_no = departments.emp_no;
+    SELECT * FROM employees
+      LEFT JOIN departments on employees.emp_no = departments.emp_no;
 
 The joined results will be presented within a JSON array having a name matching that of the alias:
 
-	{
-		"emp_no": 10001,
-		"birth_date": "1953-09-02",
-		"first_name": "Georgi",
-		"last_name": "Facello",
-		"gender": "M",
-		"hire_date": "1986-06-26",
-		"birth_year": "1953",
-		"dept_emp_by_emp_no": [
-			{
-				"emp_no": 10001,
-				"dept_no": "d005",
-				"from_date": "1986-06-26",
-				"to_date": "9999-01-01"
-			}
-		]
-	}
+    {
+        "emp_no": 10001,
+        "birth_date": "1953-09-02",
+        "first_name": "Georgi",
+        "last_name": "Facello",
+        "gender": "M",
+        "hire_date": "1986-06-26",
+        "birth_year": "1953",
+        "dept_emp_by_emp_no": [
+            {
+                "emp_no": 10001,
+                "dept_no": "d005",
+                "from_date": "1986-06-26",
+                "to_date": "9999-01-01"
+            }
+        ]
+    }
 
 
 ### Inserting Records
 
 To insert a record, you'll send a `POST` request to the API, passing along a JSON-formatted payload. For instance, to add a new record to the `supplies` table, we'd send a `POST` request to the following URI:
 
-	/api/v2/mysql/_table/supplies
+    /api/v2/mysql/_table/supplies
 
 The body payload would look like this:
 
@@ -369,45 +381,45 @@ If the request is successful, DreamFactory will return a `200` status code and a
 
 #### Adding Records to Multiple Tables
 
-It's often the case that you'll want to create a new record and associate it with another table. Believe it or not this is possible via a single HTTP request. Consider the following two tables. The first, `supplies`, manages a list of company supplies (staplers, brooms, etc). The company requires that all supply whereabouts be closely tracked in the corporate database, and so another table, `locations`, was created for this purpose. Each record in the `locations` table includes a location name and foreign key reference to a record found in the `supplies` table. 
+It's often the case that you'll want to create a new record and associate it with another table. Believe it or not this is possible via a single HTTP request. Consider the following two tables. The first, `supplies`, manages a list of company supplies (staplers, brooms, etc). The company requires that all supply whereabouts be closely tracked in the corporate database, and so another table, `locations`, was created for this purpose. Each record in the `locations` table includes a location name and foreign key reference to a record found in the `supplies` table.
 
 ::: note
-We know in the real world the location names would be managed in a separate table and then a join table 
+We know in the real world the location names would be managed in a separate table and then a join table
 would relate locations and supplies together; just trying to keep things simple for the purposes of demonstration.
 :::
 
 The table schemas look like this:
 
     CREATE TABLE `supplies` (
-	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	  `name` varchar(255) DEFAULT NULL,
-	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+      `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+      `name` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-	CREATE TABLE `locations` (
-	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	  `supply_id` int(10) unsigned NOT NULL,
-	  `name` varchar(255) DEFAULT NULL,
-	  PRIMARY KEY (`id`),
-	  KEY `supply_id` (`supply_id`),
-	  CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`supply_id`) REFERENCES `supplies` (`id`)
-	) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+    CREATE TABLE `locations` (
+      `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+      `supply_id` int(10) unsigned NOT NULL,
+      `name` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`id`),
+      KEY `supply_id` (`supply_id`),
+      CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`supply_id`) REFERENCES `supplies` (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 Remember from the last example that DreamFactory will create convenient join aliases which can be used in conjunction with the `related` parameter. In this case, that alias would be `locations_by_supply_id`. To create the relationship alongside the new `supplies` record, we'll use that alias to nest the location name within the payload, as demonstrated here:
 
 
-	{
-		"resource": [
-			{
-				"name": "Broom",
-				"locations_by_supply_id": [
-					{    
-						"name": "Broom Closet"
-					}
-				]
-			}
-		]
-	}
+    {
+        "resource": [
+            {
+                "name": "Broom",
+                "locations_by_supply_id": [
+                    {    
+                        "name": "Broom Closet"
+                    }
+                ]
+            }
+        ]
+    }
 
 With the payload sorted out, all that remains is to make a request to the `supplies` table endpoint:
 
@@ -415,13 +427,13 @@ With the payload sorted out, all that remains is to make a request to the `suppl
 
 If the nested insert is successful, you'll receive a `200` status code in return along with the primary key ID of the newly inserted `supplies` record:
 
-	{
-		"resource": [
-			{
-				"id": 15
-			}
-		]
-	}
+    {
+        "resource": [
+            {
+                "id": 15
+            }
+        ]
+    }
 
 ### Updating Records
 
@@ -436,18 +448,18 @@ Let's work through update examples involving each method.
 
 When updating records with `PUT` you'll need to send along *all* of the record attributes within the request payload:
 
-	{
-		"resource": [
-			{
-				"emp_no": 500015,
-				"birth_date": "1900-12-15",
-				"first_name": "Johnny",
-				"last_name": "Football",
-				"gender": "m",
-				"hire_date": "2007-01-01"
-			}
-		]
-	}
+    {
+        "resource": [
+            {
+                "emp_no": 500015,
+                "birth_date": "1900-12-15",
+                "first_name": "Johnny",
+                "last_name": "Football",
+                "gender": "m",
+                "hire_date": "2007-01-01"
+            }
+        ]
+    }
 
 With the payload in place, you'll send a `PUT` request to the `employees` table endpoint:
 
@@ -455,17 +467,17 @@ With the payload in place, you'll send a `PUT` request to the `employees` table 
 
 If successful, DreamFactory will return a `200` status code and a response body containing the primary key of the updated record:
 
-	{
-		"resource": [
-			{
-				"emp_no": 500015
-			}
-		]
-	}
+    {
+        "resource": [
+            {
+                "emp_no": 500015
+            }
+        ]
+    }
 
 The equivalent SQL query looks like this:
 
-   UPDATE supplies SET first_name = 'Johnny', last_name = 'Football', 
+   UPDATE supplies SET first_name = 'Johnny', last_name = 'Football',
      birthdate = '1900-12-15', gender = 'm', hire_date = '2007-01-01' WHERE emp_no = 500015;
 
 #### Updating Records with PATCH
@@ -488,7 +500,7 @@ If successful, DreamFactory will return a `200` status code and a response body 
 
 The equivalent SQL query looks like this:
 
-   UPDATE supplies SET name = 'Silver Stapler' WHERE id = 8; 
+   UPDATE supplies SET name = 'Silver Stapler' WHERE id = 8;
 
 ### Deleting Records
 
@@ -514,43 +526,118 @@ The equivalent SQL query looks like this:
 
 You can easily synchronize records between two databases by adding a pre_process event script to the database API endpoint for which the originating data is found. To do so, navigate to the Scripts tab, select the desired database API, and then drill down to the desired endpoint. For instance, if we wanted to retrieve a record from a table named employees found within database API named mysql and send it to another database API (MySQL, SQL Server, etc.) named contacts and possessing a table named names, we would drill down to the following endpoint within the Scripts interface:
 
-	mysql > mysql._table.{table_name} > mysql._table.{table_name}.get.post_process  mysql._table.employees.get.post_process
+    mysql > mysql._table.{table_name} > mysql._table.{table_name}.get.post_process  mysql._table.employees.get.post_process
 
 Once there, you'll choose the desired scripting language. We've chosen PHP for this example, but you can learn more about other available scripting engines [within our wiki documentation](https://wiki.dreamfactory.com/DreamFactory/Features/Scripting). Enable the `Active` checkbox, and add the following script to the glorified code editor:
 
-	// Assign the $platform['api'] array value to a convenient variable
-	$api = $platform['api'];
+    // Assign the $platform['api'] array value to a convenient variable
+    $api = $platform['api'];
 
-	// Declare a few arrays for later use
-	$options = [];
-	$record = [];
+    // Declare a few arrays for later use
+    $options = [];
+    $record = [];
 
-	// Retrieve the response body. This contains the returned records.
-	$responseBody = $event['response']['content'];
+    // Retrieve the response body. This contains the returned records.
+    $responseBody = $event['response']['content'];
 
-	// Peel off just the first (and possibly only) record
-	$employee = $responseBody["resource"][0];
+    // Peel off just the first (and possibly only) record
+    $employee = $responseBody["resource"][0];
 
-	// Peel the employee record's first_name and last_name values, 
-	// and assign them to two array keys named first and last, respectively.
-	$record["resource"] = [
-	    [
-	        'first' => $employee["first_name"],
-	        'last' => $employee["last_name"],
-	    ]
-	];
+    // Peel the employee record's first_name and last_name values,
+    // and assign them to two array keys named first and last, respectively.
+    $record["resource"] = [
+        [
+            'first' => $employee["first_name"],
+            'last' => $employee["last_name"],
+        ]
+    ];
 
-	// Identify the location to which $record will be POSTed
-	// and execute an API POST call. 
-	$url = "contacts/_table/names";
-	$post = $api->post;
-	$result = $post($url, $record, $options);
+    // Identify the location to which $record will be POSTed
+    // and execute an API POST call.
+    $url = "contacts/_table/names";
+    $post = $api->post;
+    $result = $post($url, $record, $options);
 
 Save the changes, making sure the script's `Active` checkbox is enabled. Then make a call to the `employees` table which will result in the return of a single record, such as:
 
-	/api/v2/mysql/_table/employees?filter=emp_no=10001
+    /api/v2/mysql/_table/employees?filter=emp_no=10001
 
 Of course, there's nothing stopping you from modifying the script logic to iterate over an array of returned records.
+
+## Obfuscating a Table Endpoint
+
+Sometimes you might wish to completely obfuscate the DreamFactory-generated database API endpoints, and give users a URI such as `/api/v2/employees` rather than `/api/v2/mysql/_table/employees`. At the same time you don't want to limit the ability to perform all of the usual CRUD tasks. Fortunately this is easily accomplished using a scripted service. The following example presents the code for a scripted PHP service that has been assigned the namespace `employees`:
+
+    $api = $platform['api'];
+    $get = $api->get;
+    $post = $api->post;
+    $put = $api->put;
+    $patch = $api->patch;
+    $delete = $api->delete;
+
+    $api_path = 'mysql/_table/employees';
+
+    $method = $event['request']['method'];
+
+    $options = [];
+
+    $params = $event['request']['parameters']; 
+
+    $result = '';
+
+    $resource = $event['response']['content']['resource'];
+
+    if ($resource && $resource !== '') { 
+      $api_path = $api_path + '/' . $resource;
+    }
+
+    if ($event['request']['payload']) { 
+      $payload = $event['request']['payload'];
+    } else {
+      $payload = null;
+    }
+
+    switch ($method) {
+      case 'GET':
+          $result = $get($api_path, null, $options);
+          break;
+      case 'POST':
+          $result = $post($api_path, $payload, $options);
+          break;
+      case 'PUT':
+          $result = $put($api_path, $payload, $options);
+          break;
+      case 'PATCH':
+          $result = $patch($api_path, $payload, $options);
+          break;
+      case 'DELETE':
+          $result = $delete($api_path, $payload, $options);
+          break;
+      default: 
+          $result = "error";
+          break;
+    }
+
+    return $result;
+
+With this script in place, you can now use the following endpoint to interact with the MySQL API's `employees` table:
+
+  https://dreamfactory.example.com/api/v2/employees
+
+Issuing a `GET` request to this endpoint would return all of the records. Issuing a `POST` request to this endpoint with a body such as the following would insert a new record:
+
+    {
+        "resource": [
+        {
+          "emp_no": 500037,
+          "birth_date": "1900-12-12",
+          "first_name": "Joe",
+          "last_name": "Texas",
+          "gender": "m",
+          "hire_date": "2007-01-01"
+        }
+        ]
+    }
 
 ## Troubleshooting
 
