@@ -97,23 +97,23 @@ When inserting a new record into a database you'll naturally want to first valid
 
 Suppose the API data source returns a response which is not compatible with the destination client. Perhaps the client expects response parameters to be named differently, or maybe some additional nesting should occur. To do so, you can add business logic to a `post_process` endpoint. For instance, to modify the response being returned from the sample MySQL database API's `employees` table endpoint, you'll add a script to `mysql._table.employees.get.post_process`. As an example, here's what a record from the default response looks like:
 
-	{
-		"emp_no": 10001,
-		"birth_date": "1953-09-02",
-		"first_name": "Georgi",
-		"last_name": "Facello",
-		"gender": "M",
-		"hire_date": "1986-06-26"
-	}
+  {
+    "emp_no": 10001,
+    "birth_date": "1953-09-02",
+    "first_name": "Georgi",
+    "last_name": "Facello",
+    "gender": "M",
+    "hire_date": "1986-06-26"
+  }
 
 Suppose you instead want it to look like this:
 
-	{
-		"emp_no": 10001,
-		"birth_date": "1953-09-02",
-		"name": "Georgi Facello",
-		"gender": "M"
-	}
+  {
+    "emp_no": 10001,
+    "birth_date": "1953-09-02",
+    "name": "Georgi Facello",
+    "gender": "M"
+  }
 
 Specifically, we've combined the `first_name` and `last_name` parameters, and removed the `hire_date` parameter. To accomplish this you can add the following PHP script to the `mysql._table.employees.get.post_process` endpoint:
 
@@ -123,7 +123,7 @@ Specifically, we've combined the `first_name` and `last_name` parameters, and re
 		$record["name"] = $record["first_name"] . " " . $record["last_name"];
 		unset($record["first_name"]);
 		unset($record["last_name"]);
-			unset($record["hire_date"]);
+		unset($record["hire_date"]);
 		$responseBody['resource'][$n] = $record;
 	}
 
