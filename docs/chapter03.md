@@ -564,6 +564,80 @@ Save the changes, making sure the script's `Active` checkbox is enabled. Then ma
 
 Of course, there's nothing stopping you from modifying the script logic to iterate over an array of returned records.
 
+## Obfuscating a Table Endpoint
+
+Sometimes you might wish to completely obfuscate the DreamFactory-generated database API endpoints, and give users a URI such as `/api/v2/employees` rather than `/api/v2/mysql/_table/employees`. At the same time you don't want to limit the ability to perform all of the usual CRUD tasks. Fortunately this is easily accomplished using a scripted service. The following example presents the code for a scripted PHP service that has been assigned the namespace `employees`:
+
+	$api = $platform['api'];
+	$get = $api->get;
+	$post = $api->post;
+	$put = $api->put;
+	$patch = $api->patch;
+	$delete = $api->delete;
+
+	$api_path = 'mysql/_table/employees';
+
+	$method = $event['request']['method'];
+
+	$options = [];
+
+	$params = $event['request']['parameters']; 
+
+	$result = '';
+
+	$resource = $event['response']['content']['resource'];
+
+	if ($resource && $resource !== '') { 
+		$api_path = $api_path + '/' . $resource;
+	}
+
+	if ($event['request']['payload']) { 
+		$payload = $event['request']['payload'];
+	} else {
+		$payload = null;
+	}
+
+	switch ($method) { 
+		case 'GET':
+			$result = $get($api_path, null, $options);
+			break;
+		case 'POST':
+			$result = $post($api_path, $payload, $options);
+			break;
+		case 'PUT':
+			$result = $put($api_path, $payload, $options);
+			break;
+		case 'PATCH':
+			$result = $patch($api_path, $payload, $options);
+			break;
+		case 'DELETE':
+			$result = $delete($api_path, $payload, $options);
+			break;
+		default: 
+			$result = "error";
+			break;
+	}
+
+	return $result;
+
+With this script in place, you can now use the following endpoint to interact with the MySQL API's `employees` table:
+
+	https://dreamfactory.example.com/api/v2/employees
+
+Issuing a `GET` request to this endpoint would return all of the records. Issuing a `POST` request to this endpoint with a body such as the following would insert a new record:
+
+	{
+		"resource": [
+			{
+				"emp_no": 500037,
+				"birth_date": "1900-12-12",
+				"first_name": "Joe",
+				"last_name": "Texas",
+				"gender": "m",
+				"hire_date": "2007-01-01"
+			}
+		]
+	}
 
 ## Troubleshooting
 
