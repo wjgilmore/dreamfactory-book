@@ -569,7 +569,7 @@ Of course, there's nothing stopping you from modifying the script logic to itera
 Sometimes you might wish to completely obfuscate the DreamFactory-generated database API endpoints, and give users a URI such as `/api/v2/employees` rather than `/api/v2/mysql/_table/employees`. At the same time you don't want to limit the ability to perform all of the usual CRUD tasks. Fortunately this is easily accomplished using a scripted service. The following example presents the code for a scripted PHP service that has been assigned the namespace `employees`:
 
 	$api = $platform['api'];
-	$get = $api->get;
+    $get = $api->get;
 	$post = $api->post;
 	$put = $api->put;
 	$patch = $api->patch;
@@ -630,7 +630,7 @@ Issuing a `GET` request to this endpoint would return all of the records. Issuin
 		"resource": [
 		{
 			"emp_no": 500037,
-			"birth_date": "1900-12-12",
+            "birth_date": "1900-12-12",
 			"first_name": "Joe",
 			"last_name": "Texas",
 			"gender": "m",
