@@ -628,15 +628,15 @@ Issuing a `GET` request to this endpoint would return all of the records. Issuin
 
 	{
 		"resource": [
-			{
-				"emp_no": 500037,
-				"birth_date": "1900-12-12",
-				"first_name": "Joe",
-				"last_name": "Texas",
-				"gender": "m",
-				"hire_date": "2007-01-01"
-			}
-		]
+		{
+			"emp_no": 500037,
+			"birth_date": "1900-12-12",
+			"first_name": "Joe",
+			"last_name": "Texas",
+			"gender": "m",
+			"hire_date": "2007-01-01"
+		}
+	]
 	}
 
 ## Troubleshooting
