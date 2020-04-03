@@ -360,3 +360,36 @@ As with authenticated users, you'll pass along a payload that looks like this:
     }
 
 For more information about managing custom user attributes, check out [this wiki page](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Managing_user_custom_data).
+
+## Debugging LDAP and Active Directory
+
+    <?php
+
+    $host = "HOSTNAME";
+    $baseDN = "BASEDN";
+    $username = "USERNAME";
+    $password = "PASSWORD";
+
+    $connection = ldap_connect($host) or die("Could not connect to LDAP server.");
+
+    ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
+    ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
+
+    $search = ldap_search($connection, $baseDN, '(uid=' . $username . ')');
+    $result = ldap_get_entries($connection, $search);
+
+    if (isset($result[0]['dn'])) {
+        print_r($result);
+        $userDN = $result[0]['dn'];
+        echo "USER DN: " . $userDN . "\n";
+    } else {
+        echo "USER DN NOT FOUND";
+    }
+
+    $auth = ldap_bind($connection, $userDN, $password);
+
+    if ($auth) {
+        echo "LDAP bind successful.";
+    } else {
+        echo "LDAP bind failed.";
+    }
