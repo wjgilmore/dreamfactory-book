@@ -361,6 +361,18 @@ The minimal JSON payload will look like this:
       ]
     }
 
+To delete an existing permission from an existing role, you'll set the `role_id` to `null`:
+
+  {
+    "id":137,
+    "role_service_access_by_role_id":[
+      {
+        "id": 168,
+        "role_id": null
+      }
+    ]
+  }
+
 ## Managing API Keys
 
 It's possible to create and manage API keys via the system API. To retrieve a list of all API keys (known as *Apps* in DreamFactory lingo), send a `GET` request to the URI `/api/v2/system/app`. You'll receive a list of apps that look like this:
