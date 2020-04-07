@@ -269,9 +269,97 @@ This payload assigns the role two permissions:
 * It can send `GET` requests to the `_table/employees/*` endpoint associated with the API identified by `SERVICE_ID`.
 * It can send `GET` and `POST` requests to the `_table/supplies/*` endpoint associated with the API identified by `SERVICE_ID`.
 
-In both cases, the `requestor_mask` was set to `3`, because you'll add permission masks together to achieve the desired permission level. For instance `GET` (1) + POST `2` = `3`. If you wanted to allow all verbs, you'll add all of the masks together `1` + `2` + `4` + `8` + `16` = `31`.
+In both cases, the `verb_mask` was set to `3`, because you'll add permission masks together to achieve the desired permission level. For instance `GET` (1) + POST `2` = `3`. If you wanted to allow all verbs, you'll add all of the masks together `1` + `2` + `4` + `8` + `16` = `31`. The `requestor_mask` was set to `3` because like the `verb_mask` it is represented by a bitmask. The value `1` represents API access whereas `2` represents access using DreamFactory's scripting syntax. Therefore a value of `3` ensures the endpoint is accessible via both an API endpoint and via the scripting environment.
 
 You can learn more about role management [in our wiki](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Managing_user_role_assignments).
+
+### Viewing a Role's Permissions
+
+You can retrieve basic role information by contacting the `/system/role/` endpoint and passing along the role's ID. For instance to retrieve information about the role associated with ID `137` you'll query this endpoint:
+
+    /api/v2/system/role/137
+
+This will return the following information:
+
+    {
+      "id": 137,
+      "name": "Dashboard Application Role",
+      "description": "Dashboard Application Role",
+      "is_active": true,
+      "created_date": "2020-04-06 17:56:00",
+      "last_modified_date": "2020-04-06 18:10:31",
+      "created_by_id": "1",
+      "last_modified_by_id": "1"
+    }
+
+However you'll often want to learn much more about a role, including notably what permissions have been assigned. To do so you'll need to join the `role_service_access_by_role_id` field:
+
+    /api/v2/system/role/137?related=role_service_access_by_role_id
+
+This will return a detailed payload containing the assigned permissions, including each permission's service identifier, endpoint, verb mask, requestor mask, and any row-level filters (if applicable):
+
+    {
+      "id": 137,
+      "name": "Dashboard Application Role",
+      "description": "Dashboard Application Role",
+      "is_active": true,
+      "created_date": "2020-04-06 17:56:00",
+      "last_modified_date": "2020-04-06 18:10:31",
+      "created_by_id": "1",
+      "last_modified_by_id": "1",
+      "role_service_access_by_role_id": [
+        {
+          "id": 168,
+          "role_id": 137,
+          "service_id": 25,
+          "component": "_table/customer/*",
+          "verb_mask": 1,
+          "requestor_mask": 1,
+          "filters": [],
+          "filter_op": "AND",
+          "created_date": "2020-04-06 17:56:00",
+          "last_modified_date": "2020-04-06 17:56:00",
+          "created_by_id": null,
+          "last_modified_by_id": null
+        },
+        {
+          "id": 184,
+          "role_id": 137,
+          "service_id": 145,
+          "component": "_table/account/*",
+          "verb_mask": 1,
+          "requestor_mask": 1,
+          "filters": [],
+          "filter_op": "AND",
+          "created_date": "2020-04-07 14:39:38",
+          "last_modified_date": "2020-04-07 14:39:38",
+          "created_by_id": null,
+          "last_modified_by_id": null
+        }
+      ]
+    }
+
+### Updating an Existing Role
+
+To add a *new* permission to an existing role, you'll the new role information along within the `role_services_access_by_role_id` JSON object. For instance, to add a new permission to the role identified by ID `137` you'll send a PUT request to this endpoint:
+
+    /api/v2/system/role/137
+
+The minimal JSON payload will look like this:
+
+    {
+      "id":137,
+      "role_service_access_by_role_id":[
+        {
+          "service_id":25,
+          "component":"_table/customer/*",
+          "verb_mask":1,
+          "requestor_mask":1,
+          "filters":[],
+          "filter_op":"AND"
+        }
+      ]
+    }
 
 ## Managing API Keys
 
