@@ -97,3 +97,32 @@ DreamFactory does not by default store any API data as it passes through the pla
 **How does DreamFactory encrypt data in transit? Is it enabled by default or are additional steps required?**
 
 DreamFactory plugs into a variety of third-party data sources, including databases such as Microsoft SQL Server and MySQL, file systems such as S3, and third-party HTTP APIs such as Salesforce, Intercom, and Twitter. DreamFactory will then serve as a conduit for clients desiring to interacting with these data sources via an HTTP-based API. DreamFactory runs atop a standard web server such as Apache or Nginx, both of which support SSL-based communication. Provided HTTPS is enabled, all correspondence between DreamFactory and the respective clients will be encrypted.
+
+**I lost my DreamFactory administrator password. How can I recover it?**
+
+DreamFactory uses one-way encryption for passwords, meaning that once they are encrypted they cannot be decrypted. If email-based password recovery has not been configured, you can create a new administrator account by logging into the terminal console included with all versions of DreamFactory. To do so, begin by SSHing into your DreamFactory server. Next, navigate to the DreamFactory root directory. For those who used an automated DreamFactory installer, the root directory will be `/opt/dreamfactory`. The path will vary in accordance to other installers.
+
+Next, enter the terminal console:
+
+    $ php artisan tinker
+    Psy Shell v0.9.12 (PHP 7.2.28 — cli) by Justin Hileman
+
+Use the following command to retrieve the desired administrator account. You'll need to swap out the placeholder email address with the actual administrator address:
+
+    >>> $u = \DreamFactory\Core\Models\User::where('email', 'known@admin-email.com')->first();
+
+Change the password to the desired value and save the results:
+
+    >>> $u->password = 'secret';
+    => "secret"
+    >>> $u->save();
+    => true
+
+You can confirm the password has been encrypted (hashed) by referencing the `$u` object's `password` attribute:
+
+    >>> $u->password
+    => "$2y$10$jtlt8D8fHWzgoosAV/P6m.w459QE6ntNfbXo.1x6V9GPXGVT7IFfm"  
+
+Exit the console, and return to the browser to login using the new password:
+
+    >>> exit
