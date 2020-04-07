@@ -363,15 +363,15 @@ The minimal JSON payload will look like this:
 
 To delete an existing permission from an existing role, you'll set the `role_id` to `null`:
 
-  {
-    "id":137,
-    "role_service_access_by_role_id":[
-      {
-        "id": 168,
-        "role_id": null
-      }
-    ]
-  }
+    {
+      "id":137,
+      "role_service_access_by_role_id":[
+        {
+          "id": 168,
+          "role_id": null
+        }
+      ]
+    }
 
 ## Managing API Keys
 
