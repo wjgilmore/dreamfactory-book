@@ -676,6 +676,31 @@ To view your executed queries in real-time, `tail` the query log:
     2019-03-28T14:50:31.649753Z	   77 Close stmt
     2019-03-28T14:50:31.696379Z	   77 Quit
 
+### Checking Your User Credentials
+
+Many database API generation issues arise due to a misconfigured set of user credentials. These credentials must possess privileges capable of connecting from the IP address where DreamFactory resides. To confirm your user can connect from the DreamFactory server, create a file named mysql-test.php and add the following contents to it. Replace the `HOSTNAME`, `DBNAME`, `USERNAME`, and `PASSWORD` placeholders with your credentials:
+
+    <?php
+
+    $dsn = "mysql:host=HOSTNAME;dbname=DBNAME";
+    $user = "USERNAME";
+    $passwd = "PASSWORD";
+
+    $pdo = new PDO($dsn, $user, $passwd);
+
+    $stmt = $pdo->query("SELECT VERSION()");
+
+    $version = $stmt->fetch();
+
+    echo $version[0] . PHP_EOL;
+
+Save the changes and run the script like so:
+
+    $ php mysql-test.php
+    5.7.29-0ubuntu0.16.04.1
+
+If the MySQL version number isn't returned, then the user is unable to connect remotely.
+
 ## Conclusion
 
 Congratulations! In less than an hour you've successfully generated, secured, and deployed a database-backed API. In the next chapter, you'll learn how to add additional authentication and authorization solutions to your APIs.
