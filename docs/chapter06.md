@@ -87,6 +87,29 @@ The **request** resource contains all the components of the original HTTP reques
 
 Please note any allowed changes to this data will overwrite existing data in the request, before further listeners are called and/or the request is handled by the called service.
 
+#### Retrieving A Request Parameter
+
+To retrieve a request parameter using PHP, you'll reference it the parameter name via the **$event['request']['parameters']** associative array:
+	
+	// PHP
+	$customerKey = $event['request']['parameters']['customer_key'];
+
+To retrieve the filter parameter, reference the **filter** key:
+
+	// PHP
+	$filter = $event['request']['parameters']['filter']
+
+This will return the key/value pair, such as "id=50". Therefore you'll want to use a string parsing function such as PHP's explode() to retrieve the key value:
+
+	// PHP
+	$id = explode("=", $event['request']['parameters']['filter'])[1];
+
+To retrieve a header value:
+
+	// Python
+	request = event.request
+	print request.headers['x-dreamfactory-api-key']
+
 #### Event Response
 
 The **response** resource contains the data being sent back to the client from the request.
@@ -137,6 +160,33 @@ A breakdown of the above:
 | payload             | optional         | Must contain a valid object for the language of the script.
 | options             | optional         | May contain headers, query parameters, and cURL options.
 
+Calling internally only requires the relative URL without the **/api/v2/** portion. You can pass absolute URLs like 'http://example.com/my_api' to these methods to access external resources. See the [scripting tutorials](https://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting) for more examples of calling platform.api methods from scripts.
+
+#### Node.js Platform API Example
+
+	var url = 'db/_table/contact';
+	var options = null;
+	platform.api.get(url, options, function(body, response) {
+	        var result = JSON.parse(body);
+	        console.log(result);
+	});
+
+#### PHP Platform API Example
+
+	$url = 'db/_table/contact';
+	$api = $platform['api'];
+	$get = $api->get;
+	$result = $get($url);
+	var_dump($result);
+
+#### Python Platform API Example
+
+	url = 'db/_table/contact'
+	result = platform.api.get(url)
+	data = result.read()
+	print data
+	jsonData = bunchify(json.loads(data))
+
 #### Platform Config
 
 The **config** object contains configuration settings for the instance.
@@ -154,6 +204,68 @@ The **config** object contains configuration settings for the instance.
 | user                |	User information derived from the supplied session token, i.e. JWT. Includes display_name, first_name, last_name, email, is_sys_admin, and last_login_date
 | app                 |	App information derived from the supplied API key.
 | lookup              |	Available lookups for the session.
+
+## Adding HTTP Headers, Query Parameters, or cURL Options to API Calls
+
+You can specify any combination of headers and query parameters when calling platform.api functions from a script. This is supported by all script types using the **options** argument.
+
+**Node.js**
+
+	var url = 'http://example.com/my_api';
+	var payload = {"name":"test"};
+	var options = {
+	    'headers': {
+	        'Content-Type': 'application/json'
+	    },
+	    'parameters': {
+	        'api_key': 'my_api_key'
+	    },
+	};
+	platform.api.post(url, payload, options, function(body, response) {
+	        var result = JSON.parse(body);
+	        console.log(result);
+	}
+
+**PHP**
+
+	$url = 'http://example.com/my_api';
+	$payload = json_decode("{\"name\":\"test\"}", true);
+	$options = [];
+	$options['headers'] = [];
+	$options['headers']['Content-Type'] = 'application/json';
+	$options['parameters'] = [];
+	$options['parameters']['api_key'] = 'my_api_key';
+	$api = $platform['api'];
+	$post = $api->post;
+	$result = $post($url, $payload, $options);
+	var_dump($result);
+
+**Python**
+
+	url = 'http://example.com/my_api'
+	payload = '{\"name\":\"test\"}'
+	options = {}
+	options['headers'] = {}
+	options['headers']['Content-Type'] = 'application/json'
+	options['parameters'] = {}
+	options['parameters']['api_key'] = 'my_api_key'
+	result = platform.api.post(url, payload, options)
+	data = result.read()
+	print data
+	jsonData = bunchify(json.loads(data))
+
+For PHP scripts, which use cURL to make calls to external URLs, you can also specify any number of cURL options. Calls to internal URLs do not use cURL, so cURL options have no effect there.
+
+	// PHP
+	$options = [];
+	$options['headers'] = [];
+	$options['headers']['Content-Type'] = 'application/json';
+	$options['parameters'] = [];
+	$options['parameters']['api_key'] = 'my_api_key';
+	$options['CURLOPT_USERNAME'] = 'user@example.com';
+	$options['CURLOPT_PASSWORD'] = 'password123';
+
+cURL options can include HTTP headers using CURLOPT_HTTPHEADER, but it's recommended to use $options['headers'] for PHP to send headers as shown above.
 
 ## Modifying Existing API Endpoint Logic
 
@@ -234,6 +346,37 @@ Specifically, we've combined the `first_name` and `last_name` parameters, and re
 	}
 
 	$event['response']['content'] = $responseBody;
+
+## Stopping Script Execution
+
+Just like in normal code execution, execution of a script is stopped prematurely by two means, throwing an exception, or returning.
+
+	// Stop execution if verbs other than GET are used in Custom Scripting Service
+	if (event.request.method !== "GET") {
+	    throw "Only HTTP GET is allowed on this endpoint."; // will result in a 500 back to client with the given message.
+	}
+	 
+	// Stop execution and return a specific status code
+	if (event.resource !== "test") {
+	    // For pre-process scripts where event.response doesn't exist yet, just create it
+	    event.response = {};
+	    // For post-process scripts just update the members necessary
+	    event.response.status_code = 400;
+	    event.response.content = {"error": "Invalid resource requested."};
+	    return;
+	}
+	 
+	// defaults to 200 status code
+	event.response.content = {"test": "value"};
+
+### Throwing An Exception
+
+If a parameter such as filter is missing, can throw an exception like so:
+
+	// PHP
+	if (! array_key_exists('filter', $event['request']['parameters'])) {
+	    throw new \DreamFactory\Core\Exceptions\BadRequestException('Missing filter');
+	}
 
 ## Creating Standalone Scripted Services
 
@@ -364,12 +507,103 @@ The referenced `Filter` class is found in a file named `Filter.php` and looks li
 
 If you'd like to permanently add a particular directory to PHP's include path, modify the [include_path](https://www.php.net/manual/en/ini.core.php#ini.include-path) configuration directive.
 
-## More Information
+## Queued Scripting Setup
 
-We're still in the process of migrating scripting documentation into this guide, so for the time being please consult our wiki for more information about scripting:
+DreamFactory queued scripting takes advantage of Laravel's built-in queueing feature, for more detailed information, see their documentation [here](https://laravel.com/docs/5.3/queues). Every DreamFactory instance comes already setup with the 'database' queue setting with all necessary tables created (scripts and failed_scripts). The queue configuration file is stored in `config/queue.php` and can be updated if another setup is preferred, such as [Beanstalkd](http://kr.github.com/beanstalkd), [Amazon SQS](http://aws.amazon.com/sqs), or [Redis](http://redis.io/).
 
-* [https://wiki.dreamfactory.com/DreamFactory/Features/Scripting](https://wiki.dreamfactory.com/DreamFactory/Features/Scripting)
-* [https://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting](https://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting)
+DreamFactory also fully supports the following artisan commands for configuration and runtime execution:
+
+	queue:failed                       List all of the failed queue scripts
+	queue:flush                        Flush all of the failed queue scripts
+	queue:forget                       Delete a failed queue script
+	queue:listen                       Listen to a given queue
+	queue:restart                      Restart queue worker daemons after their current script
+	queue:retry                        Retry a failed queue script
+	queue:work                         Process the next script on a queue
+
+#### Specifying The Queue
+
+You may also specify the queue a script should be sent to. By pushing scripts to different queues, you may categorize your queued scripts, and even prioritize how many workers you assign to various queues. This does not push scripts to different queue connections as defined by your queue configuration file, but only to specific queues within a single connection. To specify the queue, use the queue configuration option on the script or service.
+
+#### Specifying The Queue Connection
+
+If you are working with multiple queue connections, you may specify which connection to push a script to. To specify the connection, use the connection configuration option on the script or service.
+
+#### Delayed Scripts
+
+Sometimes you may wish to delay the execution of a queued script for some period of time. For instance, you may wish to queue a script that sends a customer a reminder e-mail 5 minutes after sign-up. You may accomplish this using the delay configuration option on your script or service. The option values should be in seconds.
+
+### Running The Queue Listener
+
+#### Starting The Queue Listener
+
+Laravel includes an Artisan command that will run new scripts as they are pushed onto the queue. You may run the listener using the `queue:listen` command:
+
+	php artisan queue:listen
+
+You may also specify which queue connection the listener should utilize:
+
+	php artisan queue:listen connection-name
+
+Note that once this task has started, it will continue to run until it is manually stopped. You may use a process monitor such as [Supervisor](http://supervisord.org/) to ensure that the queue listener does not stop running.
+
+#### Queue Priorities
+
+You may pass a comma-delimited list of queue connections to the listen script to set queue priorities:
+
+	php artisan queue:listen --queue=high,low
+
+In this example, scripts on the high queue will always be processed before moving onto scripts from the `low` queue.
+
+#### Specifying The Script Timeout Parameter
+
+You may also set the length of time (in seconds) each script should be allowed to run:
+
+	php artisan queue:listen --timeout=60
+
+#### Specifying The Queue Sleep Duration
+
+In addition, you may specify the number of seconds to wait before polling for new scripts:
+
+	php artisan queue:listen --sleep=5
+
+Note that the queue only sleeps if no scripts are on the queue. If more scripts are available, the queue will continue to work them without sleeping.
+
+#### Processing The First Script On The Queue
+
+To process only the first script on the queue, you may use the `queue:work` command:
+
+	php artisan queue:work
+
+### Dealing with Failed Scripts
+
+To specify the maximum number of times a script should be attempted, you may use the `--tries` switch on the `queue:listen` command:
+
+	php artisan queue:listen connection-name --tries=3
+
+After a script has exceeded this amount of attempts, it will be inserted into a `failed_jobs` table. 
+
+#### Retrying Failed Scripts
+
+To view all of your failed scripts that have been inserted into your `failed_jobs` database table, you may use the `queue:failed` Artisan command:
+
+	php artisan queue:failed
+
+The `queue:failed` command will list the script ID, connection, queue, and failure time. The script ID may be used to retry the failed script. For instance, to retry a failed script that has an ID of 5, the following command should be issued:
+
+	php artisan queue:retry 5
+
+To retry all of your failed scripts, use `queue:retry` with `all` as the ID:
+
+	php artisan queue:retry all
+
+If you would like to delete a failed script, you may use the `queue:forget` command:
+
+	php artisan queue:forget 5
+
+To delete all of your failed scripts, you may use the `queue:flush` command:
+
+	php artisan queue:flush
 
 ## Scheduled Tasks
 
@@ -398,6 +632,13 @@ Next you will edit the `crontab` by running the following:
 	$ crontab -e
 
 You will be put into the text editor where you can simply paste in your CRON job and save it. Now you have a scheduled task running every minute to call your API!
+
+## More Information
+
+We're still in the process of migrating scripting documentation into this guide, so for the time being please consult our wiki for more information about scripting:
+
+* [https://wiki.dreamfactory.com/DreamFactory/Features/Scripting](https://wiki.dreamfactory.com/DreamFactory/Features/Scripting)
+* [https://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting](https://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting)
 
 
 
