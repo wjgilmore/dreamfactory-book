@@ -56,7 +56,7 @@ If you've cloned the GitHub repository, you'll need to carry out a few additiona
 ### Configuring Your Server
 
 ::: warning
-This guide is under heavy development, and certain parts are complete. We suggest reading through the current installation documentation, [available here](http://wiki.dreamfactory.com/DreamFactory/Installation#GitHub).
+This guide is under heavy development, and certain parts are incomplete. We suggest reading through the current installation documentation, [available here](http://wiki.dreamfactory.com/DreamFactory/Installation#GitHub).
 :::
 
 Server configuration is going to vary according to your operating system. To ensure the instructions are as specific and straightforward as possible, we've broken them out into subchapters:
@@ -160,10 +160,6 @@ With the system database configured, it's time to create the system tables and s
 	Migrating: 2015_01_27_190909_create_db_extras_tables
 	Migrated:  2015_01_27_190909_create_db_extras_tables
 	...
-	Migrating: 2018_01_23_155210_script_implements_access_list
-	Migrated:  2018_01_23_155210_script_implements_access_list
-	Migrating: 2018_01_29_030233_create_bitbucket_config_table
-	Migrated:  2018_01_29_030233_create_bitbucket_config_table
 	Migration completed successfully.
 	*********************************************
 	*********************************************
@@ -354,7 +350,7 @@ For the purposes of this example we'll presume you're running 2.12 and want to u
 
 	$ git checkout tags/2.14.1
 
-Next, you'll need to add that `APP_KEY` to the `docker-compose.yml` file. Open `docker-compose.yml` in your favorite code editor, scroll down to the `web` service, and add the `APP_KEY` property and associated value alongside the other environment variables:
+Next, you'll need to add that `APP_KEY` to the `docker-compose.yml` file. Open `docker-compose.yml` in your code editor, scroll down to the `web` service, and add the `APP_KEY` property and associated value alongside the other environment variables:
 
 	...
     DB_DATABASE: dreamfactory
@@ -403,17 +399,17 @@ With that done, open your DreamFactory instance in the browser, and confirm the 
 
 ## Installing and Configuring DreamFactory on CentOS
 
-First I pull in the CentOS Docker image.
+First pull in the CentOS Docker image.
 
-	docker pull centos
+	$ docker pull centos
 
 Then I start the image in a detached state.
 
-	docker run -itd {Container_ID}
+	$ docker run -itd {Container_ID}
 
-Once the image is running we can exec into it and begin installing DreamFactory.
+Once the image is running we can enter it and begin installing DreamFactory.
 
-	docker exec -it {Container_ID} /bin/bash
+	$ docker exec -it {Container_ID} /bin/bash
 
 ### Using the DreamFactory Install Script
 
@@ -462,6 +458,14 @@ Fortunately, there are a number of HTTP clients which fill this void very well. 
 ### cURL
 
 [cURL's](https://curl.haxx.se/) lack of a polished interface may lead you to believe it's inferior to Insomnia and Postman. Not so! cURL is an incomparably capable bit of software.  cURL is a command line tool and library for transferring data with URL syntax, supporting HTTP, HTTPS, FTP, FTPS, GOPHER, TFTP, SCP, SFTP, SMB, TELNET, DICT, LDAP, LDAPS, FILE, IMAP, SMTP, POP3, RTSP and RTMP.
+
+## Running DreamFactory in a High Availability, Load Balanced Environment
+
+Most high API volume request users are running DreamFactory in a highly-available, load balanced environment. The following diagram depicts this approach:
+
+<img src="/images/02/lb-ha-diagram.png" width="800">
+
+If you're not interested in running the DreamFactory platform itself in an HA cluster then disregard the "Secondary Environment" found in the "DreamFactory Application Cluster" tier however the remainder of the diagram would still apply in a purely load balanced environment. In either case, the load balanced DreamFactory instances would be backed by a caching and system database tier. For caching DreamFactory supports Memcached and Redis. On the system database side, DreamFactory supports MySQL, PostgreSQL, and Microsoft SQL Server.
 
 ## Conclusion
 
