@@ -7,10 +7,10 @@ actionText: Get Started →
 actionLink: /docs/
 features:
 - title: Step by Step Guidance
-  details: Chapter by chapter you will learn about best practices surrounding APIs
+  details: Learn how to build, secure, and deploy APIs.
 - title: Example Applications
-  details: Learn DreamFactory by building real applications in record speeds
+  details: Learn DreamFactory by building real applications quickly.
 - title: Connect to Everything
-  details: Experience how easy it is to generate an API for your favorite databases.
-footer: Copyright © 2018-2019
+  details: See how easy it is to generate an API for your favorite databases.
+footer: Copyright © 2018-2020
 ---

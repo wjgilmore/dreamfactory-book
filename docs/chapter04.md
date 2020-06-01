@@ -23,6 +23,25 @@ You'll be pleased to know DreamFactory supports all of these options through a c
 > Authorization: Basic d2pAd2pnaWxtb3JlLmNvbTpqYXNvbjEyMw==
 > Accept: */*
 
+## Authenticating with Azure Active Directory OAuth
+
+    <?php
+
+    $queryString = $_SERVER['QUERY_STRING'];
+
+    # Create a connection
+    $url = 'https://demo.dreamfactory.com/api/v2/user/session?oauth_callback=true&' . $queryString;
+    $ch = curl_init($url);
+
+    # Setting our options
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    # Get the response
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    var_dump(json_decode($response));
 
 ## Authenticating with OpenID Connect
 
@@ -362,6 +381,8 @@ As with authenticated users, you'll pass along a payload that looks like this:
 For more information about managing custom user attributes, check out [this wiki page](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Managing_user_custom_data).
 
 ## Debugging LDAP and Active Directory
+
+You can use the following PHP script to determine whether your host, base DN, and credentials are correct:
 
     <?php
 

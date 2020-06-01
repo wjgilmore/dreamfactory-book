@@ -96,11 +96,17 @@ Finally, scroll down to the following section and uncomment `CACHE_DATABASE` and
     ## Which Redis client to use: predis or phpredis (PHP extension)
     #REDIS_CLIENT=predis
 
-You can leave CACHE_DATABASE set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). By default your Redis Database will be on 0, so be sure to `SELECT` whatever the number is you have set your `CACHE_DATABASE` equal to. Then you can start seeing the `KEYS` populate.
+You can leave `CACHE_DATABASE` set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). By default your Redis Database will be on 0, so be sure to `SELECT` whatever the number is you have set your `CACHE_DATABASE` equal to. Then you can start seeing the `KEYS` populate.
 
 ## Load Balancing Your DreamFactory Environment
 
 You can use a load balancer to distribute API requests among multiple servers. A load balancer can also perform health checks and remove an unhealthy server from the pool automatically. Most large server architectures include load balancers at several points throughout the infrastructure. You can cluster load balancers to avoid a single point of failure. DreamFactory is specifically designed to work with load balancers and all of the various scheduling algorithms. A REST API request can be sent to any one of the web servers at any time and handled in a stateless manner.
+
+The following diagram depicts a typical load-balanced, high-availability environment. Like many HTTP-based applications, DreamFactory can be scaled using a three tier architecture:
+
+* Application tier: These are the servers where one or more DreamFactory instances operate.
+* Caching tier: If you load balance DreamFactory across multiple servers, you will need to use a caching solution such as Redis or Memcached for distributed cache management.
+* Database tier: In a load balanced environment the DreamFactory system database will need to be shared across the instances. You can use MySQL, PostgreSQL, or Microsoft SQL Server for this purpose.
 
 <img src="/images/performance/load-balanced-diagram.png">
 
