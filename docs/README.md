@@ -79,6 +79,10 @@ Although the DreamFactory Platform is best known for the ability to generate RES
 
 All DreamFactory versions include a web-based administration console used to manage all aspects of the platform. While this console offers a user-friendly solution for performing tasks such as managing APIs, administrators, and business logic, many companies desire to instead automate management tasks through scripting. In this chapter you'll learn how to interact with the system APIs to easily manage multiple DreamFactory environments, and integrate DreamFactory features into third-party applications such as an API monetization SaaS.
 
+### [Chapter 16. Migrating Your System Database to a New Instance](./chapter16.md)
+
+In this chapter you'll learn how to safely migrate existing data to a new instance in a variety of ways.
+
 ### [Appendix A. Configuration Parameter Reference](./reference/appendixa.md)
 
 DreamFactory is packed with features capable of being tweaked via configuration parameters. These parameters can be managed as server environment variables or within a `.env` file found in the platform's root directory. This appendix defines all available parameters.
