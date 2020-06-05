@@ -83,6 +83,10 @@ All DreamFactory versions include a web-based administration console used to man
 
 In this chapter you'll learn how to safely migrate existing data to a new instance in a variety of ways.
 
+### [Chapter 17. Modifying the Service Definition](./chapter17.md)
+
+We explore the possibilities of customizing your API Docs tab for customized documentation.
+
 ### [Appendix A. Configuration Parameter Reference](./reference/appendixa.md)
 
 DreamFactory is packed with features capable of being tweaked via configuration parameters. These parameters can be managed as server environment variables or within a `.env` file found in the platform's root directory. This appendix defines all available parameters.
