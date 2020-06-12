@@ -40,4 +40,30 @@ Now you have a fully functioning developer portal for your API!
 
 ## Modifying Existing API Documentation
 
-TODO
+To modify existing API Documentation we will still need to donwload the Service Documentation. After we have the documentation we cannot modify it and change that existing Services documentation, but rather create a new Service with that documentation. 
+
+### Customizing your Documentation
+
+To customize your API Documentation it is fairly straightforward. You can begin by briefly taking a look at the existing structure and use it as a boiler plate for your own custom documentation. In this example we will be removing the `/_schema`,`/_function`, and `/_proc` endpoints entirely. 
+
+First we start by modifying the Service Definition we downloaded. We can simply navigate down to "paths" and begin deleting the endpoints from the documentation. As we go through deleting these endpoints you may also notice the summaries and descriptions can be modified to your liking as well.
+
+### Making a New API
+
+Now we can import this custom documentation to DreamFactory via the [HTTP connector](remote-soap.html#proxying-a-remote-http-api). We start by specifying the base URL for the API we customized and providing an API Key for the Service. 
+
+<p>
+<img src="/images/17/custom-api-config.png" width="800" alt="Custom API Config tab">
+</p>
+
+Then we move to the `Service Definition` tab, where we simply copy and paste the documentation.
+
+<p>
+<img src="/images/17/custom-service-def.png" width="800" alt="Custom API Service Definition tab">
+</p>
+
+Once done we can save it and navigate to the `API Docs` to see our custom documentation.
+
+<p>
+<img src="/images/17/custom-api-doc.png" width="800" alt="Custom API Docs tab">
+</p>
