@@ -33,19 +33,19 @@ Python 3 scripting support will automatically be made available inside all Dream
 
 You'll install Munch via Python's [pip](https://pip.pypa.io/en/stable/) package manager. A Python 3-specific version of pip known as pip3 should be used for the installation. If your server doesn't already include pip3 (find out by executing `which pip3`), you can install it using your server operating system's package manager. For instance on Ubuntu you can install it like this:
 
-	$ apt-get install -y --allow-unauthenticated python3-pip
+    $ apt-get install -y --allow-unauthenticated python3-pip
 
 With pip3 installed, you can install munch:
 
-	$ pip3 install munch
+    $ pip3 install munch
 
 Once installed, you'll need to update your `.env` file (or server environment variables) to point to the Python 3 interpreter:
 
-	DF_PYTHON3_PATH=/usr/local/bin/python3
+    DF_PYTHON3_PATH=/usr/local/bin/python3
 
 You can find your Python 3 interpreter path by executing this command:
 
-	$ which python3
+    $ which python3
 
 After saving these changes, restart your PHP-FPM and Apache/Nginx service.
 
@@ -90,25 +90,25 @@ Please note any allowed changes to this data will overwrite existing data in the
 #### Retrieving A Request Parameter
 
 To retrieve a request parameter using PHP, you'll reference it the parameter name via the **$event['request']['parameters']** associative array:
-	
-	// PHP
-	$customerKey = $event['request']['parameters']['customer_key'];
+
+    // PHP
+    $customerKey = $event['request']['parameters']['customer_key'];
 
 To retrieve the filter parameter, reference the **filter** key:
 
-	// PHP
-	$filter = $event['request']['parameters']['filter']
+    // PHP
+    $filter = $event['request']['parameters']['filter']
 
 This will return the key/value pair, such as "id=50". Therefore you'll want to use a string parsing function such as PHP's explode() to retrieve the key value:
 
-	// PHP
-	$id = explode("=", $event['request']['parameters']['filter'])[1];
+    // PHP
+    $id = explode("=", $event['request']['parameters']['filter'])[1];
 
 To retrieve a header value:
 
-	// Python
-	request = event.request
-	print request.headers['x-dreamfactory-api-key']
+    // Python
+    request = event.request
+    print request.headers['x-dreamfactory-api-key']
 
 #### Event Response
 
@@ -164,28 +164,28 @@ Calling internally only requires the relative URL without the **/api/v2/** porti
 
 #### Node.js Platform API Example
 
-	var url = 'db/_table/contact';
-	var options = null;
-	platform.api.get(url, options, function(body, response) {
-	        var result = JSON.parse(body);
-	        console.log(result);
-	});
+    var url = 'db/_table/contact';
+    var options = null;
+    platform.api.get(url, options, function(body, response) {
+            var result = JSON.parse(body);
+            console.log(result);
+    });
 
 #### PHP Platform API Example
 
-	$url = 'db/_table/contact';
-	$api = $platform['api'];
-	$get = $api->get;
-	$result = $get($url);
-	var_dump($result);
+    $url = 'db/_table/contact';
+    $api = $platform['api'];
+    $get = $api->get;
+    $result = $get($url);
+    var_dump($result);
 
 #### Python Platform API Example
 
-	url = 'db/_table/contact'
-	result = platform.api.get(url)
-	data = result.read()
-	print data
-	jsonData = bunchify(json.loads(data))
+    url = 'db/_table/contact'
+    result = platform.api.get(url)
+    data = result.read()
+    print data
+    jsonData = bunchify(json.loads(data))
 
 #### Platform Config
 
@@ -211,59 +211,59 @@ You can specify any combination of headers and query parameters when calling pla
 
 **Node.js**
 
-	var url = 'http://example.com/my_api';
-	var payload = {"name":"test"};
-	var options = {
-	    'headers': {
-	        'Content-Type': 'application/json'
-	    },
-	    'parameters': {
-	        'api_key': 'my_api_key'
-	    },
-	};
-	platform.api.post(url, payload, options, function(body, response) {
-	        var result = JSON.parse(body);
-	        console.log(result);
-	}
+    var url = 'http://example.com/my_api';
+    var payload = {"name":"test"};
+    var options = {
+        'headers': {
+            'Content-Type': 'application/json'
+        },
+        'parameters': {
+            'api_key': 'my_api_key'
+        },
+    };
+    platform.api.post(url, payload, options, function(body, response) {
+            var result = JSON.parse(body);
+            console.log(result);
+    }
 
 **PHP**
 
-	$url = 'http://example.com/my_api';
-	$payload = json_decode("{\"name\":\"test\"}", true);
-	$options = [];
-	$options['headers'] = [];
-	$options['headers']['Content-Type'] = 'application/json';
-	$options['parameters'] = [];
-	$options['parameters']['api_key'] = 'my_api_key';
-	$api = $platform['api'];
-	$post = $api->post;
-	$result = $post($url, $payload, $options);
-	var_dump($result);
+    $url = 'http://example.com/my_api';
+    $payload = json_decode("{\"name\":\"test\"}", true);
+    $options = [];
+    $options['headers'] = [];
+    $options['headers']['Content-Type'] = 'application/json';
+    $options['parameters'] = [];
+    $options['parameters']['api_key'] = 'my_api_key';
+    $api = $platform['api'];
+    $post = $api->post;
+    $result = $post($url, $payload, $options);
+    var_dump($result);
 
 **Python**
 
-	url = 'http://example.com/my_api'
-	payload = '{\"name\":\"test\"}'
-	options = {}
-	options['headers'] = {}
-	options['headers']['Content-Type'] = 'application/json'
-	options['parameters'] = {}
-	options['parameters']['api_key'] = 'my_api_key'
-	result = platform.api.post(url, payload, options)
-	data = result.read()
-	print data
-	jsonData = bunchify(json.loads(data))
+    url = 'http://example.com/my_api'
+    payload = '{\"name\":\"test\"}'
+    options = {}
+    options['headers'] = {}
+    options['headers']['Content-Type'] = 'application/json'
+    options['parameters'] = {}
+    options['parameters']['api_key'] = 'my_api_key'
+    result = platform.api.post(url, payload, options)
+    data = result.read()
+    print data
+    jsonData = bunchify(json.loads(data))
 
 For PHP scripts, which use cURL to make calls to external URLs, you can also specify any number of cURL options. Calls to internal URLs do not use cURL, so cURL options have no effect there.
 
-	// PHP
-	$options = [];
-	$options['headers'] = [];
-	$options['headers']['Content-Type'] = 'application/json';
-	$options['parameters'] = [];
-	$options['parameters']['api_key'] = 'my_api_key';
-	$options['CURLOPT_USERNAME'] = 'user@example.com';
-	$options['CURLOPT_PASSWORD'] = 'password123';
+    // PHP
+    $options = [];
+    $options['headers'] = [];
+    $options['headers']['Content-Type'] = 'application/json';
+    $options['parameters'] = [];
+    $options['parameters']['api_key'] = 'my_api_key';
+    $options['CURLOPT_USERNAME'] = 'user@example.com';
+    $options['CURLOPT_PASSWORD'] = 'password123';
 
 cURL options can include HTTP headers using CURLOPT_HTTPHEADER, but it's recommended to use $options['headers'] for PHP to send headers as shown above.
 
@@ -293,90 +293,90 @@ Let's review a few scripting examples to get your mind racing regarding what's p
 
 When inserting a new record into a database you'll naturally want to first validate the input parameters. To do so you'll add a `pre_process` event handler to the target table's `post` method endpoint. For instance, if the API namespace was `mysql`, and the target table was `employees`, you would add the scripting logic to the `mysql._table.account.post.pre_process` endpoint. Here's a PHP-based example that examines the `POST` payload for missing values and also confirms that a salary-related parameter is greater than zero:
 
-	$payload = $event['request']['payload'];
+    $payload = $event['request']['payload'];
 
-	if(!empty($payload['resource'])){
-		foreach($payload['resource'] as $record){
-			if(!array_key_exists('first_name', $record)){
-				throw new \Exception('Missing first_name.');
-			}
-			
-			if(!array_key_exists('hire_date', $record)){
-				throw new \Exception('Missing hire_date.');
-			}
+    if(!empty($payload['resource'])){
+        foreach($payload['resource'] as $record){
+            if(!array_key_exists('first_name', $record)){
+                throw new \Exception('Missing first_name.');
+            }
+            
+            if(!array_key_exists('hire_date', $record)){
+                throw new \Exception('Missing hire_date.');
+            }
 
-			if($record['salary'] <= 0){
-				throw new \Exception('Annual salary must be > 0');
-			}
-		}
-	}
+            if($record['salary'] <= 0){
+                throw new \Exception('Annual salary must be > 0');
+            }
+        }
+    }
 
 #### Transforming a Response
 
 Suppose the API data source returns a response which is not compatible with the destination client. Perhaps the client expects response parameters to be named differently, or maybe some additional nesting should occur. To do so, you can add business logic to a `post_process` endpoint. For instance, to modify the response being returned from the sample MySQL database API's `employees` table endpoint, you'll add a script to `mysql._table.employees.get.post_process`. As an example, here's what a record from the default response looks like:
 
-  {
-    "emp_no": 10001,
-    "birth_date": "1953-09-02",
-    "first_name": "Georgi",
-    "last_name": "Facello",
-    "gender": "M",
-    "hire_date": "1986-06-26"
-  }
+    {
+        "emp_no": 10001,
+        "birth_date": "1953-09-02",
+        "first_name": "Georgi",
+        "last_name": "Facello",
+        "gender": "M",
+        "hire_date": "1986-06-26"
+    }
 
 Suppose you instead want it to look like this:
 
-  {
-    "emp_no": 10001,
-    "birth_date": "1953-09-02",
-    "name": "Georgi Facello",
-    "gender": "M"
-  }
+    {
+        "emp_no": 10001,
+        "birth_date": "1953-09-02",
+        "name": "Georgi Facello",
+        "gender": "M"
+    }
 
 Specifically, we've combined the `first_name` and `last_name` parameters, and removed the `hire_date` parameter. To accomplish this you can add the following PHP script to the `mysql._table.employees.get.post_process` endpoint:
 
-	$responseBody = $event['response']['content'];
+    $responseBody = $event['response']['content'];
 
-	foreach ($responseBody['resource'] as $n => $record) {
-		$record["name"] = $record["first_name"] . " " . $record["last_name"];
-		unset($record["first_name"]);
-		unset($record["last_name"]);
-		unset($record["hire_date"]);
-		$responseBody['resource'][$n] = $record;
-	}
+    foreach ($responseBody['resource'] as $n => $record) {
+        $record["name"] = $record["first_name"] . " " . $record["last_name"];
+        unset($record["first_name"]);
+        unset($record["last_name"]);
+        unset($record["hire_date"]);
+        $responseBody['resource'][$n] = $record;
+    }
 
-	$event['response']['content'] = $responseBody;
+    $event['response']['content'] = $responseBody;
 
 ## Stopping Script Execution
 
 Just like in normal code execution, execution of a script is stopped prematurely by two means, throwing an exception, or returning.
 
-	// Stop execution if verbs other than GET are used in Custom Scripting Service
-	if (event.request.method !== "GET") {
-	    throw "Only HTTP GET is allowed on this endpoint."; // will result in a 500 back to client with the given message.
-	}
-	 
-	// Stop execution and return a specific status code
-	if (event.resource !== "test") {
-	    // For pre-process scripts where event.response doesn't exist yet, just create it
-	    event.response = {};
-	    // For post-process scripts just update the members necessary
-	    event.response.status_code = 400;
-	    event.response.content = {"error": "Invalid resource requested."};
-	    return;
-	}
-	 
-	// defaults to 200 status code
-	event.response.content = {"test": "value"};
+    // Stop execution if verbs other than GET are used in Custom Scripting Service
+    if (event.request.method !== "GET") {
+        throw "Only HTTP GET is allowed on this endpoint."; // will result in a 500 back to client with the given message.
+    }
+        
+    // Stop execution and return a specific status code
+    if (event.resource !== "test") {
+        // For pre-process scripts where event.response doesn't exist yet, just create it
+        event.response = {};
+        // For post-process scripts just update the members necessary
+        event.response.status_code = 400;
+        event.response.content = {"error": "Invalid resource requested."};
+        return;
+    }
+        
+    // defaults to 200 status code
+    event.response.content = {"test": "value"};
 
 ### Throwing An Exception
 
 If a parameter such as filter is missing, can throw an exception like so:
 
-	// PHP
-	if (! array_key_exists('filter', $event['request']['parameters'])) {
-	    throw new \DreamFactory\Core\Exceptions\BadRequestException('Missing filter');
-	}
+    // PHP
+    if (! array_key_exists('filter', $event['request']['parameters'])) {
+        throw new \DreamFactory\Core\Exceptions\BadRequestException('Missing filter');
+    }
 
 ## Creating Standalone Scripted Services
 
