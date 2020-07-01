@@ -1,15 +1,14 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Creating Scripted Services and Endpoints with DreamFactory
+  - name: "description"
+    content: This chapter shows you how to use PHP, Python, Node.js, and JavaScript to created scripted services and endpoints using DreamFactory.
 ---
 
-# Chapter 5. Generating a SOAP-to-REST API
+# Chapter 5. Creating Scripted Services and Endpoints with DreamFactory
 
-::: tip
-The SOAP-to-REST connector is available in the DreamFactory Silver and Gold Editions. Interested in a demo or free trial for either edition? [Contact us!](https://www.dreamfactory.com/contact)
-:::
+DreamFactory offers an extraordinarily powerful solution for creating APIs and adding business logic to existing APIs using a variety of popular scripting languages including PHP, Python (versions 2 and 3), Node.js, and JavaScript. In this chapter we'll walk you through several examples which will hopefully spur the imagination regarding the many ways in which you can take advantage of this great feature.
 
-## Video-based Learning
-
-If video-based learning is more your style, check out the ~12 minute Youtube video we created which walks you through the configuration and access process:
-
-<iframe width="672" height="378" src="https://www.youtube.com/embed/z-K2VeFaGRQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+## Creating a Scripted Service

@@ -1,5 +1,10 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Installing and Configuring DreamFactory
+  - name: "description"
+    content: This chapter introduces the different DreamFactory installers and walks readers through the standard installation and configuration process.
 ---
 
 # Chapter 2. Installing and Configuring DreamFactory
@@ -16,7 +21,7 @@ Cloning DreamFactory's OSS repository has long been by far the most popular way 
 
     $ git clone https://github.com/dreamfactorysoftware/dreamfactory/
 
-DreamFactory is built atop the very popular [Laravel Framework](http://www.laravel.com), which is in turn built atop PHP. This means DreamFactory is almost ubiquitously supported in all hosting environments; you'll just need to make sure your hosting environment is running PHP 7.1 or greater, a recent version of a web server such as Apache or NGINX, access to one of four databases for storing configuration data (MySQL/MariaDB, PostgreSQL, SQLite, and MS SQL Server are supported), and that you have adequate permissions to install a few requisite PHP extensions. You can learn more about the required software and extensions via our wiki:
+DreamFactory is built atop the very popular [Laravel Framework](http://www.laravel.com), which is in turn built atop PHP. This means DreamFactory is almost ubiquitously supported in all hosting environments; you'll just need to make sure your hosting environment is running PHP 7.2 or greater, a recent version of a web server such as Apache or NGINX, access to one of four databases for storing configuration data (MySQL/MariaDB, PostgreSQL, SQLite, and MS SQL Server are supported), and that you have adequate permissions to install a few requisite PHP extensions. You can learn more about the required software and extensions via our wiki:
 
 [http://wiki.dreamfactory.com/DreamFactory/Installation#GitHub](http://wiki.dreamfactory.com/DreamFactory/Installation#GitHub)
 
@@ -34,6 +39,10 @@ Installers are available for Linux, Windows, and Mac OS X. Download your desired
 
 [https://www.dreamfactory.com/downloads](https://www.dreamfactory.com/downloads)
 
+If you're using DreamFactory's commercial Bitnami edition and would like to configure Oracle, follow these instructions:
+
+* [Configuring Oracle with Bitnami](chapter02/bitnami-oracle.md)
+
 ### Cloud Images
 
 Cloud environments are the hosting solution of choice these days, and for good reason. Cloud service providers offer unsurpassed levels of stability, performance, and security, and countless additional features capable of maximizing IT teams' efficiency while minimizing costs. DreamFactory offers Bitnami images targeting all of the major cloud providers, including AWS, Azure, Google, and Oracle Cloud. Download your desired version via the following link:
@@ -47,17 +56,36 @@ If you've cloned the GitHub repository, you'll need to carry out a few additiona
 ### Configuring Your Server
 
 ::: warning
-This guide is under heavy development, and certain parts are complete. We suggest reading through the current installation documentation, [available here](http://wiki.dreamfactory.com/DreamFactory/Installation#GitHub).
+This guide is under heavy development, and certain parts are incomplete. We suggest reading through the current installation documentation, [available here](http://wiki.dreamfactory.com/DreamFactory/Installation#GitHub).
 :::
 
 Server configuration is going to vary according to your operating system. To ensure the instructions are as specific and straightforward as possible, we've broken them out into subchapters:
 
-* [Debian / Ubuntu](chapter02/ubuntu-server-configuration.md)
+* [Debian / Ubuntu](./chapter02/ubuntu-server-configuration.md)
 
 If you plan on using PHP in conjunction with one of the following databases, please review the pertinent subchapters presented below:
 
-* [Microsoft SQL Server](chapter02/microsoft-sql-server.md)
-* [SAP SQL Anywhere](chapter02/sap-sql-anywhere.md)
+* [Microsoft SQL Server](./chapter02/microsoft-sql-server.md)
+* [SAP SQL Anywhere](./chapter02/sap-sql-anywhere.md)
+* [Firebird](./chapter02/firebird.md)
+
+#### Server Hardware Requirements
+
+DreamFactory is surprisingly performant even under minimally provisioned servers, you'll want to install DreamFactory on a 64-bit server with at least 4GB RAM. If you're planning on hosting the system database on the same server as DreamFactory, then we recommend at least 8GB RAM. This server will house not only the operating system and DreamFactory, but also a web server such as Nginx (recommended) or Apache, and PHP-FPM. Keep in mind these are the *minimum* RAM requirements; many customers can and do run DreamFactory in far larger production environments.
+
+Under heavier loads you'll want to load balance DreamFactory across multiple servers, and take advantage of a shared caching (Redis or Memcached are typically used) and database layer (which houses the system database).
+
+| Cloud Environment   | Minimum Server
+| --------------------|------------------|
+| AWS                 | t2.large         |
+| Azure               | D2 v3            |
+| Oracle Cloud        | VM.Standard.E2.1 |
+| Digital Ocean       | Standard 8/160/5 |
+| Google Cloud        | n1-standard-2    |
+
+Although DreamFactory can run on Windows Server and IIS, we recommend instead using a popular Linux distribution such as Ubuntu, Debian, or CentOS in order to take advantage of our automated installers targeting those specific operating systems.
+
+Prior to launching your project, we recommend thoroughly testing your APIs under estimated production loads using a tool such as [loader.io](https://loader.io/).
 
 ### Installing DreamFactory
 
@@ -132,10 +160,6 @@ With the system database configured, it's time to create the system tables and s
 	Migrating: 2015_01_27_190909_create_db_extras_tables
 	Migrated:  2015_01_27_190909_create_db_extras_tables
 	...
-	Migrating: 2018_01_23_155210_script_implements_access_list
-	Migrated:  2018_01_23_155210_script_implements_access_list
-	Migrating: 2018_01_29_030233_create_bitbucket_config_table
-	Migrated:  2018_01_29_030233_create_bitbucket_config_table
 	Migration completed successfully.
 	*********************************************
 	*********************************************
@@ -265,6 +289,31 @@ APP_LOG=daily
 APP_LOG_LEVEL=debug
 APP_LOG_MAX_FILES=5
 ```
+
+### Enabling Email Registration
+
+When creating new users and admins it is not ideal nor secure to manually set a password for each one. You can instead enable email registration which will allow you to instead send e-mail invitations by checking the `Send email invite` option. This will send an email invite to the new user containing a link to your instance and allow them to set a password.
+
+To enable e-mail support, you will need to add the below lines to your `.env` file and then you can send new users registration notifications!
+
+	MAIL_DRIVER=smtp
+	MAIL_HOST=smtp.gmail.com
+	MAIL_PORT=587
+	MAIL_USERNAME=YOUR_EMAIL@gmail.com
+	MAIL_PASSWORD=YOUR_PASSWORD
+
+Keep in mind `smtp` is but one of several available delivery options.
+
+### Increasing Your Session Lifetime
+
+For security reasons DreamFactory sessions are limited to 60 minutes. You can however change the lifetime to any desired duration by opening your `.env` file and finding the following variable:
+
+	#DF_JWT_TTL=60
+
+Change `DF_JWT_TTL` to any duration you please, defined in minutes. For instance, the following settings will persist your session for a week:
+
+	DF_JWT_TTL=10080
+
 ### Updating Your DreamFactory Docker Environment
 
 Our DreamFactory environment is still a work-in-progress, however many users are actively using it thanks to Docker's streamlined configuration and deployment capabilities. Occasionally you'll want to update to a newer version of DreamFactory so we've assembled the following instructions as a guide.
@@ -275,9 +324,9 @@ You are presumably reading this section with the intention of upgrading a DreamF
 
 Begin by opening a terminal and entering your DreamFactory instance's root directory. Then execute this command:
 
-$ docker-compose exec web cat .env | grep APP_KEY
-APP_KEY=base64:U/En8zI8WKrZ/F7CA9KncWjGTIhbvpGD5wN3eLoDZuQ=
-...
+    $ docker-compose exec web cat .env | grep APP_KEY
+    APP_KEY=base64:U/En8zI8WKrZ/F7CA9KncWjGTIhbvpGD5wN3eLoDZuQ=
+    ...
 
 A couple of lines of output will be returned, however you should only copy the line beginning with `APP_KEY` into a text file. Keep in mind at a *minimum* you'll need to copy down the `APP_KEY` value. If you've overridden other defaults, such as the type, location, and credentials associated with the system database, you'll need to copy those too. It is very important you perform this step otherwise you'll run into all sorts of upgrade-related issues.
 
@@ -301,7 +350,7 @@ For the purposes of this example we'll presume you're running 2.12 and want to u
 
 	$ git checkout tags/2.14.1
 
-Next, you'll need to add that `APP_KEY` to the `docker-compose.yml` file. Open `docker-compose.yml` in your favorite code editor, scroll down to the `web` service, and add the `APP_KEY` property and associated value alongside the other environment variables:
+Next, you'll need to add that `APP_KEY` to the `docker-compose.yml` file. Open `docker-compose.yml` in your code editor, scroll down to the `web` service, and add the `APP_KEY` property and associated value alongside the other environment variables:
 
 	...
     DB_DATABASE: dreamfactory
@@ -348,6 +397,46 @@ Finally, you'll want to clear your application and configuration caches by execu
 
 With that done, open your DreamFactory instance in the browser, and confirm the environment is operational.
 
+## Installing and Configuring DreamFactory on CentOS
+
+First pull in the CentOS Docker image.
+
+	$ docker pull centos
+
+Then I start the image in a detached state.
+
+	$ docker run -itd {Container_ID}
+
+Once the image is running we can enter it and begin installing DreamFactory.
+
+	$ docker exec -it {Container_ID} /bin/bash
+
+### Using the DreamFactory Install Script
+
+Instead of spending time copying and pasting a lenghty list of commands we are going to use our installation script that can be found [here](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers).
+
+To start we will have to bring the script into our container by using `wget`.
+
+	wget -O cent.sh {RAW_GITHUB_SCRIPT_URL}
+
+Now that we have the script on our server, let's make it executable.
+
+	chmod +x cent.sh
+
+We can now run the script, but first let's take a look at additional configuration flags. You may pass several options into the script to alter its behavior. If you do not use these options, the script will install the Nginx web server, DreamFactory, and the required system and PHP extensions, but will **not install a database server**. To see a full list of installation options check it our [here](https://github.com/dreamfactorysoftware/df-genie#installation-options), otherwise we will be using the `--with-mysql` flag to be able to use MySQL as our system database.
+
+Now we can run the script!
+
+	sudo ./cent.sh --with-mysql
+
+You should now see the script running like so.
+
+<p>
+<img src="/images/02/install-script.png" width="600">
+</p>
+
+Upon completion you can now go to your browser and access your instance!
+
 ## Choosing an HTTP Client
 
 Whether your API consumer is an iPhone or Android application, a SPA (Single Page Application), or another server altogether, that consumer is often referred to as the *client*. The client issues HTTP requests to the REST API, parsing the responses and reacting accordingly. Although in most cases your team will use libraries such as [Alamofire](https://github.com/Alamofire/Alamofire) or [Axios](https://github.com/axios/axios) to manage these requests, you'll often want to interact with the APIs in a much more fluid manner during the investigatory and learning phase. The API Docs feature serves this need well, however the API Docs interface lacks the ability to bookmark and otherwise persist queries, manage parameters programmatically using variables, and other features useful for maintaining a set of easily accessible configurations.
@@ -368,7 +457,15 @@ Fortunately, there are a number of HTTP clients which fill this void very well. 
 
 ### cURL
 
-[cURL's](https://curl.haxx.se/) lack of a polished interface may lead you to believe it's inferior to Insomnia and Postman. Not so! cURL is an incomparably capable bit of software.  cURL is a command line tool and library for transferring data with URL syntax, supporting HTTP, HTTPS, FTP, FTPS, GOPHER, TFTP, SCP, SFTP, SMB, TELNET, DICT, LDAP, LDAPS, FILE, IMAP, SMTP, POP3, RTSP and RTMP. libcurl offers a myriad of powerful features
+[cURL's](https://curl.haxx.se/) lack of a polished interface may lead you to believe it's inferior to Insomnia and Postman. Not so! cURL is an incomparably capable bit of software.  cURL is a command line tool and library for transferring data with URL syntax, supporting HTTP, HTTPS, FTP, FTPS, GOPHER, TFTP, SCP, SFTP, SMB, TELNET, DICT, LDAP, LDAPS, FILE, IMAP, SMTP, POP3, RTSP and RTMP.
+
+## Running DreamFactory in a High Availability, Load Balanced Environment
+
+Most high API volume request users are running DreamFactory in a highly-available, load balanced environment. The following diagram depicts this approach:
+
+<img src="/images/02/lb-ha-diagram.png" width="800">
+
+If you're not interested in running the DreamFactory platform itself in an HA cluster then disregard the "Secondary Environment" found in the "DreamFactory Application Cluster" tier however the remainder of the diagram would still apply in a purely load balanced environment. In either case, the load balanced DreamFactory instances would be backed by a caching and system database tier. For caching DreamFactory supports Memcached and Redis. On the system database side, DreamFactory supports MySQL, PostgreSQL, and Microsoft SQL Server.
 
 ## Conclusion
 

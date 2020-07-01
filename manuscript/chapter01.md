@@ -1,8 +1,13 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Introducing REST and DreamFactory
+  - name: "description"
+    content: This chapter introduces you to REST APIs and explains how the DreamFactory API generation and management platform can help you quickly build REST APIs.
 ---
 
-# Chapter 1. Introducing DreamFactory
+# Chapter 1. Introducing REST and DreamFactory
 
 No matter your role in today's IT industry, APIs are an inescapable part of the job. Marketers regularly integrate Salesforce, Pipedrive, and MailChimp APIs into campaigns, while software developers rely upon Stripe, Google Maps, and Twitter APIs to build compelling web applications. Data scientists down the hall are grappling with an increasingly unwieldy avalanche of company metrics using Amazon Machine Learning, Elasticsearch, and IBM EventStore APIs. Meanwhile, the executive team relies upon Geckoboard, Google Analytics, and Baremetrics to monitor company progress and future direction. 
 
