@@ -1,10 +1,43 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Example DreamFactory applications
+  - name: "description"
+    content: Looking for DreamFactory inspriation? Check out these example DreamFactory applications.
 ---
 
-# Chapter 10. JavaScript Examples
+# Chapter 11. Demo DreamFactory Applications
 
 We regularly receive requests for examples involving connecting DreamFactory to a web interface. In this chapter we'll include several examples involving modern JavaScript technologies, and in the near future will provide a GitHub repository where these and other examples can be downloaded.
+
+## Dynamic Dashboard with Pagination, Sorting, and Filtering
+
+R&D departments and others interested in rapid prototype development regularly turn to DreamFactory for quickly exposing data through an API which can then be connected to a web-based interface such as a dashboard. This sort of project is particularly easy since numerous interactive table-oriented JavaScript libraries can be configured to consume an API endpoint. One such solution is [Tabulator](http://tabulator.info/).
+
+In this example (screenshot below), viewable at [https://tabulator.demo.dreamfactory.com/](https://tabulator.demo.dreamfactory.com/) and with the source code available on [GitHub](https://github.com/dreamfactorysoftware/dreamfactory-tabulator), we've configured a MySQL database API containing almost 5 million records, and used Tabulator to present 300,000 records residing in one of the tables.
+
+::: tip
+You can interact with a live version of this application at [https://tabulator.demo.dreamfactory.com/](https://tabulator.demo.dreamfactory.com/).
+:::
+
+<img src="/images/javascript-examples/tabulator.png" width="1000">
+
+Check out the [GitHub project README](https://github.com/dreamfactorysoftware/dreamfactory-tabulator) for information regarding how DreamFactory was configured to expose this API, and how you can easily configure this project to consume your own API.
+
+## Progressive Web Application
+
+The above dashboard example certainly has its purposes, however web applications are often much more involved. For instance, you might connect to multiple data sources such as Salesforce and MySQL, and require users to authenticate via an authentication services provider such as Okta. Further, the interface must be responsive, capable of suiting different screen sizes (phone, tablet, and desktop).
+
+We've created a demo application (screenshots below) to suit this more ambitious set of requirements. It's live at [https://pwa.demo.dreamfactory.com/](https://pwa.demo.dreamfactory.com/), and the source code is downloadable via [GitHub](https://github.com/dreamfactorysoftware/dreamfactory-demo-pwa).
+
+::: tip
+You can interact with a live version of this application at [https://pwa.demo.dreamfactory.com/](https://pwa.demo.dreamfactory.com/). Use the test credentials alex.smith@dreamfactory.com / TE%W2E%g0Lud0q8Gej to login!
+:::
+
+<img src="/images/javascript-examples/pwa-departments-mobile.png" style="border: 1px solid black;">
+<img src="/images/javascript-examples/pwa-customers-mobile.png" style="border: 1px solid black; margin-left: 25px;">
+<img src="/images/javascript-examples/pwa-customer-mobile.png" style="border: 1px solid black; margin-left: 25px;">
 
 ## Creating a Simple Status Dashboard
 

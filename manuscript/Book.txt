@@ -6,3 +6,17 @@ chapter05.md
 chapter06.md
 chapter07.md
 chapter08.md
+performance.md
+raspberry-pi.md
+javascript.md
+chapter12.md
+salesforce.md
+remote-soap.md
+system-apis.md
+chapter16.md
+chapter17.md
+reference/appendixa.md
+reference/security.md
+reference/gdpr.md
+reference/architecture.md
+reference/scalability.md

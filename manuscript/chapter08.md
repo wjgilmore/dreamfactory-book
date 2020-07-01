@@ -1,67 +1,53 @@
 ---
 sidebar: auto
+meta:
+  - name: "name"
+    content: Securing and Maintaining Your DreamFactory Enviroment
+  - name: "description"
+    content: This chapter introduces DreamFactory's layer-based security approach, discussing the many ways in which you can ensure your APIs are fully secured. 
 ---
 
-# Chapter 08. Optimizing, Securing, and Maintaining Your DreamFactory Enviroment
+# Chapter 8. Securing Your DreamFactory Environment
 
-The DreamFactory platform is build atop the [Laravel](https://www.laravel.com). Laravel is an amazing PHP-based framework that in just a few short years has grown in popularity to become one of the today's most popular framework solutions regardless of language. We speculate there are several reasons for such soaring popularity, including a thoroughly pragmatic approach, security-first implementation, fantastic documentation, and a comprehensive ecosystem (in addition to the framework itself, the Laravel development team also maintains an e-commerce framework called Spark, an application adminstration toolkit called Nova, and an application deployment service called Envoyer. Further, it's also quite performant, capable of serving as the backbone for high-traffic, mission critical applications. Regardless, like any application you're going to want to learn all you can about how to best go about maintaining, securing, and optimizing the environment. This chapter tackles all three topics.
-
-## Optimizing DreamFactory's Database APIs
-
-Ensuring the DreamFactory-generated database APIs are running at peak performance is accomplished by ensuring your database is properly configured, has been allocated appropriate hardware and network resources, and turning on DreamFactory's database caching feature. In this section we'll talk more about all of these tasks.
-
-## Index the Database
-
-For database-backed APIs, there is no more impactful task one could take than properly indexing the database. Database indexing is what allows your database engine to quickly identify which rows match conditions defined by a `where` clause. Refer to the following resources for both general and database-specific indexing information:
-
-* [Database Indexes Defined](https://en.wikipedia.org/wiki/Database_index)
-* [Microsoft SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/indexes/indexes?view=sql-server-2017)
-* [MongoDB](https://docs.mongodb.com/manual/indexes/)
-* [MySQL](https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html)
-* [Oracle](https://docs.oracle.com/cd/E11882_01/server.112/e40540/indexiot.htm#CNCPT721)
-* [PostgreSQL](https://www.postgresql.org/docs/9.1/indexes.html)
-
-### Database API Caching
-
-Enable database API caching whenever practical at service creation time, as it will undoubtedly improve performance.
-
-<img src="/images/10/database_caching.png" width="800">
-
-You can achieve particularly high performance by compiling your DreamFactory application code using OPcache. You can learn more about OPcache in these links:
-
-1. [Official PHP Docs](http://php.net/manual/en/book.opcache.php)
-2. [How to Make your Laravel App Fly](https://medium.com/appstract/make-your-laravel-app-fly-with-php-opcache-9948db2a5f93) 
-
-DreamFactory instances may be load balanced, and can be configured to share the system database, cache details, and other information necessary to operate in a distributed environment. Below are some links that may help you configure a load balancer with some of the most common cloud providers.
-
-1. [Amazon Web Services](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancer-getting-started.html)
-2. [Google Cloud](https://cloud.google.com/load-balancing/)
-3. [Microsoft Azure](https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview)
-4. [IBM Cloud](https://www.ibm.com/cloud/load-balancer)
-
-DreamFactory enables file-based caching by default, however you may opt to configure one of the other supported caching solutions, such as Redis. Please see these links to see connection tutorials:
-
- 1. [YouTube - Setting up and using Redis](c94200f4d0567522370908afcdafd28d)<br>
- 2. [Blog - Caching](http://blog.dreamfactory.com/new-dreamfactory-cache-service-supports-redis-memcahed-and-local-storage/)
+The DreamFactory platform is built atop the [Laravel](https://www.laravel.com) framework. Laravel is an amazing PHP-based framework that in just a few short years has grown in popularity to become one of the today's most popular framework solutions. There are several reasons for its popularity, including a pragmatic approach to convention over configuration, security-first implementation, fantastic documentation, and a comprehensive ecosystem (in addition to the framework itself, the Laravel team maintains a number of sibling projects, among them an e-commerce framework called Spark, an application adminstration toolkit called Nova, and an application deployment service called Envoyer). Regardless, like any application you're going to want to learn all you can about how to best go about maintaining and securing the environment. 
 
 ## Security
 
 ### CORS Security
 
-Always make sure your `CORS` settings are only set for the appropriate "scheme/host/port tuple" to ensure you are observing the maximum security you can by only allowing cross origin resources access when there is no other way around it.  For a great explanation of `CORS` and how they work, please see this [article](http://performantcode.com/web/do-you-really-know-cors).  
+CORS (Cross-Origin Resource Sharing) is a mechanism that allows a client to interact with an API endpoint which hails from a different domain, subdomain, port, or protocol. DreamFactory is configured by default to disallow all outside requests, so before you can integrate a third-party client such as a web or mobile application, you'll need to enable CORS.
 
-* You can modify your `CORS` settings in DreamFactory under the `Config` tab.
+You can modify your CORS settings in DreamFactory under the `Config` tab. You'll be presented with the following interface:
 
 <img src="/images/10/cors.png" width="800">
 
-For database-backed APIs, create the API using a database account privileges that closely correspond to your API privilege requirements. For instance, if the database includes a table called `employees` but there is no intention for this table to be accessible via the API, then configure the proxy user's privileges accordingly.
+To enable CORS for a specific originating network address such and an IP address or domain, press the plus `+` button located at the top of the screen. Doing so will enable all of the configuration fields found below:
 
-Never use a blanket API key for your APIs! Instead, create roles which expressly define the level of privileges intended to be exposed via the API, and then associate the role with a new App and corresponding API Key. Don't be afraid to create multiple roles and therefore multiple corresponding API keys if you'd like to limit API access in different ways on a per-client or group basis.
+* `Path`: The `Path` field defines the path associated with the API you're exposing via this CORS entry. For instance if you've created a Twitter API and would like to expose it, the path might be `/api/v2/twitter`. If you want to expose all APIs, use `*`.
+
+* `Description`: The `Description` field serves as a descriptive reference explaining the purpose of this CORS entry.
+
+* `Origins`: The `Origins` field identifies the network address making the request. If you'd like to allow more than one origin (e.g. www.example.com and www2.example.com), separate each by a comma (`www.example.com,ww2.example.com`). If you'd like to allow access from anywhere, supply an asterisk `*`.
+
+* `Headers`: The `Headers` field determines what headers can be used in the request. Several headers are whitelisted by default, including `Accept`, `Accept-Language`, `Content-Language`, and `Content-Type`. When set, DreamFactory will send as part of the preflight request the list of declared headers using the `Access-Control-Allow-Headers` header.
+
+* `Exposed Headers`: The `Exposed Headers` field determines which headers are exposed to the client.
+
+* `Max Age`: The `Max Age` field determines how long the results of a preflight request (the information found in the `Access-Control-Allow-Methods` and `Access-Control-Allow-Headers` headers) can be cached. This field's value is passed along to the client using the `Access-Control-Max-Age` field.
+
+* `Methods`: The `Methods` field determines which HTTP methods can be used in conjunction with this CORS definition. The selected values will be passed along to the client using the `Access-Control-Allow-Methods` field.
+
+* `Supports Credentials`: The `Supports Credentials` field determines whether this CORS configuration can be used in conjunction with user authentication. When enabled, the `Access-Control-Allow-Credentials` header will be passed and set to `true`.
+
+* `Enabled`: To enable the CORS configuration, make sure this field is enabled.
+
+Always make sure your `CORS` settings are only set for the appropriate "scheme/host/port tuple" to ensure you are observing the maximum security you can by only allowing cross origin resources access when there is no other way around it.  For a great explanation of `CORS`, refer to these articles:
+
+* [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+* [Do You Really Know CORS](http://performantcode.com/web/do-you-really-know-cors) 
 
 
-* Should you need to make API documentation available to team members, use DreamFactory's user-centric role assignment feature to make solely the documentation available to the team members, rather than granting unnecessary administrative access.
 
-<img src="/images/10/role_detail.png" width="800">
 
 ### Securing Your Web Traffic
 
@@ -72,6 +58,10 @@ Below are resources on how to add an SSL cert to your web server:
 1. [Nginx](http://nginx.org/en/docs/http/configuring_https_servers.html)
 	* [Nginx YouTube Video](https://www.youtube.com/watch?v=X3Pr5VATOyA)
 2. [Apache YouTube Example](https://www.youtube.com/watch?v=NfUoiv4FTSs)
+
+### Securing Your Credentials
+
+When generating APIs using DreamFactory's native connectors, you'll logically need to supply a set of credentials so DreamFactory can connect to and interact with the underlying data source. These credentials are stored in the system database, and are encrypted using [AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) encryption. The credentials are decrypted on-the-fly when DreamFactory connects to the destination data source, and are never cached in plaintext.
 
 ### Suppressing Errors
 
@@ -84,47 +74,18 @@ APP_DEBUG=false
 APP_ENV=production
 ```
 
-## Separating the Web Administration Interface from the Platform
+### Separating the Web Administration Interface from the Platform
 
-New DreamFactory users often conflate the web administration interface with the API platform; in fact, the web administration interface is just a client like any other. It just so happens that the DreamFactory team built this particular interface expressly for managing the platform in an administrative capacity. This interface talks to the platform using a series of administrative APIs exposed by the platform, and accessible only when requests are accompanied by a session token associated with an authenticated administrator.
+New DreamFactory users often conflate the web administration interface with the API platform; in fact, the web administration interface is just a client like any other. It just so happens that the DreamFactory team built this particular interface expressly for managing the platform in an administrative capacity. This interface interacts with the platform using a series of administrative APIs exposed by the platform, and accessible only when requests are accompanied by a session token associated with an authenticated administrator.
 
 By default this interface runs on the same server as the platform itself. Some users prefer to entirely separate the two, running the interface in one networking environment and entirely isolating the platform in another.
 
-TODO: Add link to df-admin-app README.
+The interface is maintained within an Angular application hosted in a public GitHub repository. The `README` file contains instructions regarding both building the Angular app and separating it from the platform. To learn more head over to [the GitHub repository](https://github.com/dreamfactorysoftware/df-admin-app).
 
-## Implementing Key Security Safeguards
+### Best Practices
 
-### Obfuscating Sensitive Data
+For database-backed APIs, create the API using a database account privileges that closely correspond to your API privilege requirements. For instance, if the database includes a table called `employees` but there is no intention for this table to be accessible via the API, then configure the proxy user's privileges accordingly.
 
-## Adding Redis Caching
+Never use a blanket API key for your APIs! Instead, create roles which expressly define the level of privileges intended to be exposed via the API, and then associate the role with a new App and corresponding API Key. Don't be afraid to create multiple roles and therefore multiple corresponding API keys if you'd like to limit API access in different ways on a per-client or group basis.
 
-One of DreamFactory's great advantages is it is built atop Laravel, and as such, you can take advantage of Laravel's support for shared caching solutions, among other things. This is great because it means the caching solution has been extensively tested and proven in production environments. 
-
-To install the predis package you just need to navigate to your project's root directory and execute this command:
-
-    $ composer require predis/predis
-
-Next, open your .env file and look for this section:
-
-    ## CACHE_DRIVER options: apc, array, database, file, memcached, redis
-    CACHE_DRIVER=file
-
-    Change CACHE_DRIVER to:
-
-    CACHE_DRIVER=redis
-
-Next, scroll down and uncomment these lines by removing the `#`, and then update the `CACHE_HOST`, `CACHE_PORT`, and (optionally) the `CACHE_PASSWORD` parameters to match your Redis environment:
-
-    ## If CACHE_DRIVER = memcached or redis
-    #CACHE_HOST=
-    #CACHE_PORT=
-    #CACHE_PASSWORD=
-
-Finally, scroll down to the following section and uncomment `CACHE_DATABASE` and `REDIS_CLIENT`:
-
-    ## If CACHE_DRIVER = redis
-    #CACHE_DATABASE=2
-    ## Which Redis client to use: predis or phpredis (PHP extension)
-    #REDIS_CLIENT=predis
-
-You can probably leave CACHE_DATABASE set to 2. For the `REDIS_CLIENT` you can leave it set to predis if you've installed the predis/predis package (recommended). 
+Should you need to make API documentation available to team members, use DreamFactory's user-centric role assignment feature to make solely the documentation available to the team members, rather than granting unnecessary administrative access.
